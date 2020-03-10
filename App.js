@@ -98,13 +98,13 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName={'AudioPlayer'} headerMode={'none'}>
+    <Stack.Navigator initialRouteName={'Main'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
-        <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
-        <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
+      <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
+      <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
     </Stack.Navigator>
   );
 }

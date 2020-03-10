@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, FlatList, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Text from '../../component/Text';
 import {
   moderateScale,
@@ -11,6 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {Fonts} from '../../utils/CommonStyles';
 import {SvgXml} from 'react-native-svg';
 import PlayIcon from '../../../assets/svg/Play.svg';
+import {useNavigation} from '@react-navigation/native';
 
 const DATA = [
   {
@@ -41,8 +48,10 @@ const DATA = [
 
 function Item({item, index}) {
   const {image} = item;
+  const navigation = useNavigation();
   return (
-    <View>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate('AudioDetail')}>
       <View
         style={{
           marginRight: scale(16),
@@ -77,7 +86,7 @@ function Item({item, index}) {
           (2:53:33-2:55:21)
         </Text>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 
