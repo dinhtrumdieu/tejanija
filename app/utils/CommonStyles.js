@@ -32,13 +32,13 @@ class CommonColors {
 
   static inActiveTintColor = '#383b6b';
 
-  static border = '#D1D1D6';
+  static border = '#C4C4C4';
 
   static separator = '#D1D1D6';
 
   static mainText = '#FFFFFF';
 
-  static secondaryText = '#000000';
+  static secondaryText = '#1A1A1A';
 
   static headerBarBgColor = '#FFFFFF';
 
