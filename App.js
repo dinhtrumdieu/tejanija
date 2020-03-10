@@ -19,6 +19,7 @@ import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
 import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
 import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
+import LikeScreen from './app/screens/LikeScreen';
 
 function NotificationsScreen({navigation}) {
   return (
@@ -37,7 +38,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName={'More'}
+      initialRouteName={'Likes'}
       tabBarOptions={{
         activeTintColor: '#EFEEB4',
         style: {
@@ -62,7 +63,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Likes"
-        component={NotificationsScreen}
+        component={LikeScreen}
         options={{
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Likes" focused={focused} />
