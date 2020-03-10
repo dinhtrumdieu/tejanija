@@ -1,5 +1,5 @@
 import Swipeable from 'react-native-swipeable';
-import {StyleSheet, TouchableOpacity, View, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Image, Alert} from 'react-native';
 import {moderateScale, scale} from '../../../libs/reactSizeMatter/scalingUtils';
 import Text from '../../../component/Text';
 import React from 'react';
@@ -11,6 +11,7 @@ import {
   Fonts,
   ShadowStyle,
 } from '../../../utils/CommonStyles';
+import I18n from '../../../i18n/i18n';
 
 export default class NoteItem extends React.Component {
   close = () => {
@@ -19,7 +20,21 @@ export default class NoteItem extends React.Component {
     }
   };
 
-  onClickDelete = () => {};
+  onClickDelete = () => {
+    Alert.alert(
+      I18n.t('app.delete_alert'),
+      I18n.t('app.delete_message'),
+      [
+        {
+          text: I18n.t('app.cancel'),
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => this.close()},
+      ],
+      {cancelable: false},
+    );
+  };
 
   rightButtons = () => {
     return [
@@ -56,7 +71,12 @@ export default class NoteItem extends React.Component {
               borderRadius: scale(5),
               overflow: 'hidden',
             }}>
-            <Text style={{lineHeight: scale(24), textAlign: 'justify', padding: scale(8)}}>
+            <Text
+              style={{
+                lineHeight: scale(24),
+                textAlign: 'justify',
+                padding: scale(8),
+              }}>
               <Text style={styles.time}>November 01, 2019</Text>- [Note content
               dummy data] Consequat ligula sed rhoncus consequat metus. Quam
               urna vehicula feugiat Nisl commodo tempor, tincidunt ligula

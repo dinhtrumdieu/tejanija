@@ -1,11 +1,12 @@
 import Swipeable from 'react-native-swipeable';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {moderateScale, scale} from '../../../libs/reactSizeMatter/scalingUtils';
 import Text from '../../../component/Text';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import DeleteIcon from '../../../../assets/svg/delete_icon.svg';
 import {CommonStyles, ShadowStyle} from '../../../utils/CommonStyles';
+import I18n from '../../../i18n/i18n';
 
 export default class LikeItem extends React.Component {
   close = () => {
@@ -14,7 +15,21 @@ export default class LikeItem extends React.Component {
     }
   };
 
-  onClickDelete = () => {};
+  onClickDelete = () => {
+    Alert.alert(
+      I18n.t('app.delete_alert'),
+      I18n.t('app.delete_message'),
+      [
+        {
+          text: I18n.t('app.cancel'),
+          onPress: () => {},
+          style: 'cancel',
+        },
+        {text: 'OK', onPress: () => this.close()},
+      ],
+      {cancelable: false},
+    );
+  };
 
   rightButtons = () => {
     return [

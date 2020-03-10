@@ -15,7 +15,7 @@ import LikesList from './likes/LikesList';
 import NotesList from './likes/NotesList';
 
 export default function LikeScreen() {
-  const [tab, setTab] = React.useState(1);
+  const [tab, setTab] = React.useState(0);
   return (
     <View style={{flex: 1}}>
       <View
