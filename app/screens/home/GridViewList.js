@@ -1,10 +1,21 @@
 import React from 'react';
-import {View, FlatList, StyleSheet, Image} from 'react-native';
+import {
+  View,
+  FlatList,
+  StyleSheet,
+  Image,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Text from '../../component/Text';
-import {moderateScale, scale, verticalScale} from '../../libs/reactSizeMatter/scalingUtils';
+import {
+  moderateScale,
+  scale,
+  verticalScale,
+} from '../../libs/reactSizeMatter/scalingUtils';
 //import Image from '../../component/Image';
 import LinearGradient from 'react-native-linear-gradient';
 import {Fonts} from '../../utils/CommonStyles';
+import {useNavigation} from '@react-navigation/native';
 
 const DATA = [
   [
@@ -39,33 +50,38 @@ const DATA = [
 
 function renderContent(item, index, height, style) {
   const {image} = item;
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const navigation = useNavigation();
   return (
-    <View
-      style={{
-        width: scale(160),
-        marginRight: scale(16),
-        marginBottom: scale(30),
-      }}>
-      <Image
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate('AudioDetail')}>
+      <View
         style={{
           width: scale(160),
-          height: height,
-          borderRadius: scale(10),
-        }}
-        source={image}
-      />
-      <LinearGradient
-        colors={['rgba(69, 77, 102, 0)', 'rgba(69, 77, 102, 0.7)']}
-        style={[styles.linearGradient, {height: height}]}>
-        <View style={styles.bottom}>
-          <Text style={styles.category}>Confidence</Text>
-          <Text style={styles.totalTime}>05:20</Text>
-        </View>
-      </LinearGradient>
-      <Text style={styles.title}>
-        WHEN THE PRACTICE IS CORRECT, FAITH INCR...
-      </Text>
-    </View>
+          marginRight: scale(16),
+          marginBottom: scale(30),
+        }}>
+        <Image
+          style={{
+            width: scale(160),
+            height: height,
+            borderRadius: scale(10),
+          }}
+          source={image}
+        />
+        <LinearGradient
+          colors={['rgba(69, 77, 102, 0)', 'rgba(69, 77, 102, 0.7)']}
+          style={[styles.linearGradient, {height: height}]}>
+          <View style={styles.bottom}>
+            <Text style={styles.category}>Confidence</Text>
+            <Text style={styles.totalTime}>05:20</Text>
+          </View>
+        </LinearGradient>
+        <Text style={styles.title}>
+          WHEN THE PRACTICE IS CORRECT, FAITH INCR...
+        </Text>
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 

@@ -17,6 +17,8 @@ import {scale} from './app/libs/reactSizeMatter/scalingUtils';
 import VideoPlayer from './app/screens/VideoPlayer';
 import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
+import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
+import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 
 function NotificationsScreen({navigation}) {
   return (
@@ -101,6 +103,8 @@ function MyStack() {
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={NotificationsScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
+      <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
     </Stack.Navigator>
   );
 }

@@ -91,6 +91,8 @@ const CommonStyles = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderColor: '#e2e2e2',
   },
   headerHome: {
     backgroundColor: CommonColors.headerBarBgColor,
