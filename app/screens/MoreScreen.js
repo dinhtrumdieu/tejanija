@@ -19,7 +19,7 @@ export default function MoreScreen({navigation}) {
         center={<Text style={CommonStyles.headerTitle}>More</Text>}
       />
       <View style={styles.body}>
-        <TouchableWithoutFeedback onPress={()=>navigation.navigate('Settings')}>
+        <TouchableWithoutFeedback onPress={()=>navigation.navigate('')}>
           <View style={styles.row}>
             <SvgXml xml={SettingIcon} />
             <Text style={styles.label}>Settings</Text>

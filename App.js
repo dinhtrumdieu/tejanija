@@ -17,25 +17,14 @@ import {scale} from './app/libs/reactSizeMatter/scalingUtils';
 import VideoPlayer from './app/screens/VideoPlayer';
 import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
-
-function NotificationsScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
+import Notifications from './app/screens/notification/Notifications'
 
 const MAIN_TAB_BAR_HEIGHT = scale(50);
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName={'More'}
+      initialRouteName={'Home'}
       tabBarOptions={{
         activeTintColor: '#EFEEB4',
         style: {
@@ -60,7 +49,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Likes"
-        component={NotificationsScreen}
+        component={HomeScreen}
         options={{
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Likes" focused={focused} />
@@ -99,7 +88,7 @@ function MyStack() {
     <Stack.Navigator initialRouteName={'Main'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
     </Stack.Navigator>
   );
