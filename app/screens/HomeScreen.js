@@ -107,13 +107,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     width: '100%',
+    borderBottomWidth: 0,
   },
   headerWhite: {
     backgroundColor: '#fff',
     position: 'absolute',
     top: 0,
     width: '100%',
-    borderBottomWidth: 0.5,
-    borderColor: '#e2e2e2',
   },
 });

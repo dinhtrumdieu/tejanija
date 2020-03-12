@@ -2,34 +2,27 @@ import React, {Component} from 'react';
 import { View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Alert, SwipeView, Image} from 'react-native';
 import Text from '../../component/Text';
 import { scale, moderateScale } from '../../libs/reactSizeMatter/scalingUtils'
-import { supported32BitAbis } from 'react-native-device-info';
 import {SvgXml, SvgCss} from 'react-native-svg';
 import {CommonColors, CommonStyles} from '../../utils/CommonStyles'
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet'
 import Header from '../../component/Header';
-import DetailIcon from '../../../assets/svg/Detail-icon.svg';
-import MenuIcon from '../../../assets/svg/Menu.svg';
-import Swipeout from 'react-native-swipeout';
-import ActionSheet from 'react-native-actionsheet'
 import PostItem from './item/PostItem'
+import ActionSheetItem from './item/ActionSheetItem';
+import Notification1 from '../../../assets/svg/notification-empty.svg';
 
 export default function Notifications() {
 
         const [tabSelected, setTabSelected] = React.useState(1);
-        const list1 = [1,2,3,4,5,6,7,8]
+        const [isShow, setIsShow] = React.useState(false);
+        const list1 = [{"id": 1}, {"id": 2}, {"id": 3}, {"id": 4}]
         const [list, setList] = React.useState(list1); 
         return (
             <View style={styles.container}>
                 <Header
-                headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
-                type={0}
-                center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
-                right = {<TouchableOpacity
-                    onPress={showActionSheet}
-                    style={{height: scale(22), width: scale(22)}}>
-                     <SvgXml xml={DetailIcon} />
-                  </TouchableOpacity>}
-                
+                    headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
+                    type={0}
+                    center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
+                    right = { <ActionSheetItem /> }
                 />
                 <View style={styles.containerSwitch}>
                     <TouchableWithoutFeedback onPress={() => setTabSelected(1)}>
@@ -46,27 +39,20 @@ export default function Notifications() {
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
-                {/* {<RenderTabPost tabSelected={tabSelected}/>}
-                {<RenderTabSystem tabSelected={tabSelected}/>} */}
-                {<RenderTabPost/>}
-                {<RenderTabSystem/>}
-
-                <ActionSheet
-                // ref={o => this.ActionSheet = o}
-                title={'Which one do you like ?'}
-                options={['Apple', 'Banana', 'cancel']}
-                cancelButtonIndex={2}
-                destructiveButtonIndex={1}
-                onPress={(index) => { /* do something */ }}
-            />
-                
+                { list.length > 0 ?
+                    <View>
+                        {<RenderTabPost/>}
+                        {<RenderTabSystem/>}
+                    </View>
+                    :
+                    <View
+                        style={{flex:1, justifyContent: 'center', alignItems: 'center', height: scale(300), width: scale(300)}}>
+                        <SvgXml xml={Notification1} />
+                        <Text>You have no notification.</Text>
+                    </View>
+                }
             </View>
         );
-
-        function showActionSheet(){
-            // ActionSheet.show()
-            console.warn("SHEET")
-        }
 
     const DATA = [{}, {}];
 
@@ -82,10 +68,15 @@ export default function Notifications() {
         }
     }
 
-    // function RenderTabPost(props) {
-        // const {tabSelected} = props;
-        // console.warn(tabSelected);
+    function deleteItem(index) {
+        const filterdata = list.filter(item => item.id !== index)
+        setList(filterdata)
+        // setList(list.splice(index,1))
+        console.warn("list")
+        console.warn(list)
+    }
 
+  
     function RenderTabPost() {
         console.warn(tabSelected);
         const display = tabSelected === 1;
@@ -98,17 +89,10 @@ export default function Notifications() {
                     paddingHorizontal: scale(16),
                 }}>
                 </View>
-                {/* <FlatList
-                    contentContainerStyle={{paddingLeft: scale(16)}}
-                    data={list}
-                    horizontal={false}
-                    keyExtractor={(item, index) => index.toString()}
-                    renderItem={({ item, index }) => <RenderListPost item={item} />}
-                    showsHorizontalScrollIndicator={false}
-                /> */}
                 <FlatList
                     bounces={true}
                     data={list}
+                    extraData = {list}
                     renderItem={({item, index}) => (
                     <PostItem
                         getSwipeItemIsOpen={() => getSwipeRef(index)}
@@ -117,14 +101,15 @@ export default function Notifications() {
                         item={item}
                         index={index}
                         type={""}
+                        detlete={() => deleteItem(index)}
                     />
                     )}
                     keyExtractor={(item, index) => index.toString()}
+                    // keyExtractor = {({item}) => item.id}
                 />
             </View>
         );
     };
-
   
     function RenderTabSystem() {
         const display = tabSelected === 2;
@@ -137,14 +122,7 @@ export default function Notifications() {
                         paddingHorizontal: scale(16),
                     }}>
                     </View>
-                    {/* <FlatList
-                        contentContainerStyle={{paddingLeft: scale(16)}}
-                        data={list}
-                        horizontal={false}
-                        keyExtractor={(item, index) => index.toString() }
-                        renderItem={({item}) =><RenderListSystem item={item}/>}
-                        showsHorizontalScrollIndicator={false}
-                    /> */}
+              
                     <FlatList
                     bounces={true}
                     data={list}
@@ -156,6 +134,7 @@ export default function Notifications() {
                         item={item}
                         index={index}
                         type={"sys"}
+                        
                     />
                     )}
                     keyExtractor={(item, index) => index.toString()}
@@ -163,30 +142,6 @@ export default function Notifications() {
                 </View>
         );
     };
-
-
-
-    function ShowAlert() {
-        Alert.alert(
-            'Delete notification',
-            'Are you sure want to delete this notification ?',
-            [
-              {text: 'Cancel', onPress: () => console.warn('Cancel Pressed'), style: 'default'},
-            //   {text: 'OK', onPress: () => setList(list.filter(item => item.id !== id))},
-            {text: 'OK', onPress: () => console.warn('OK Pressed'), style: 'default'},
-            // {text: 'OK', onPress: () => console.warn(item), style: 'cancel'},
-        ],
-            { cancelable: false }
-          )
-    }
-    // function deleteItem(id){
-    //     setList(list.filter(item => item.id !== id))
-
-    // let newimagesAddFile = this.state.imagesAddFile;
-    // newimagesAddFile.splice(index,1); //to remove a single item starting at index
-    // this.setState({imagesAddFile:newimagesAddFile})
-    //  }
-
 
 }
 
@@ -251,6 +206,7 @@ const styles = ScaledSheet.create({
     },
     containerSwitch: {
         margin: scale(16),
+        marginTop: scale(3),
         flexDirection: "row",
         justifyContent:"center",
         alignItems:"center"

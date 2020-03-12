@@ -4,7 +4,7 @@ import {moderateScale, scale} from '../../../libs/reactSizeMatter/scalingUtils';
 import Text from '../../../component/Text';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
-import DeleteIcon from '../../../../assets/svg/Menu.svg';
+import DeleteIcon from '../../../../assets/svg/delete_icon.svg';
 import {
   CommonColors,
   CommonStyles,
@@ -22,27 +22,37 @@ export default class PostItem extends React.Component {
     }
   };
 
-  onClickDelete = () => {
+  onClickDelete = (index) => {
     Alert.alert(
       I18n.t('app.delete_alert'),
       I18n.t('app.delete_message'),
       [
         {
           text: I18n.t('app.cancel'),
-          onPress: () => {},
+          onPress: () => this.close(),
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => this.close()},
+        {text: 'OK', onPress: (index) => this.delete()},
       ],
       {cancelable: false},
     );
   };
 
-  rightButtons = () => {
+  delete=() => {
+    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, detlete} = this.props;
+    detlete(index)
+    console.warn("index")
+    console.warn(index)
+    // if (this.swipe) {
+    //   this.swipe.recenter();
+    // }
+  }
+
+  rightButtons = (index) => {
     return [
       <TouchableOpacity
         style={{flex: 1, justifyContent: 'center'}}
-        onPress={() => this.onClickDelete()}>
+        onPress={() => this.onClickDelete(index)}>
         <View style={styles.deleteButton}>
           <SvgXml xml={DeleteIcon} />
         </View>
@@ -61,10 +71,10 @@ export default class PostItem extends React.Component {
             onCloseOldSwipe(index);
             getSwipeItemIsOpen(index);
           }}
-          rightButtons={this.rightButtons()}>
+          rightButtons={this.rightButtons(index)}>
           <View
             style={{
-              paddingVertical: scale(16),
+              paddingVertical: scale(10),
               paddingHorizontal: scale(20),
             }}>
             <View style = {{ padding: scale(0)}}>
@@ -88,8 +98,8 @@ export default class PostItem extends React.Component {
 const styles = ScaledSheet.create({
  
   date: {
-      paddingTop: scale(8),
-      paddingBottom: scale(8),
+      paddingTop: scale(4),
+      paddingBottom: scale(4),
       marginLeft: scale(18),
       marginRight: scale(18),
       fontSize: scale(11),
@@ -110,7 +120,7 @@ const styles = ScaledSheet.create({
   },
   textContent: {
       paddingTop: scale(8),
-      paddingBottom: scale(8),
+      paddingBottom: scale(0),
       marginLeft: scale(18),
       marginRight: scale(18),
       fontSize: scale(13),
@@ -126,5 +136,14 @@ const styles = ScaledSheet.create({
       fontSize: scale(16),
       color: "#1A1A1A",
       fontWeight: '900',
-  }
+  },
+  deleteButton: {
+    width: scale(64),
+    height: scale(64),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#309975',
+    borderRadius: scale(32),
+    ...ShadowStyle,
+  },
 })

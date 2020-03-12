@@ -18,6 +18,21 @@ import VideoPlayer from './app/screens/VideoPlayer';
 import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
 import Notifications from './app/screens/notification/Notifications'
+import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
+import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
+import LikeScreen from './app/screens/LikeScreen';
+
+function NotificationsScreen({navigation}) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Button
+        title="Go to Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
+      <Button title="Go back" onPress={() => navigation.goBack()} />
+    </View>
+  );
+}
 
 const MAIN_TAB_BAR_HEIGHT = scale(50);
 const Tab = createBottomTabNavigator();
@@ -49,7 +64,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Likes"
-        component={HomeScreen}
+        component={LikeScreen}
         options={{
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Likes" focused={focused} />
@@ -90,6 +105,8 @@ function MyStack() {
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
+      <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
+      <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
     </Stack.Navigator>
   );
 }
