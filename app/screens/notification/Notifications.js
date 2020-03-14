@@ -59,9 +59,9 @@ export default function Notifications() {
                     </TouchableWithoutFeedback>
                 </View>
                 { list.length > 0 ?
-                    <View>
+                    <View style={{}}>
                         {<RenderTabPost />}
-                        {<RenderTabSystem/>}
+                        {<RenderTabSystem />}
                     </View>
                     :
                     <View
@@ -112,17 +112,19 @@ export default function Notifications() {
         const display = tabSelected === 1;
         return (
             <View style={[display ? {} : {display: 'none'}]}>
-                <View style={{
+                {/* <View style={{
                     flexDirection: 'row',
                     alignItems: 'center',
                     paddingHorizontal: scale(16),
                 }}>
-                </View>
+                </View> */}
+                <View style={{}}>
                 <FlatList
                     bounces={true}
                     data={list}
                     keyExtractor={item => item.id}
                     extraData={selected}
+                    // contentContainerStyle={{ flexGrow: 0 }}
                     renderItem={({item, index}) => (
                     <PostItem
                         getSwipeItemIsOpen={() => getSwipeRef(index)}
@@ -132,13 +134,14 @@ export default function Notifications() {
                         index={index}
                         type={""}
                         isRead = {isRead}
-                        detlete={() => deleteItem(index)}
+                        deleteItem={() => deleteItem(index)}
                         selected={!!selected.get(item.id)}
                         onSelect={onSelect}
                     />
                     )}
                     // keyExtractor={(item, index) => index.toString()}
                 />
+                </View>
             </View>
         );
     };
@@ -165,7 +168,7 @@ export default function Notifications() {
                         item={item}
                         index={index}
                         type={"sys"}
-                        detlete={() => deleteItem(index)}
+                        deleteItem={() => deleteItem(index)}
                         selected={!!selected.get(item.id)}
                         onSelect={onSelect}
                         
@@ -182,7 +185,7 @@ export default function Notifications() {
 const styles = ScaledSheet.create({
     container: {
         // marginTop: scale(30),
-        flex: 1
+        // flex: 1
     },
 
     labelTextInactive: {

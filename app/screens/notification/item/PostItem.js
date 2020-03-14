@@ -39,8 +39,8 @@ export default class PostItem extends React.Component {
   };
 
   delete=() => {
-    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, detlete} = this.props;
-    detlete(index)
+    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, deleteItem} = this.props;
+    deleteItem(index)
     console.warn("index")
     console.warn(index)
     // if (this.swipe) {
@@ -61,13 +61,13 @@ export default class PostItem extends React.Component {
   };
 
   render() {
-    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, detlete, isRead,  selected, onSelect } = this.props;
+    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, deleteItem, isRead,  selected, onSelect } = this.props;
     console.warn("isRead1")
    
     console.warn(item)
     return (
 
-      <View style={selected ? styles.isRead : ""}>
+      <View style={[{flex: 1}, selected ? styles.isRead : ""]}>
         <Swipeable
           ref={ref => (this.swipe = ref)}
           rightActionActivationDistance={20}
