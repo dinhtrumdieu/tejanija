@@ -20,6 +20,7 @@ export default class ActionSheetItem extends React.Component {
     this.ActionSheet.show()
   }
   render() {
+    const {deleteAllItem, markAllRead} = this.props
     return (
       <View>
         <TouchableOpacity
@@ -36,9 +37,11 @@ export default class ActionSheetItem extends React.Component {
           onPress={(index) => {
             if (index == 0) {
                 console.warn("Pressed Mark")
+                markAllRead()
             }
             if (index == 1) {
                 console.warn("Pressed Delete")
+                deleteAllItem()
             } else {
                 console.warn("Pressed Cancel")
             }

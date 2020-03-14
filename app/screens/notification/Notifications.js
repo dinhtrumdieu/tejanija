@@ -14,39 +14,58 @@ export default function Notifications() {
 
         const [tabSelected, setTabSelected] = React.useState(1);
         const [isShow, setIsShow] = React.useState(false);
-        const list1 = [{"id": 1}, {"id": 2}, {"id": 3}, {"id": 4}]
+        const list1 = [
+            {id: 1, name: "Drowsiness", date: "November 23, 2019", content:"You need to practice – whenever the mind is thin... ", isOpen: false, title: "Dealing with wandering mind"},
+            {id: 2, name: "Restlessness", date: "November 23, 2019", content:"They are not important – just imagination. Don’t ... ", isOpen: false, title: "Images in the mind are just thoughts – nothing to fear"},
+            {id: 3, name: "Guided meditation", date: "November 24, 2019", content:"", isOpen: false, title: "This meditation is for life, no need to "},
+            {id: 4, name: "Burmese zen", date: "November 24, 2019", content:"Check your mind, what is the mind knowing?...", isOpen: false, title: "Every object is very simple; it’s only thinking that makes it complicated."}
+        ]
         const [list, setList] = React.useState(list1); 
+        const [isRead, setIsRead] = React.useState(false); 
+        const [selected, setSelected] = React.useState(new Map());
+        const onSelect = React.useCallback(
+            id => {
+              const newSelected = new Map(selected);
+              newSelected.set(id, !selected.get(id));
+        
+              setSelected(newSelected);
+            },
+            [selected],
+          );
         return (
             <View style={styles.container}>
                 <Header
                     headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
                     type={0}
                     center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
-                    right = { <ActionSheetItem /> }
+                    right = { 
+                        <ActionSheetItem 
+                            deleteAllItem={() => deleteAllItem()}
+                            markAllRead={() => markAllRead()}
+                        /> }
                 />
                 <View style={styles.containerSwitch}>
                     <TouchableWithoutFeedback onPress={() => setTabSelected(1)}>
-                    <View style={[styles.activeTab1, tabSelected === 1 ? {backgroundColor: '#309975'} : styles.inActiveTab1]}>
+                        <View style={[styles.activeTab1, tabSelected === 1 ? {backgroundColor: '#309975'} : styles.inActiveTab1]}>
                             {tabSelected !== 1 ? <Text style={styles.labelTextInactive}>Post</Text> :
-                                <Text style={styles.labelTextActive}>Post</Text>}
+                            <Text style={styles.labelTextActive}>Post</Text>}
                         </View>
                     </TouchableWithoutFeedback>
                     <TouchableWithoutFeedback onPress={() => setTabSelected(2)}>
-                    <View style={[styles.activeTab2, tabSelected === 2 ? {backgroundColor: '#309975'} : styles.inActiveTab2]}>
-
+                        <View style={[styles.activeTab2, tabSelected === 2 ? {backgroundColor: '#309975'} : styles.inActiveTab2]}>
                             {tabSelected !== 2 ? <Text style={styles.labelTextInactive}>System</Text> :
-                                <Text style={styles.labelTextActive}>System</Text>}
+                            <Text style={styles.labelTextActive}>System</Text>}
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
                 { list.length > 0 ?
                     <View>
-                        {<RenderTabPost/>}
+                        {<RenderTabPost />}
                         {<RenderTabSystem/>}
                     </View>
                     :
                     <View
-                        style={{flex:1, justifyContent: 'center', alignItems: 'center', height: scale(300), width: scale(300)}}>
+                        style={{flex:1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', height: scale(300), width: scale(300)}}>
                         <SvgXml xml={Notification1} />
                         <Text>You have no notification.</Text>
                     </View>
@@ -68,10 +87,21 @@ export default function Notifications() {
         }
     }
 
+    function markAllRead() {
+        setIsRead(true)
+    }
+
+    function deleteAllItem() {
+        const dataZero = []
+        setList(dataZero)
+        // setList(list.splice(index,1))
+        console.warn("list")
+        console.warn(list)
+    }
+
     function deleteItem(index) {
         const filterdata = list.filter(item => item.id !== index)
         setList(filterdata)
-        // setList(list.splice(index,1))
         console.warn("list")
         console.warn(list)
     }
@@ -80,7 +110,6 @@ export default function Notifications() {
     function RenderTabPost() {
         console.warn(tabSelected);
         const display = tabSelected === 1;
-        // const list = [1,1,1,1,1,1,1,1]
         return (
             <View style={[display ? {} : {display: 'none'}]}>
                 <View style={{
@@ -92,7 +121,8 @@ export default function Notifications() {
                 <FlatList
                     bounces={true}
                     data={list}
-                    extraData = {list}
+                    keyExtractor={item => item.id}
+                    extraData={selected}
                     renderItem={({item, index}) => (
                     <PostItem
                         getSwipeItemIsOpen={() => getSwipeRef(index)}
@@ -101,11 +131,13 @@ export default function Notifications() {
                         item={item}
                         index={index}
                         type={""}
+                        isRead = {isRead}
                         detlete={() => deleteItem(index)}
+                        selected={!!selected.get(item.id)}
+                        onSelect={onSelect}
                     />
                     )}
-                    keyExtractor={(item, index) => index.toString()}
-                    // keyExtractor = {({item}) => item.id}
+                    // keyExtractor={(item, index) => index.toString()}
                 />
             </View>
         );
@@ -113,7 +145,6 @@ export default function Notifications() {
   
     function RenderTabSystem() {
         const display = tabSelected === 2;
-        // const list = [1,1,1,1,1,1,1,1]
         return (
                 <View style={[display ? {} : {display: 'none'}]}>
                     <View style={{
@@ -134,6 +165,9 @@ export default function Notifications() {
                         item={item}
                         index={index}
                         type={"sys"}
+                        detlete={() => deleteItem(index)}
+                        selected={!!selected.get(item.id)}
+                        onSelect={onSelect}
                         
                     />
                     )}
@@ -205,8 +239,9 @@ const styles = ScaledSheet.create({
         color: "#C4C4C4",
     },
     containerSwitch: {
-        margin: scale(16),
+        marginVertical: scale(16),
         marginTop: scale(3),
+        marginBottom: scale(3),
         flexDirection: "row",
         justifyContent:"center",
         alignItems:"center"

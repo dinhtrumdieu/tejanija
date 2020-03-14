@@ -61,9 +61,13 @@ export default class PostItem extends React.Component {
   };
 
   render() {
-    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type} = this.props;
+    const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, detlete, isRead,  selected, onSelect } = this.props;
+    console.warn("isRead1")
+   
+    console.warn(item)
     return (
-      <View>
+
+      <View style={selected ? styles.isRead : ""}>
         <Swipeable
           ref={ref => (this.swipe = ref)}
           rightActionActivationDistance={20}
@@ -72,25 +76,29 @@ export default class PostItem extends React.Component {
             getSwipeItemIsOpen(index);
           }}
           rightButtons={this.rightButtons(index)}>
-          <View
-            style={{
-              paddingVertical: scale(10),
-              paddingHorizontal: scale(20),
-            }}>
-            <View style = {{ padding: scale(0)}}>
-                  
-          <Text style = {styles.date}>November 27, 2019 / {type ==="sys" ? <View/> : <Text style ={{fontSize: scale(11), color: "#309975"}}>Drowsiness</Text>}</Text>
-                  <View style = {{flexDirection:"row", flex:1, alignItems:"center"}}>
-                      <View style ={styles.circleStatus}></View>
-                      <Text style = {styles.textTitle} >Dealing with wandering mind</Text>
+          <TouchableOpacity
+              onPress={() => onSelect(item.id)}
+              // style={[ styles.item, { backgroundColor: selected ? CommonColors.disableText : '' }, ]}
+            >
+            <View
+              style={{
+                paddingVertical: scale(10),
+                paddingHorizontal: scale(20),
+              }}>
+                <View style = {{ padding: scale(0)}}>
+                  <Text style = {styles.date}>{item.date} {type ==="sys" ? <View/> : <Text style ={!isRead ? {fontSize: scale(11), color: "#309975"} : styles.date }> / {item.name}</Text>}</Text>
+                    <View style = {{flexDirection:"row", flex:1, alignItems:"center"}}>
+                      { !isRead ? <View style ={[styles.circleStatus,  ]}></View> : <View style={{marginLeft: 18}}/>}
+                      <Text style = {!isRead ? styles.textTitle : styles.textTitleInactive} >{item.title}</Text>
+                    </View>
+                  <Text style = {styles.textContent}>{item.content}</Text>
                   </View>
-                  <Text style = {styles.textContent}>If you can’t change the attitude, change the...</Text>
-
-              </View>
-          </View>
+            </View>
+          </TouchableOpacity>
         </Swipeable>
         <View style ={[CommonStyles.separatorStyle, { marginLeft: scale(18), marginRight: scale(18)}]}></View>
       </View>
+      
     );
   }
 }
@@ -137,6 +145,11 @@ const styles = ScaledSheet.create({
       color: "#1A1A1A",
       fontWeight: '900',
   },
+  textTitleInactive: {
+    fontSize: scale(16),
+    color: "#7D7D7D",
+    fontWeight: '500',
+},
   deleteButton: {
     width: scale(64),
     height: scale(64),
@@ -146,4 +159,7 @@ const styles = ScaledSheet.create({
     borderRadius: scale(32),
     ...ShadowStyle,
   },
+  isRead:{
+    // backgroundColor: CommonColors.disableText,
+  }
 })
