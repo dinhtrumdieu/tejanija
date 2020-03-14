@@ -65,9 +65,8 @@ const _renderItem = ({ item,index }) => {
                           style={styles.buttonStart}
                           onPress={() => {}}>
                           <Text style={styles.textStart}>Get started</Text>
-                       </TouchableOpacity>
+                        </TouchableOpacity>
                       </View>
-
                     </View>
                   </ImageBackground>
                 )
@@ -98,17 +97,11 @@ return (
                 dotsLength={3} // also based on number of sildes you want
                 activeDotIndex={activeSlide}
                 containerStyle={{ backgroundColor: "", borderWidth: 0}}
-                dotStyle={{
-                    width: scale(16),
-                    height: scale(16),
-                    borderRadius: scale(8),
-                    marginHorizontal: 0,
-                    backgroundColor: '#FFF'
-                }}
+                dotStyle={styles.dotStyle}
                 inactiveDotStyle={{
-                    backgroundColor: "gray"
+                    backgroundColor: "#000"
                 }}
-                inactiveDotOpacity={0.4}
+                inactiveDotOpacity={0.65}
                 inactiveDotScale={0.6}
             />
           </View>
@@ -159,7 +152,14 @@ const styles = StyleSheet.create({
     fontWeight:'bold',
     color:'#1A2C3C',
     textAlign: 'center'
-  }
+  },
+  dotStyle:{
+    width: scale(14),
+    height: scale(14),
+    borderRadius: scale(7),
+    marginHorizontal: 0,
+    backgroundColor: '#FFF'
+}
   
 
   
