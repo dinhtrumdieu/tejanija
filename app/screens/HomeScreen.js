@@ -65,7 +65,7 @@ export default function HomeScreen({navigation}) {
               )}
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setType(1)}
+              onPress={() => navigation.navigate('Search')}
               style={{marginHorizontal: scale(30)}}>
               {type === 0 ? (
                 <SvgXml xml={SearchWhiteIcon} />

@@ -165,7 +165,7 @@ const CommonStyles = {
     color: 'red',
   },
   separatorStyle: {
-    height: 1,
+    height: 0.5,
     backgroundColor: CommonColors.separator,
   },
 };

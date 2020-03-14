@@ -20,6 +20,7 @@ import SettingsScreen from './app/screens/more/SettingsScreen';
 import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
 import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
+import SearchScreen from './app/screens/search/SearchScreen';
 
 function NotificationsScreen({navigation}) {
   return (
@@ -38,7 +39,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName={'Likes'}
+      initialRouteName={'Home'}
       tabBarOptions={{
         activeTintColor: '#EFEEB4',
         style: {
@@ -106,6 +107,7 @@ function MyStack() {
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Stack.Navigator>
   );
 }
