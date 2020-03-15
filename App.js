@@ -17,9 +17,11 @@ import {scale} from './app/libs/reactSizeMatter/scalingUtils';
 import VideoPlayer from './app/screens/VideoPlayer';
 import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
+import Notifications from './app/screens/notification/Notifications'
 import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
 import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
+import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen'
 
 function NotificationsScreen({navigation}) {
   return (
@@ -38,7 +40,7 @@ const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
     <Tab.Navigator
-      initialRouteName={'Likes'}
+      initialRouteName={'Home'}
       tabBarOptions={{
         activeTintColor: '#EFEEB4',
         style: {
@@ -99,13 +101,15 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName={'Main'} headerMode={'none'}>
+    <Stack.Navigator initialRouteName={'OnBoarding'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
-      <Stack.Screen name="Notifications" component={NotificationsScreen} />
+      <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
+      <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
+      
     </Stack.Navigator>
   );
 }
