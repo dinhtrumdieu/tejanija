@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Image, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Text from '../../component/Text';
 import Header from '../../component/Header';
 import {CommonColors, CommonStyles, Fonts} from '../../utils/CommonStyles';
@@ -13,7 +19,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import {SvgXml} from 'react-native-svg';
 import PlayIcon from '../../../assets/svg/Play.svg';
 
-export default function AudioDetailScreen() {
+export default function AudioDetailScreen({navigation}) {
   return (
     <View style={{flex: 1}}>
       <Header
@@ -34,22 +40,27 @@ export default function AudioDetailScreen() {
         contentContainerStyle={{paddingBottom: scale(30)}}
         style={styles.body}>
         <View>
-          <Image
-            style={{
-              width: scale(335),
-              height: verticalScale(175),
-              borderRadius: scale(10),
-            }}
-            source={require('../../../assets/demo/81b6683a2687eaeb0201905296cf5d79.jpg')}
-          />
-          <LinearGradient
-            colors={['rgba(69, 77, 102, 0)', 'rgba(69, 77, 102, 0.7)']}
-            style={[styles.linearGradient]}>
-            <View style={styles.playButton}>
-              <SvgXml xml={PlayIcon} />
+          <TouchableWithoutFeedback
+            onPress={() => navigation.navigate('AudioPlayer')}>
+            <View>
+              <Image
+                style={{
+                  width: scale(335),
+                  height: verticalScale(175),
+                  borderRadius: scale(10),
+                }}
+                source={require('../../../assets/demo/81b6683a2687eaeb0201905296cf5d79.jpg')}
+              />
+              <LinearGradient
+                colors={['rgba(69, 77, 102, 0)', 'rgba(69, 77, 102, 0.7)']}
+                style={[styles.linearGradient]}>
+                <View style={styles.playButton}>
+                  <SvgXml xml={PlayIcon} />
+                </View>
+                <Text style={styles.totalTime}>05:20</Text>
+              </LinearGradient>
             </View>
-            <Text style={styles.totalTime}>05:20</Text>
-          </LinearGradient>
+          </TouchableWithoutFeedback>
           <Text style={styles.title}>
             When the practice is correct, faith increases
           </Text>
