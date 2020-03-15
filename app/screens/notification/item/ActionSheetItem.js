@@ -36,11 +36,9 @@ export default class ActionSheetItem extends React.Component {
           destructiveButtonIndex={2}
           onPress={(index) => {
             if (index == 0) {
-                console.warn("Pressed Mark")
                 markAllRead()
             }
             if (index == 1) {
-                console.warn("Pressed Delete")
                 deleteAllItem()
             } else {
                 console.warn("Pressed Cancel")
