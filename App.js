@@ -22,6 +22,11 @@ import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
 import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
 import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen'
+import MenuScreen from './app/screens/menu/MenuScreen'
+import CollectionListScreen from './app/screens/menu/collection/CollectionListScreen'
+import CollectionItemDetailScreen from './app/screens/menu/collection/CollectionItemDetailScreen'
+
+
 
 function NotificationsScreen({navigation}) {
   return (
@@ -101,7 +106,7 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName={'OnBoarding'} headerMode={'none'}>
+    <Stack.Navigator initialRouteName={'MenuScreen'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={Notifications} />
@@ -109,6 +114,11 @@ function MyStack() {
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
+      <Stack.Screen name="MenuScreen" component={MenuScreen} />
+      <Stack.Screen name="CollectionListScreen" component={CollectionListScreen} />
+      <Stack.Screen name="CollectionItemDetailScreen" component={CollectionItemDetailScreen} />
+      
+      
       
     </Stack.Navigator>
   );
