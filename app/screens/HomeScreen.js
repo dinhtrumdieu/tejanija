@@ -73,7 +73,10 @@ export default function HomeScreen({navigation}) {
                 <SvgXml xml={SearchIcon} />
               )}
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setType(2)}>
+            {/* <TouchableOpacity onPress={() => setType(2)}> */}
+            <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
+
+            
               {type === 0 ? (
                 <SvgXml xml={NotificationWhiteIcon} />
               ) : (
