@@ -4,7 +4,7 @@ import {moderateScale, scale} from '../../../libs/reactSizeMatter/scalingUtils';
 import Text from '../../../component/Text';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
-import DeleteIcon from '../../../../assets/svg/delete_icon.svg';
+import DeleteIcon from '../../../../assets/svg/trash.svg';
 import {
   CommonColors,
   CommonStyles,
@@ -41,11 +41,7 @@ export default class PostItem extends React.Component {
   delete=() => {
     const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, deleteItem} = this.props;
     deleteItem(index)
-    console.warn("index")
-    console.warn(index)
-    // if (this.swipe) {
-    //   this.swipe.recenter();
-    // }
+    
   }
 
   rightButtons = (index) => {
@@ -54,7 +50,7 @@ export default class PostItem extends React.Component {
         style={{flex: 1, justifyContent: 'center'}}
         onPress={() => this.onClickDelete(index)}>
         <View style={styles.deleteButton}>
-          <SvgXml xml={DeleteIcon} />
+          <SvgXml style={{height: scale(16), width: scale(16)}} xml={DeleteIcon} />
         </View>
       </TouchableOpacity>,
     ];
@@ -62,9 +58,7 @@ export default class PostItem extends React.Component {
 
   render() {
     const {item, index, getSwipeItemIsOpen, onCloseOldSwipe, type, deleteItem, isRead,  selected, onSelect } = this.props;
-    console.warn("isRead1")
-   
-    console.warn(item)
+    
     return (
 
       <View style={[{flex: 1}, selected ? styles.isRead : ""]}>
@@ -88,7 +82,7 @@ export default class PostItem extends React.Component {
                 <View style = {{ padding: scale(0)}}>
                   <Text style = {styles.date}>{item.date} {type ==="sys" ? <View/> : <Text style ={!isRead ? {fontSize: scale(11), color: "#309975"} : styles.date }> / {item.name}</Text>}</Text>
                     <View style = {{flexDirection:"row", flex:1, alignItems:"center"}}>
-                      { !isRead ? <View style ={[styles.circleStatus,  ]}></View> : <View style={{marginLeft: 18}}/>}
+                      { !isRead ? <View style ={[styles.circleStatus,  ]}></View> : <View style={{marginLeft: 18, marginRight: 16}}/>}
                       <Text style = {!isRead ? styles.textTitle : styles.textTitleInactive} >{item.title}</Text>
                     </View>
                   <Text style = {styles.textContent}>{item.content}</Text>
@@ -142,22 +136,26 @@ const styles = ScaledSheet.create({
   },
   textTitle: {
       fontSize: scale(16),
+      marginRight: scale(16),
       color: "#1A1A1A",
       fontWeight: '900',
   },
   textTitleInactive: {
     fontSize: scale(16),
+    marginRight: scale(24),
+    marginLeft: scale(-14),
     color: "#7D7D7D",
     fontWeight: '500',
 },
   deleteButton: {
-    width: scale(64),
-    height: scale(64),
+    width: scale(32),
+    height: scale(32),
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#309975',
     borderRadius: scale(32),
     ...ShadowStyle,
+    marginLeft: scale(10)
   },
   isRead:{
     // backgroundColor: CommonColors.disableText,
