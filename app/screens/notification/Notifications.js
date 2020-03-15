@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Alert, SwipeView, Image} from 'react-native';
+import { View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Alert, SwipeView, Image, Dimensions} from 'react-native';
 import Text from '../../component/Text';
 import { scale, moderateScale } from '../../libs/reactSizeMatter/scalingUtils'
 import {SvgXml, SvgCss} from 'react-native-svg';
@@ -9,16 +9,20 @@ import Header from '../../component/Header';
 import PostItem from './item/PostItem'
 import ActionSheetItem from './item/ActionSheetItem';
 import Notification1 from '../../../assets/svg/notification-empty.svg';
+import BackButton from '../../component/BackButton'
 
 export default function Notifications() {
-
+        const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
         const [tabSelected, setTabSelected] = React.useState(1);
         const [isShow, setIsShow] = React.useState(false);
         const list1 = [
-            {id: 1, name: "Drowsiness", date: "November 23, 2019", content:"You need to practice – whenever the mind is thin... ", isOpen: false, title: "Dealing with wandering mind"},
-            {id: 2, name: "Restlessness", date: "November 23, 2019", content:"They are not important – just imagination. Don’t ... ", isOpen: false, title: "Images in the mind are just thoughts – nothing to fear"},
-            {id: 3, name: "Guided meditation", date: "November 24, 2019", content:"", isOpen: false, title: "This meditation is for life, no need to "},
-            {id: 4, name: "Burmese zen", date: "November 24, 2019", content:"Check your mind, what is the mind knowing?...", isOpen: false, title: "Every object is very simple; it’s only thinking that makes it complicated."}
+            {id: 1, name: "Drowsiness", date: "November 23, 2019", content:"You need to practice – whenever the mind is thin... ", title: "Dealing with wandering mind"},
+            {id: 2, name: "Restlessness", date: "November 23, 2019", content:"They are not important – just imagination. Don’t ... ", title: "Images in the mind are just thoughts – nothing to fear"},
+            {id: 3, name: "Guided meditation", date: "November 24, 2019", content:"", title: "This meditation is for life, no need to "},
+            {id: 4, name: "Burmese zen", date: "November 24, 2019", content:"Check your mind, what is the mind knowing?...", title: "Every object is very simple; it’s only thinking that makes it complicated."},
+            {id: 5, name: "Drowsiness", date: "November 23, 2019", content:"You need to practice – whenever the mind is thin... ", title: "Dealing with wandering mind"},
+            {id: 6, name: "Restlessness", date: "November 23, 2019", content:"They are not important – just imagination. Don’t ... ", title: "Images in the mind are just thoughts – nothing to fear"},
+
         ]
         const [list, setList] = React.useState(list1); 
         const [isRead, setIsRead] = React.useState(false); 
@@ -27,7 +31,6 @@ export default function Notifications() {
             id => {
               const newSelected = new Map(selected);
               newSelected.set(id, !selected.get(id));
-        
               setSelected(newSelected);
             },
             [selected],
@@ -37,6 +40,7 @@ export default function Notifications() {
                 <Header
                     headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
                     type={0}
+                    left={<BackButton isShowBackLabel={false} />}
                     center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
                     right = { 
                         <ActionSheetItem 
@@ -73,7 +77,6 @@ export default function Notifications() {
             </View>
         );
 
-    const DATA = [{}, {}];
 
     function getSwipeRef(index) {
         this.itemIsOpen = index;
@@ -81,9 +84,9 @@ export default function Notifications() {
     
     function onClose(index) {
         if (this.itemIsOpen !== index) {
-        if (this[`item_${this.itemIsOpen}`]) {
-            this[`item_${this.itemIsOpen}`].close();
-        }
+            if (this[`item_${this.itemIsOpen}`]) {
+                this[`item_${this.itemIsOpen}`].close();
+            }
         }
     }
 
@@ -95,52 +98,38 @@ export default function Notifications() {
         const dataZero = []
         setList(dataZero)
         // setList(list.splice(index,1))
-        console.warn("list")
-        console.warn(list)
     }
 
     function deleteItem(index) {
         const filterdata = list.filter(item => item.id !== index)
         setList(filterdata)
-        console.warn("list")
-        console.warn(list)
     }
-
   
     function RenderTabPost() {
-        console.warn(tabSelected);
         const display = tabSelected === 1;
         return (
             <View style={[display ? {} : {display: 'none'}]}>
-                {/* <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: scale(16),
-                }}>
-                </View> */}
-                <View style={{}}>
-                <FlatList
-                    bounces={true}
-                    data={list}
-                    keyExtractor={item => item.id}
-                    extraData={selected}
-                    // contentContainerStyle={{ flexGrow: 0 }}
-                    renderItem={({item, index}) => (
-                    <PostItem
-                        getSwipeItemIsOpen={() => getSwipeRef(index)}
-                        onCloseOldSwipe={() => onClose(index)}
-                        ref={ref => (this[`item_${index}`] = ref)}
-                        item={item}
-                        index={index}
-                        type={""}
-                        isRead = {isRead}
-                        deleteItem={() => deleteItem(index)}
-                        selected={!!selected.get(item.id)}
-                        onSelect={onSelect}
+                <View style={{height: screenHeight}}>
+                    <FlatList
+                        bounces={true}
+                        data={list}
+                        keyExtractor={item => item.id}
+                        extraData={selected}
+                        renderItem={({item, index}) => (
+                        <PostItem
+                            getSwipeItemIsOpen={() => getSwipeRef(index)}
+                            onCloseOldSwipe={() => onClose(index)}
+                            ref={ref => (this[`item_${index}`] = ref)}
+                            item={item}
+                            index={index}
+                            type={""}
+                            isRead = {isRead}
+                            deleteItem={() => deleteItem(index)}
+                            selected={!!selected.get(item.id)}
+                            onSelect={onSelect}
+                        />
+                        )}
                     />
-                    )}
-                    // keyExtractor={(item, index) => index.toString()}
-                />
                 </View>
             </View>
         );
@@ -150,32 +139,28 @@ export default function Notifications() {
         const display = tabSelected === 2;
         return (
                 <View style={[display ? {} : {display: 'none'}]}>
-                    <View style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        paddingHorizontal: scale(16),
-                    }}>
+
+                    <View style={{height: screenHeight}}>
+                        <FlatList
+                        bounces={true}
+                        data={list}
+                        renderItem={({item, index}) => (
+                            <PostItem
+                                getSwipeItemIsOpen={() => getSwipeRef(index)}
+                                onCloseOldSwipe={() => onClose(index)}
+                                ref={ref => (this[`item_${index}`] = ref)}
+                                item={item}
+                                index={index}
+                                type={"sys"}
+                                deleteItem={() => deleteItem(index)}
+                                selected={!!selected.get(item.id)}
+                                onSelect={onSelect}
+                                
+                            />
+                            )}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
                     </View>
-              
-                    <FlatList
-                    bounces={true}
-                    data={list}
-                    renderItem={({item, index}) => (
-                    <PostItem
-                        getSwipeItemIsOpen={() => getSwipeRef(index)}
-                        onCloseOldSwipe={() => onClose(index)}
-                        ref={ref => (this[`item_${index}`] = ref)}
-                        item={item}
-                        index={index}
-                        type={"sys"}
-                        deleteItem={() => deleteItem(index)}
-                        selected={!!selected.get(item.id)}
-                        onSelect={onSelect}
-                        
-                    />
-                    )}
-                    keyExtractor={(item, index) => index.toString()}
-                />
                 </View>
         );
     };
@@ -192,13 +177,11 @@ const styles = ScaledSheet.create({
         color: '#309975',
         fontSize: moderateScale(16),
         fontWeight: '500',
-        // textTransform: 'uppercase',
     },
     labelTextActive: {
         color: '#FFF',
         fontSize: moderateScale(16),
         fontWeight: '500',
-        // textTransform: 'uppercase',
     },
    
     activeTab1: {
