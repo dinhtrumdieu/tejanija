@@ -20,6 +20,8 @@ import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
 import SearchScreen from './app/screens/search/SearchScreen';
 import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
+import MenuScreen from './app/screens/menu/MenuScreen';
+
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -85,7 +87,7 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName={'Main'} headerMode={'none'}>
+    <Stack.Navigator initialRouteName={'MenuScreen'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={Notifications} />
@@ -94,6 +96,8 @@ function MyStack() {
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
+      <Stack.Screen name="MenuScreen" component={MenuScreen} />
+      
     </Stack.Navigator>
   );
 }
