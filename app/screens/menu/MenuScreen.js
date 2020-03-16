@@ -115,8 +115,8 @@ const MenuScreen = () => {
     return (
         <View >
             <Header
-                headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
-                type={0}
+                headerStyle={{backgroundColor: "#FFF"}}
+                type={1}
                 left={<BackButton isShowBackLabel={true} />}
             />
             <View style={{ marginLeft: scale(16), marginVertical: scale(30)}}>
@@ -135,14 +135,11 @@ const MenuScreen = () => {
                     data={entries}
                     renderItem={renderItemCarousel}
                     itemWidth={scale(247)}
-                    containerWidth={screenWidth - 20} 
-                    separatorWidth={0}
+                    containerWidth={screenWidth - scale(0)} 
+                    separatorWidth={- scale(6)}
                     ref={carouselRef}
                     // pagingEnable={false}
                     // minScrollDistance={20}
-                    autoplay={true}
-                    autoplayInterval={2000}
-                    loop={true}
             />
         </View>
             <View style={{ marginVertical: scale(16)}}>
