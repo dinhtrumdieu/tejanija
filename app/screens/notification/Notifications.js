@@ -69,9 +69,9 @@ export default function Notifications() {
                     </View>
                     :
                     <View
-                        style={{flex:1, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', height: scale(300), width: scale(300)}}>
-                        <SvgXml xml={Notification1} />
-                        <Text>You have no notification.</Text>
+                        style={{flex: 1, alignItems: 'center', alignSelf: 'center', height: scale(300), width: scale(300)}}>
+                            <SvgXml xml={Notification1} />
+                            <Text style={{textAlign: 'center'}}>You have no notification.</Text>
                     </View>
                 }
             </View>
@@ -104,9 +104,11 @@ export default function Notifications() {
         const filterdata = list.filter(item => item.id !== index)
         setList(filterdata)
     }
+
   
     function RenderTabPost() {
         const display = tabSelected === 1;
+
         return (
             <View style={[display ? {} : {display: 'none'}]}>
                 <View style={{height: screenHeight}}>
@@ -129,6 +131,7 @@ export default function Notifications() {
                             onSelect={onSelect}
                         />
                         )}
+                        ItemSeparatorComponent={() => <View style={styles.separator} />}
                     />
                 </View>
             </View>
@@ -159,6 +162,7 @@ export default function Notifications() {
                             />
                             )}
                             keyExtractor={(item, index) => index.toString()}
+                            ItemSeparatorComponent={() => <View style={styles.separator} />}
                         />
                     </View>
                 </View>
@@ -257,5 +261,9 @@ const styles = ScaledSheet.create({
         fontSize: scale(16),
         color: "#1A1A1A",
         fontWeight: '900',
-    }
+    },
+    separator: {
+        ...CommonStyles.separatorStyle,
+        marginHorizontal: scale(20),
+      },
 })
