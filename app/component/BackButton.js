@@ -9,8 +9,9 @@ import {CommonColors} from '../utils/CommonStyles';
 import I18n from '../i18n/i18n';
 import {useNavigation} from '@react-navigation/native';
 
-export default function BackButton() {
+export default function BackButton(props) {
   const navigation = useNavigation();
+  const {isShowBackLabel = true} = props;
   return (
     <TouchableOpacity
       hitSlop={{
@@ -22,7 +23,7 @@ export default function BackButton() {
       onPress={() => navigation.goBack()}>
       <View style={{flexDirection: 'row'}}>
         {<SvgXml xml={BackIcon} />}
-        {
+        {isShowBackLabel && (
           <Text
             style={{
               marginLeft: scale(5),
@@ -32,7 +33,7 @@ export default function BackButton() {
             }}>
             {I18n.t('app.back')}
           </Text>
-        }
+        )}
       </View>
     </TouchableOpacity>
   );

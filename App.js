@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Button, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -10,32 +9,18 @@ import HeartActiveIcon from './assets/svg/heart_active.svg';
 import MoreIcon from './assets/svg/more.svg';
 import MoreActiveIcon from './assets/svg/more_active.svg';
 import HomeScreen from './app/screens/HomeScreen';
-import CustomTab from './app/component/CustomTab';
 import {SvgXml} from 'react-native-svg';
 import LabelComponent from './app/component/LabelComponent';
-import {scale} from './app/libs/reactSizeMatter/scalingUtils';
 import VideoPlayer from './app/screens/VideoPlayer';
 import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
-import Notifications from './app/screens/notification/Notifications'
+import Notifications from './app/screens/notification/Notifications';
 import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
 import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
-import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen'
+import SearchScreen from './app/screens/search/SearchScreen';
+import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
 
-function NotificationsScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-        title="Go to Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
-      <Button title="Go back" onPress={() => navigation.goBack()} />
-    </View>
-  );
-}
-
-const MAIN_TAB_BAR_HEIGHT = scale(50);
 const Tab = createBottomTabNavigator();
 function MyTabs() {
   return (
@@ -45,7 +30,6 @@ function MyTabs() {
         activeTintColor: '#EFEEB4',
         style: {
           backgroundColor: 'rgba(26, 44, 60, 0.92)',
-          // height: MAIN_TAB_BAR_HEIGHT,
         },
       }}>
       <Tab.Screen
@@ -55,7 +39,7 @@ function MyTabs() {
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Newest" focused={focused} />
           ),
-          tabBarIcon: ({focused, color, size}) =>
+          tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={HomeActiveIcon} />
             ) : (
@@ -70,7 +54,7 @@ function MyTabs() {
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Likes" focused={focused} />
           ),
-          tabBarIcon: ({focused, color, size}) =>
+          tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={HeartActiveIcon} />
             ) : (
@@ -85,7 +69,7 @@ function MyTabs() {
           tabBarLabel: ({focused}) => (
             <LabelComponent title="More" focused={focused} />
           ),
-          tabBarIcon: ({focused, color, size}) =>
+          tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={MoreActiveIcon} />
             ) : (
@@ -101,15 +85,15 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName={'OnBoarding'} headerMode={'none'}>
+    <Stack.Navigator initialRouteName={'Main'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
-      
     </Stack.Navigator>
   );
 }
