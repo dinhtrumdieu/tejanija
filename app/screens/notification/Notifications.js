@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
-import { View, TouchableOpacity, FlatList, TouchableWithoutFeedback, Alert, SwipeView, Image, Dimensions} from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  TouchableWithoutFeedback,
+  Alert,
+  SwipeView,
+  Image,
+  Dimensions,
+} from 'react-native';
 import Text from '../../component/Text';
-import { scale, moderateScale } from '../../libs/reactSizeMatter/scalingUtils'
+import {scale, moderateScale} from '../../libs/reactSizeMatter/scalingUtils';
 import {SvgXml, SvgCss} from 'react-native-svg';
-import {CommonColors, CommonStyles} from '../../utils/CommonStyles'
-import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet'
+import {CommonColors, CommonStyles} from '../../utils/CommonStyles';
+import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import Header from '../../component/Header';
-import PostItem from './item/PostItem'
+import PostItem from './item/PostItem';
 import ActionSheetItem from './item/ActionSheetItem';
 import Notification1 from '../../../assets/svg/notification-empty.svg';
-import BackButton from '../../component/BackButton'
+import BackButton from '../../component/BackButton';
 
 export default function Notifications() {
         const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
@@ -77,28 +86,27 @@ export default function Notifications() {
             </View>
         );
 
+  function getSwipeRef(index) {
+    this.itemIsOpen = index;
+  }
 
-    function getSwipeRef(index) {
-        this.itemIsOpen = index;
+  function onClose(index) {
+    if (this.itemIsOpen !== index) {
+      if (this[`item_${this.itemIsOpen}`]) {
+        this[`item_${this.itemIsOpen}`].close();
+      }
     }
-    
-    function onClose(index) {
-        if (this.itemIsOpen !== index) {
-            if (this[`item_${this.itemIsOpen}`]) {
-                this[`item_${this.itemIsOpen}`].close();
-            }
-        }
-    }
+  }
 
-    function markAllRead() {
-        setIsRead(true)
-    }
+  function markAllRead() {
+    setIsRead(true);
+  }
 
-    function deleteAllItem() {
-        const dataZero = []
-        setList(dataZero)
-        // setList(list.splice(index,1))
-    }
+  function deleteAllItem() {
+    const dataZero = [];
+    setList(dataZero);
+    // setList(list.splice(index,1))
+  }
 
     function deleteItem(index) {
         const filterdata = list.filter(item => item.id !== index)
@@ -169,13 +177,40 @@ export default function Notifications() {
         );
     };
 
+  function RenderTabSystem() {
+    const display = tabSelected === 2;
+    return (
+      <View style={[display ? {} : {display: 'none'}]}>
+        <View style={{height: screenHeight}}>
+          <FlatList
+            bounces={true}
+            data={list}
+            renderItem={({item, index}) => (
+              <PostItem
+                getSwipeItemIsOpen={() => getSwipeRef(index)}
+                onCloseOldSwipe={() => onClose(index)}
+                ref={ref => (this[`item_${index}`] = ref)}
+                item={item}
+                index={index}
+                type={'sys'}
+                deleteItem={() => deleteItem(index)}
+                selected={!!selected.get(item.id)}
+                onSelect={onSelect}
+              />
+            )}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        </View>
+      </View>
+    );
+  }
 }
 
 const styles = ScaledSheet.create({
-    container: {
-        // marginTop: scale(30),
-        // flex: 1
-    },
+  container: {
+    // marginTop: scale(30),
+    // flex: 1
+  },
 
     labelTextInactive: {
         color: '#309975',

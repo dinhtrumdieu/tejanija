@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Button, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -10,19 +9,17 @@ import HeartActiveIcon from './assets/svg/heart_active.svg';
 import MoreIcon from './assets/svg/more.svg';
 import MoreActiveIcon from './assets/svg/more_active.svg';
 import HomeScreen from './app/screens/HomeScreen';
-import CustomTab from './app/component/CustomTab';
 import {SvgXml} from 'react-native-svg';
 import LabelComponent from './app/component/LabelComponent';
-import {scale} from './app/libs/reactSizeMatter/scalingUtils';
 import VideoPlayer from './app/screens/VideoPlayer';
 import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
-import Notifications from './app/screens/notification/Notifications'
+import Notifications from './app/screens/notification/Notifications';
 import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
 import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
 import SearchScreen from './app/screens/search/SearchScreen';
-import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen'
+import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -42,7 +39,7 @@ function MyTabs() {
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Newest" focused={focused} />
           ),
-          tabBarIcon: ({focused, color, size}) =>
+          tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={HomeActiveIcon} />
             ) : (
@@ -57,7 +54,7 @@ function MyTabs() {
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Likes" focused={focused} />
           ),
-          tabBarIcon: ({focused, color, size}) =>
+          tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={HeartActiveIcon} />
             ) : (
@@ -72,7 +69,7 @@ function MyTabs() {
           tabBarLabel: ({focused}) => (
             <LabelComponent title="More" focused={focused} />
           ),
-          tabBarIcon: ({focused, color, size}) =>
+          tabBarIcon: ({focused}) =>
             focused ? (
               <SvgXml xml={MoreActiveIcon} />
             ) : (
@@ -97,8 +94,6 @@ function MyStack() {
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
-      
-
     </Stack.Navigator>
   );
 }
