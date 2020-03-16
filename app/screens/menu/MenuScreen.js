@@ -5,14 +5,16 @@ import Text from '../../component/Text';
 import { scale } from '../../libs/reactSizeMatter/scalingUtils'
 import {SvgXml} from 'react-native-svg';
 import PlayIcon from '../../../assets/svg/play_icon.svg'
-import RightIcon from '../../../assets/svg/Chevron-right.svg';
+import RightIcon from '../../../assets/svg/chervon-right-green.svg';
 import {CommonColors, CommonStyles} from '../../utils/CommonStyles'
 import {useNavigation} from '@react-navigation/native';
 import Header from '../../component/Header';
+import Carousel from 'react-native-anchor-carousel';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const MenuScreen = () => {
 const navigation = useNavigation();
+const carouselRef = useRef(null);
 const entries = [
     {
       title: "Wisdom’s road ",
@@ -28,7 +30,21 @@ const entries = [
       title: "Xyhdhde’s road ",
       header: "33Heading",
       content: "33Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea",
-    },
+    },{
+        title: "Wisdom’s road ",
+        header: "Heading",
+        content: "Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea",
+      },
+      {
+        title: "Abcfd’s road ",
+        header: "22Heading",
+        content: "22Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea",
+      },
+      {
+        title: "Xyhdhde’s road ",
+        header: "33Heading",
+        content: "33Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea",
+      },
 ];
 
 const list1 = [
@@ -78,23 +94,50 @@ const CellComponentH = ({item}) => {
             <View style={{flex: 1, height: scale(50), flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
                 <Text style={{flex: 8, fontSize: scale(18), fontWeight: 'normal', }}>{item.title}</Text>
                 <View style={{flex: 2, flexDirection:'row', marginRight: scale(0), right: scale(-20)}}>
-                    <View style={{height: scale(15), width: scale(24), borderRadius: scale(12), backgroundColor:'#454D66', marginRight: scale(0)}}>
-                        <Text style={{color:'#FFF', fontSize: scale(11), textAlign: 'center'}}>{item.count}</Text>
+                    <View style={{height: scale(15), width: scale(24), borderRadius: scale(12), backgroundColor:'#454D66', marginRight: scale(10)}}>
+                        <Text style={{color:'#FFF', fontSize: scale(11), fontWeight: 'bold', textAlign: 'center'}}>{item.count}</Text>
                     </View>
                     <TouchableOpacity 
                         style={styles.buttonRight}
-                        // onPress={(item) => navigation.navigate('CollectionListScreen')}
-                        onPress={() => navigation.navigate('CollectionListScreen', { data: item })}
+                        onPress={(item) => {}}
+                        // onPress={() => navigation.navigate('CollectionListScreen', { data: item })}
                     >
 
                         <SvgXml xml={RightIcon} />
                     </TouchableOpacity>
                 </View>
             </View>
-            {/* <View style ={[CommonStyles.separatorStyle,]}></View> */}
         </View>
 
     );
+}
+
+const renderItemCarousel = ({item, index}) => {
+    const {backgroundColor} = item;
+        return (
+            <TouchableOpacity style={[styles.item, {backgroundColor, }]}
+                 onPress={() => { carouselRef.current.scrollToIndex(index); }}>
+                    <View style={[styles.viewContainerImage, {marginLeft: scale(16)}]}>
+                        <ImageBackground 
+                            source={require('../../../assets/images/bg_board.png')}
+                            imageStyle={{ borderRadius: scale(10) }}
+                            style={[styles.backgroundImage, {marginRight: scale(16), }]}>
+                            <View style={{ flex: 1}}>
+                            <View style={{ flex: 3, alignContent:'center', justifyContent: 'center'}}>
+                                <Text style={styles.textTop}>{item.title}</Text>
+                            </View>
+                            <View style={{flex: 3, alignContent:'', justifyContent: 'center'}}>
+                                <TouchableOpacity 
+                                style={styles.buttonPlay}
+                                onPress={() => {}}>
+                                <SvgXml xml={PlayIcon}/>
+                                </TouchableOpacity>
+                            </View>
+                            </View>
+                            </ImageBackground>
+                    </View>
+            </TouchableOpacity>)
+
 }
 
 return (
@@ -116,16 +159,21 @@ return (
             </View> 
         </View>
 
-        <View style={{ marginLeft: scale(16) }}>
-            <FlatList
-                bounces={true}
+     <View style={styles.carouselContainer}>
+        <Carousel  style={styles.carousel}
                 data={entries}
-                keyExtractor={item => item.id}
-                renderItem={CellComponentV}
-                horizontal = {true}
-            />
-        </View>
-
+                renderItem={renderItemCarousel}
+                itemWidth={scale(247)}
+                containerWidth={screenWidth - 20} 
+                separatorWidth={0}
+                ref={carouselRef}
+                // pagingEnable={false}
+                // minScrollDistance={20}
+                autoplay={true}
+                autoplayInterval={2000}
+                loop={true}
+        />
+    </View>
         <View style={{ marginVertical: scale(16)}}>
             <FlatList
                 bounces={true}
@@ -141,11 +189,18 @@ return (
 
 export default MenuScreen;
 const styles = StyleSheet.create({
+  viewContainerImage: {
+    // flex: 1,
+    // alignSelf: 'stretch',
+    width: scale(247),
+    height: scale(130)
+  },
   backgroundImage: {
     flex: 1,
     alignSelf: 'stretch',
     width: scale(247),
-    height: scale(130)
+    height: scale(130),
+    borderRadius: scale(10)
   },
   textTop:{
     fontSize: scale(20),
@@ -172,7 +227,8 @@ const styles = StyleSheet.create({
     height: scale(24),
     borderRadius: scale(12),
     justifyContent: 'center',
-    backgroundColor: "#000",
+    backgroundColor: "gray",
+    opacity: .3,
     marginLeft: scale(16),
     alignItems: 'center'
 
@@ -203,7 +259,99 @@ textHeader:{
     color:'#000',
     textAlign: 'left',
     textTransform: 'uppercase'
-  }
+},
+carouselContainer: {
+    height:scale(140)  
+},
+carousel: {
+    flex:1
+} 
   
 
 });
+
+
+
+// import React, {useRef} from 'react';
+// import Carousel from 'react-native-anchor-carousel';
+// import { View, Dimensions, StyleSheet, ImageBackground, TouchableOpacity, Image, FlatList } from "react-native";
+
+
+// const MenuScreen = () => {
+// const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
+// const carouselRef = useRef(null);
+// const entries = [ { }, { }, { }, { }, { }, { }, { }, { }]
+
+// return (
+//     <View style={styles.carouselContainer}>
+//      <Carousel  style={styles.carousel}
+//                 data={entries}
+//                 renderItem={renderItem}
+//                 itemWidth={200}
+//                 containerWidth={screenWidth - 20} 
+//                 separatorWidth={0}
+//                 ref={carouselRef}
+//                 //pagingEnable={false}
+//                 //minScrollDistance={20}
+//             />
+//     </View>
+// )
+
+//   const renderItem = ({item, index}) => {
+//         const {backgroundColor} = item;
+//         return (
+//             <TouchableOpacity style={[styles.item, {backgroundColor}]}
+//                               onPress={() => { carouselRef.current.scrollToIndex(index); }}>
+//                  AAAAAA
+//             </TouchableOpacity>)
+//     };
+// }
+// export default MenuScreen;
+ 
+//     const styles = StyleSheet.create({ 
+       
+//         carouselContainer: {
+//             height:200  
+//         },
+//         	carousel: {
+//                 flex:1
+//         } 
+//     })
+
+//     import { Dimensions } from 'react-native';
+// import SideSwipe from 'react-native-sideswipe';
+
+// import CustomComponent from '...'
+// import data from '...'
+
+// export default class MenuScreen extends Component {
+//   state = {
+//     currentIndex: 0,
+//   };
+
+//   render = () => {
+//     // center items on screen
+//     const { width } = Dimensions.get('window');
+//     const contentOffset = (width - CustomComponent.WIDTH) / 2;
+
+//     return (
+//       <SideSwipe
+//         index={this.state.currentIndex}
+//         itemWidth={CustomComponent.WIDTH}
+//         style={{ width }}
+//         data={data}
+//         contentOffset={contentOffset}
+//         onIndexChange={index =>
+//           this.setState(() => ({ currentIndex: index }))
+//         }
+//         renderItem={({ itemIndex, currentIndex, item, animatedValue }) => (
+//          <CustomComponent
+//             {...item}
+//             index={itemIndex}
+//             currentIndex={currentIndex}
+//             animatedValue={animatedValue}
+//           />
+//         )}
+//       />
+//     );
+//   };
