@@ -85,7 +85,7 @@ export default function Notifications() {
       <Header
         headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
         type={0}
-        left={<BackButton isShowBackLabel={false} />}
+        left={<BackButton white={true} isShowBackLabel={false} />}
         center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
         right={
           <ActionSheetItem
@@ -183,7 +183,7 @@ export default function Notifications() {
           <FlatList
             bounces={true}
             data={list}
-            keyExtractor={item => item.id}
+            keyExtractor={(item, index) => index.toString()}
             extraData={selected}
             renderItem={({item, index}) => (
               <PostItem

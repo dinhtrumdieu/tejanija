@@ -1,6 +1,16 @@
 // @flow
 import * as React from 'react';
-import {Dimensions, StyleSheet, StatusBar} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  StatusBar,
+  ImageBackground,
+  View,
+  Image,
+  Alert,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 //import {Video, Constants, DangerZone, GestureHandler} from 'expo';
 import Video from 'react-native-video';
 import {type Video as VideoModel} from './videos';
@@ -12,10 +22,12 @@ import Animated, {Easing} from 'react-native-reanimated';
 //const {State, PanGestureHandler} = GestureHandler;
 import {State, PanGestureHandler} from 'react-native-gesture-handler';
 import moment from 'moment';
+import {SvgXml} from 'react-native-svg';
 const {width, height} = Dimensions.get('window');
-const statusBarHeight = 30;
+const statusBarHeight = 0;
 const minHeight = 64;
-const midBound = height - 64 * 3;
+//const midBound = height - 64 * 3;
+const midBound = height - 64;
 const upperBound = midBound + minHeight;
 const {
   Extrapolate,
@@ -37,7 +49,7 @@ const {
   timing,
   neq,
 } = Animated;
-const AnimatedVideo = Animated.createAnimatedComponent(Video);
+const AnimatedVideo = Animated.createAnimatedComponent(ImageBackground);
 const shadow = {
   alignItems: 'center',
   shadowColor: 'black',
@@ -45,6 +57,21 @@ const shadow = {
   shadowOpacity: 0.18,
   shadowRadius: 2,
 };
+
+import PlayIcon from '../../../assets/svg/Play.svg';
+import PauseIcon from '../../../assets/svg/Pause.svg';
+import HeartIcon from '../../../assets/svg/Heart_Detail.svg';
+import MoreIcon from '../../../assets/svg/More-horizontal.svg';
+import ShareIcon from '../../../assets/svg/Share-other.svg';
+import ArrowDownIcon from '../../../assets/svg/Chevron-down.svg';
+
+import {scale, verticalScale} from '../../libs/reactSizeMatter/scalingUtils';
+import LinearGradient from 'react-native-linear-gradient';
+import Text from '../../component/Text';
+import Header from '../../component/Header';
+import BackButton from '../../component/BackButton';
+import Sound from 'react-native-sound';
+import Slider from '@react-native-community/slider';
 
 function runSpring(clock: Clock, value: Value, dest: Value): Value {
   const state = {
@@ -146,22 +173,132 @@ export default class AudioPlayerScreen extends React.Component {
         add(offsetY, translationY),
       ],
     );
+
+    Sound.setCategory('Playback');
+
+    // audio play
+    this.state = {
+      playState: 'paused', //playing, paused
+      playSeconds: 0,
+      duration: 0,
+    };
+    this.sliderEditing = false;
   }
 
-  componentDidUpdate(prevProps: VideoModalProps) {
-    if (prevProps !== this.props) {
-      this.slideUp();
+  play = async () => {
+    if (this.sound) {
+      this.sound.play(this.playComplete);
+      this.setState({playState: 'playing'});
+    } else {
+      const filepath = require('../../../assets/audio/SoundHelix-Song-1.mp3');
+      this.sound = new Sound(filepath, error => {
+        if (error) {
+          console.log('failed to load the sound', error);
+          Alert.alert('Notice', 'audio file error. (Error code : 1)');
+          this.setState({playState: 'paused'});
+        } else {
+          this.setState({
+            playState: 'playing',
+            duration: this.sound.getDuration(),
+          });
+          this.sound.play(this.playComplete);
+        }
+      });
+    }
+  };
+
+  playComplete = success => {
+    if (this.sound) {
+      if (success) {
+        console.log('successfully finished playing');
+      } else {
+        console.log('playback failed due to audio decoding errors');
+        Alert.alert('Notice', 'audio file error. (Error code : 2)');
+      }
+      this.setState({playState: 'paused', playSeconds: 0});
+      this.sound.setCurrentTime(0);
+    }
+  };
+
+  pause = () => {
+    if (this.sound) {
+      this.sound.pause();
+    }
+
+    this.setState({playState: 'paused'});
+  };
+
+  componentDidMount() {
+    this.play();
+    this.timeout = setInterval(() => {
+      if (
+        this.sound &&
+        this.sound.isLoaded() &&
+        this.state.playState === 'playing' &&
+        !this.sliderEditing
+      ) {
+        this.sound.getCurrentTime((seconds, isPlaying) => {
+          this.setState({playSeconds: seconds});
+        });
+      }
+    }, 100);
+  }
+
+  getAudioTimeString(seconds) {
+    const h = parseInt(seconds / (60 * 60));
+    const m = parseInt((seconds % (60 * 60)) / 60);
+    const s = parseInt(seconds % 60);
+
+    return (
+      (h < 10 ? '0' + h : h) +
+      ':' +
+      (m < 10 ? '0' + m : m) +
+      ':' +
+      (s < 10 ? '0' + s : s)
+    );
+  }
+
+  componentWillUnmount() {
+    if (this.sound) {
+      this.sound.release();
+      this.sound = null;
+    }
+    if (this.timeout) {
+      clearInterval(this.timeout);
     }
   }
 
-  slideUp = () =>
+  onSliderEditStart = () => {
+    this.sliderEditing = true;
+  };
+  onSliderEditEnd = () => {
+    this.sliderEditing = false;
+  };
+  onSliderEditing = value => {
+    if (this.sound) {
+      this.sound.setCurrentTime(value);
+      this.setState({playSeconds: value});
+    }
+  };
+
+  // componentDidUpdate(prevProps: VideoModalProps) {
+  //   if (prevProps !== this.props) {
+  //     this.slideUp();
+  //   }
+  // }
+
+  slideUp = () => {
+    console.warn('slide ip');
     timing(this.offsetY2, {
       toValue: -upperBound,
       duration: 300,
       easing: Easing.inOut(Easing.ease),
     }).start();
+  };
 
   render() {
+    const currentTimeString = this.getAudioTimeString(this.state.playSeconds);
+    const durationString = this.getAudioTimeString(this.state.duration);
     const {onGestureEvent, translateY: y, offsetY2} = this;
     const translateY = add(y, offsetY2);
     const video = {
@@ -201,7 +338,7 @@ export default class AudioPlayerScreen extends React.Component {
     });
     const videoHeight = interpolate(translateY, {
       inputRange: [0, midBound, upperBound],
-      outputRange: [width / 1.78, minHeight * 1.3, minHeight],
+      outputRange: [height, minHeight * 1.3, minHeight],
       extrapolate: Extrapolate.CLAMP,
     });
     const containerHeight = interpolate(translateY, {
@@ -209,20 +346,20 @@ export default class AudioPlayerScreen extends React.Component {
       outputRange: [height, 0],
       extrapolate: Extrapolate.CLAMP,
     });
-    const playerControlOpaciy = interpolate(translateY, {
+    const playerControlOpacity = interpolate(translateY, {
       inputRange: [midBound, upperBound],
       outputRange: [0, 1],
       extrapolate: Extrapolate.CLAMP,
     });
     return (
       <>
-        <Animated.View
-          style={{
-            height: statusBarHeight,
-            backgroundColor: 'black',
-            opacity: statusBarOpacity,
-          }}
-        />
+        {/*<Animated.View*/}
+        {/*  style={{*/}
+        {/*    height: statusBarHeight,*/}
+        {/*    backgroundColor: 'black',*/}
+        {/*    opacity: statusBarOpacity,*/}
+        {/*  }}*/}
+        {/*/>*/}
         <PanGestureHandler
           onHandlerStateChange={onGestureEvent}
           activeOffsetY={[-10, 10]}
@@ -237,29 +374,153 @@ export default class AudioPlayerScreen extends React.Component {
               <Animated.View
                 style={{
                   ...StyleSheet.absoluteFillObject,
-                  opacity: playerControlOpaciy,
+                  opacity: playerControlOpacity,
                 }}>
                 <PlayerControls title={video.title} onPress={this.slideUp} />
               </Animated.View>
               <AnimatedVideo
-                source={video.video}
+                source={require('../../../assets/demo/81b6683a2687eaeb0201905296cf5d79.jpg')}
                 style={{width: videoWidth, height: videoHeight}}
-                shouldPlay
-              />
+                shouldPlay>
+                <Animated.View
+                  style={{
+                    backgroundColor: 'transparent',
+                    width: videoContainerWidth,
+                    height: containerHeight,
+                  }}>
+                  <Animated.View
+                    style={{
+                      opacity,
+                      flex: 1,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <LinearGradient
+                      colors={[
+                        'rgba(69, 77, 102, 0)',
+                        'rgba(69, 77, 102, 0.7)',
+                      ]}
+                      style={[styles.linearGradient]}
+                    />
+
+                    <Header
+                      headerStyle={styles.header}
+                      left={<BackButton white={true} />}
+                      right={<SvgXml xml={ArrowDownIcon} />}
+                    />
+
+                    {this.state.playState === 'playing' && (
+                      <TouchableOpacity
+                        onPress={() => this.pause()}
+                        style={styles.playButton}>
+                        <SvgXml xml={PauseIcon} />
+                      </TouchableOpacity>
+                    )}
+
+                    {this.state.playState === 'paused' && (
+                      <TouchableOpacity
+                        onPress={() => this.play()}
+                        style={styles.playButton}>
+                        <SvgXml xml={PlayIcon} />
+                      </TouchableOpacity>
+                    )}
+
+                    <View
+                      style={{
+                        marginVertical: 15,
+                        marginHorizontal: 15,
+                        flexDirection: 'row',
+                      }}>
+                      <Text style={{color: 'white', alignSelf: 'center'}}>
+                        {currentTimeString}
+                      </Text>
+                      <Slider
+                        //onTouchStart={this.onSliderEditStart}
+                        // onTouchMove={() => console.log('onTouchMove')}
+                        //  onTouchEnd={this.onSliderEditEnd}
+                        // onTouchEndCapture={() => console.log('onTouchEndCapture')}
+                        // onTouchCancel={() => console.log('onTouchCancel')}
+                        // onValueChange={this.onSliderEditing}
+                        value={this.state.playSeconds}
+                        maximumValue={this.state.duration}
+                        maximumTrackTintColor="gray"
+                        minimumTrackTintColor="white"
+                        thumbTintColor="white"
+                        style={{
+                          flex: 1,
+                          alignSelf: 'center',
+                          marginHorizontal: Platform.select({ios: 5}),
+                        }}
+                      />
+                      <Text style={{color: 'white', alignSelf: 'center'}}>
+                        {durationString}
+                      </Text>
+                    </View>
+
+                    <View style={styles.buttonBottom}>
+                      <TouchableOpacity>
+                        <SvgXml xml={HeartIcon} />
+                      </TouchableOpacity>
+                      <TouchableOpacity>
+                        <SvgXml xml={MoreIcon} />
+                      </TouchableOpacity>
+                      <TouchableOpacity>
+                        <SvgXml xml={ShareIcon} />
+                      </TouchableOpacity>
+                    </View>
+                  </Animated.View>
+                </Animated.View>
+              </AnimatedVideo>
             </Animated.View>
-            <Animated.View
-              style={{
-                backgroundColor: 'white',
-                width: videoContainerWidth,
-                height: containerHeight,
-              }}>
-              <Animated.View style={{opacity}}>
-                <VideoContent {...{video}} />
-              </Animated.View>
-            </Animated.View>
+            {/*<Animated.View*/}
+            {/*  style={{*/}
+            {/*    backgroundColor: 'red',*/}
+            {/*    width: videoContainerWidth,*/}
+            {/*    height: containerHeight,*/}
+            {/*    position: 'absolute'*/}
+            {/*  }}>*/}
+            {/*  <Animated.View style={{opacity}}>*/}
+            {/*    /!*<VideoContent {...{video}} />*!/*/}
+            {/*  </Animated.View>*/}
+            {/*</Animated.View>*/}
           </Animated.View>
         </PanGestureHandler>
       </>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  playButton: {
+    width: scale(48),
+    height: scale(48),
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(26,26,26, 0.45)',
+    borderRadius: scale(24),
+  },
+  linearGradient: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: height,
+    borderRadius: scale(10),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    top: 0,
+    borderBottomWidth: 0,
+    width: '100%',
+  },
+  buttonBottom: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: verticalScale(30),
+  },
+});
