@@ -107,7 +107,7 @@ const MenuScreen = () => {
                 minWidth: scale(24),
                 borderRadius: scale(12),
                 backgroundColor: '#454D66',
-                marginRight: scale(10),
+                marginRight: scale(16),
               }}>
               <Text
                 style={{
@@ -193,7 +193,11 @@ const MenuScreen = () => {
 
       <View style={styles.carouselContainer}>
         <Carousel
-          style={{paddingHorizontal: scale(16)}}
+          style={{paddingHorizontal: scale(16), flex: 1}}
+          contentContainerStyle={{
+            paddingRight: scale(30),
+            flexGrow: 1,
+          }}
           data={entries}
           renderItem={renderItemCarousel}
           itemWidth={scale(247)}
@@ -212,7 +216,7 @@ const MenuScreen = () => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={renderItemFlatlist}
         contentContainerStyle={{
-          paddingBottom: scale(30),
+          paddingBottom: scale(10),
           paddingTop: scale(15),
           flexGrow: 1,
         }}
@@ -299,6 +303,6 @@ const styles = StyleSheet.create({
   },
   separator: {
     ...CommonStyles.separatorStyle,
-    marginLeft: scale(20),
+    marginHorizontal: scale(20),
   },
 });
