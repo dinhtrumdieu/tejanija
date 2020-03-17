@@ -57,6 +57,11 @@ const MenuScreen = () => {
         {id: 4, count: "13", title: "Stability"},
         {id: 2, count: "45", title: "Effort"},
         {id: 3, count: "33", title: "Awareness 1"},
+        {id: 4, count: "13", title: "Stability"},
+        {id: 3, count: "33", title: "Awareness 1"},
+        {id: 4, count: "13", title: "Stability"},
+        {id: 2, count: "45", title: "Effort"},
+        {id: 3, count: "33", title: "Awareness 1"},
         {id: 4, count: "13", title: "Stability"}
     ]
     const [list, setList] = React.useState(list1); 
@@ -142,12 +147,13 @@ const MenuScreen = () => {
                     // minScrollDistance={20}
             />
         </View>
-            <View style={{ marginVertical: scale(16)}}>
+            <View style={{ marginVertical: scale(16), height: screenHeight - scale(300)}}>
                 <FlatList
                     bounces={true}
                     data={list}
                     keyExtractor={item => item.id}
                     renderItem={renderItemFlatlist}
+                    contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
                     ItemSeparatorComponent={() => <View style={styles.separator} />}
                 />
             </View>
