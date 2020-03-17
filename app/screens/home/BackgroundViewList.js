@@ -53,29 +53,43 @@ function BackgroundViewList(props) {
           height: height - scale(50),
           //display: type !== 0 ? 'none' : ''
         }}>
-        <ActionButton buttonColor="#309975">
-          <ActionButton.Item
-            buttonColor="#9b59b6"
-            title="New Task"
-            onPress={() => console.log('notes tapped!')}>
-            {type === 0 ? (
-              <SvgXml xml={MenuWhiteIcon} />
-            ) : (
+        <ActionButton 
+        // verticalOrientation="down"
+
+        // position='left'
+        // backdrop={true}
+        buttonColor="#309975">
+          <View style={{flexDirection:'row', backgroundColor: "red"}}>
+            <ActionButton.Item
+              buttonColor="#9b59b6"
+              title="New Task"
+              onPress={() => console.log('notes tapped!')}>
+              {type === 0 ? (
+                <SvgXml xml={MenuWhiteIcon} />
+              ) : (
+                <SvgXml xml={MenuIcon} />
+              )}
+            </ActionButton.Item>
+
+            <ActionButton.Item
+              buttonColor="#3498db"
+              position='left'
+              backdrop={true}
+              title="Notifications"
+              onPress={() => {}}>
               <SvgXml xml={MenuIcon} />
-            )}
-          </ActionButton.Item>
-          <ActionButton.Item
-            buttonColor="#3498db"
-            title="Notifications"
-            onPress={() => {}}>
-            <SvgXml xml={MenuIcon} />
-          </ActionButton.Item>
+            </ActionButton.Item>
+
+          </View>
+
+
           <ActionButton.Item
             buttonColor="#1abc9c"
             title="All Tasks"
             onPress={() => {}}>
             <SvgXml xml={MenuWhiteIcon} />
           </ActionButton.Item>
+
         </ActionButton>
       </ImageBackground>
     </TouchableWithoutFeedback>
