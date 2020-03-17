@@ -20,91 +20,91 @@ import ActionSheetItem from './item/ActionSheetItem';
 import Notification1 from '../../../assets/svg/notification-empty.svg';
 import BackButton from '../../component/BackButton';
 
+const list1 = [
+  {
+    id: 1,
+    name: 'Drowsiness',
+    date: 'November 23, 2019',
+    content: 'You need to practice – whenever the mind is thin... ',
+    title: 'Dealing with wandering mind',
+  },
+  {
+    id: 2,
+    name: 'Restlessness',
+    date: 'November 23, 2019',
+    content: 'They are not important – just imagination. Don’t ... ',
+    title: 'Images in the mind are just thoughts – nothing to fear',
+  },
+  {
+    id: 3,
+    name: 'Guided meditation',
+    date: 'November 24, 2019',
+    content: '',
+    title: 'This meditation is for life, no need to ',
+  },
+  {
+    id: 4,
+    name: 'Burmese zen',
+    date: 'November 24, 2019',
+    content: 'Check your mind, what is the mind knowing?...',
+    title:
+      'Every object is very simple; it’s only thinking that makes it complicated.',
+  },
+  {
+    id: 5,
+    name: 'Drowsiness',
+    date: 'November 23, 2019',
+    content: 'You need to practice – whenever the mind is thin... ',
+    title: 'Dealing with wandering mind',
+  },
+  {
+    id: 6,
+    name: 'Restlessness',
+    date: 'November 23, 2019',
+    content: 'They are not important – just imagination. Don’t ... ',
+    title: 'Images in the mind are just thoughts – nothing to fear',
+  },
+  {
+    id: 2,
+    name: 'Restlessness',
+    date: 'November 23, 2019',
+    content: 'They are not important – just imagination. Don’t ... ',
+    title: 'Images in the mind are just thoughts – nothing to fear',
+  },
+  {
+    id: 3,
+    name: 'Guided meditation',
+    date: 'November 24, 2019',
+    content: '',
+    title: 'This meditation is for life, no need to ',
+  },
+  {
+    id: 4,
+    name: 'Burmese zen',
+    date: 'November 24, 2019',
+    content: 'Check your mind, what is the mind knowing?...',
+    title:
+      'Every object is very simple; it’s only thinking that makes it complicated.',
+  },
+  {
+    id: 5,
+    name: 'Drowsiness',
+    date: 'November 23, 2019',
+    content: 'You need to practice – whenever the mind is thin... ',
+    title: 'Dealing with wandering mind',
+  },
+  {
+    id: 6,
+    name: 'Restlessness',
+    date: 'November 23, 2019',
+    content: 'They are not important – just imagination. Don’t ... ',
+    title: 'Images in the mind are just thoughts – nothing to fear',
+  },
+];
+
 export default function Notifications() {
-  const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
   const [tabSelected, setTabSelected] = React.useState(1);
   const [isShow, setIsShow] = React.useState(false);
-  const list1 = [
-    {
-      id: 1,
-      name: 'Drowsiness',
-      date: 'November 23, 2019',
-      content: 'You need to practice – whenever the mind is thin... ',
-      title: 'Dealing with wandering mind',
-    },
-    {
-      id: 2,
-      name: 'Restlessness',
-      date: 'November 23, 2019',
-      content: 'They are not important – just imagination. Don’t ... ',
-      title: 'Images in the mind are just thoughts – nothing to fear',
-    },
-    {
-      id: 3,
-      name: 'Guided meditation',
-      date: 'November 24, 2019',
-      content: '',
-      title: 'This meditation is for life, no need to ',
-    },
-    {
-      id: 4,
-      name: 'Burmese zen',
-      date: 'November 24, 2019',
-      content: 'Check your mind, what is the mind knowing?...',
-      title:
-        'Every object is very simple; it’s only thinking that makes it complicated.',
-    },
-    {
-      id: 5,
-      name: 'Drowsiness',
-      date: 'November 23, 2019',
-      content: 'You need to practice – whenever the mind is thin... ',
-      title: 'Dealing with wandering mind',
-    },
-    {
-      id: 6,
-      name: 'Restlessness',
-      date: 'November 23, 2019',
-      content: 'They are not important – just imagination. Don’t ... ',
-      title: 'Images in the mind are just thoughts – nothing to fear',
-    },
-    {
-      id: 2,
-      name: 'Restlessness',
-      date: 'November 23, 2019',
-      content: 'They are not important – just imagination. Don’t ... ',
-      title: 'Images in the mind are just thoughts – nothing to fear',
-    },
-    {
-      id: 3,
-      name: 'Guided meditation',
-      date: 'November 24, 2019',
-      content: '',
-      title: 'This meditation is for life, no need to ',
-    },
-    {
-      id: 4,
-      name: 'Burmese zen',
-      date: 'November 24, 2019',
-      content: 'Check your mind, what is the mind knowing?...',
-      title:
-        'Every object is very simple; it’s only thinking that makes it complicated.',
-    },
-    {
-      id: 5,
-      name: 'Drowsiness',
-      date: 'November 23, 2019',
-      content: 'You need to practice – whenever the mind is thin... ',
-      title: 'Dealing with wandering mind',
-    },
-    {
-      id: 6,
-      name: 'Restlessness',
-      date: 'November 23, 2019',
-      content: 'They are not important – just imagination. Don’t ... ',
-      title: 'Images in the mind are just thoughts – nothing to fear',
-    },
-  ];
   const [list, setList] = React.useState(list1);
   const [isRead, setIsRead] = React.useState(false);
   const [selected, setSelected] = React.useState(new Map());
@@ -121,7 +121,7 @@ export default function Notifications() {
       <Header
         headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
         type={0}
-        left={<BackButton isShowBackLabel={false} />}
+        left={<BackButton white={true} isShowBackLabel={false} />}
         center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
         right={
           <ActionSheetItem
@@ -163,9 +163,9 @@ export default function Notifications() {
         </TouchableWithoutFeedback>
       </View>
       {list.length > 0 ? (
-        <View style={{}}>
-          {<RenderTabPost />}
-          {<RenderTabSystem />}
+        <View style={{flex: 1}}>
+          {tabSelected === 1 && <RenderTabPost />}
+          {tabSelected === 2 && <RenderTabSystem />}
         </View>
       ) : (
         <View
@@ -175,14 +175,12 @@ export default function Notifications() {
             alignSelf: 'center',
             height: scale(300),
             width: scale(300),
-            justifyContent:'center',
+            justifyContent: 'center',
           }}>
-            <View style={{paddingBottom: scale(40)}}>
-              <SvgXml xml={Notification1} />
-              <Text style={{textAlign: 'center'}}>You have no notification.</Text>
-
-            </View>
-
+          <View style={{paddingBottom: scale(40)}}>
+            <SvgXml xml={Notification1} />
+            <Text style={{textAlign: 'center'}}>You have no notification.</Text>
+          </View>
         </View>
       )}
     </View>
@@ -216,67 +214,55 @@ export default function Notifications() {
   }
 
   function RenderTabPost() {
-    const display = tabSelected === 1;
-
     return (
-      <View style={[display ? {} : {display: 'none'}]}>
-        <View style={{height: screenHeight - scale(80)}}>
-          <FlatList
-            bounces={true}
-            data={list}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
-            extraData={selected}
-            renderItem={({item, index}) => (
-              <PostItem
-                getSwipeItemIsOpen={() => getSwipeRef(index)}
-                onCloseOldSwipe={() => onClose(index)}
-                ref={ref => (this[`item_${index}`] = ref)}
-                item={item}
-                index={index}
-                type={''}
-                isRead={isRead}
-                deleteItem={() => deleteItem(index)}
-                selected={!!selected.get(item.id)}
-                onSelect={onSelect}
-              />
-            )}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
+      <FlatList
+        bounces={true}
+        data={list}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={{paddingBottom: scale(30), flexGrow: 1}}
+        extraData={selected}
+        renderItem={({item, index}) => (
+          <PostItem
+            getSwipeItemIsOpen={() => getSwipeRef(index)}
+            onCloseOldSwipe={() => onClose(index)}
+            ref={ref => (this[`item_${index}`] = ref)}
+            item={item}
+            index={index}
+            type={''}
+            isRead={isRead}
+            deleteItem={() => deleteItem(index)}
+            selected={!!selected.get(item.id)}
+            onSelect={onSelect}
           />
-        </View>
-      </View>
+        )}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+      />
     );
   }
 
   function RenderTabSystem() {
-    const display = tabSelected === 2;
     return (
-      <View style={[display ? {} : {display: 'none'}]}>
-        <View style={{height: screenHeight - scale(85)}}>
-          <FlatList
-            bounces={true}
-            data={list}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
-            renderItem={({item, index}) => (
-              <PostItem
-                getSwipeItemIsOpen={() => getSwipeRef(index)}
-                onCloseOldSwipe={() => onClose(index)}
-                ref={ref => (this[`item_${index}`] = ref)}
-                item={item}
-                index={index}
-                type={'sys'}
-                isRead={isRead}
-                deleteItem={() => deleteItem(index)}
-                selected={!!selected.get(item.id)}
-                onSelect={onSelect}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
+      <FlatList
+        bounces={true}
+        data={list}
+        contentContainerStyle={{paddingBottom: scale(30), flexGrow: 1}}
+        renderItem={({item, index}) => (
+          <PostItem
+            getSwipeItemIsOpen={() => getSwipeRef(index)}
+            onCloseOldSwipe={() => onClose(index)}
+            ref={ref => (this[`item_${index}`] = ref)}
+            item={item}
+            index={index}
+            type={'sys'}
+            isRead={isRead}
+            deleteItem={() => deleteItem(index)}
+            selected={!!selected.get(item.id)}
+            onSelect={onSelect}
           />
-        </View>
-      </View>
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        ItemSeparatorComponent={() => <View style={styles.separator} />}
+      />
     );
   }
 }
@@ -284,7 +270,7 @@ export default function Notifications() {
 const styles = ScaledSheet.create({
   container: {
     // marginTop: scale(30),
-    flex: 1
+    flex: 1,
   },
 
   labelTextInactive: {

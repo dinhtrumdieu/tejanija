@@ -39,21 +39,23 @@ export default function HomeScreen({navigation}) {
       <Header
         type={type}
         left={
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            {type === 0 ? (
-              <SvgXml xml={MenuWhiteIcon} />
-            ) : (
-              <SvgXml xml={MenuIcon} />
-            )}
-            <Text
-              style={{
-                color: type === 0 ? '#fff' : '#1A1A1A',
-                ...Fonts.defaultBold,
-                marginLeft: scale(5),
-              }}>
-              Menu
-            </Text>
-          </View>
+          <TouchableOpacity onPress={() => navigation.navigate('MenuScreen')}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              {type === 0 ? (
+                <SvgXml xml={MenuWhiteIcon} />
+              ) : (
+                <SvgXml xml={MenuIcon} />
+              )}
+              <Text
+                style={{
+                  color: type === 0 ? '#fff' : '#1A1A1A',
+                  ...Fonts.defaultBold,
+                  marginLeft: scale(5),
+                }}>
+                Menu
+              </Text>
+            </View>
+          </TouchableOpacity>
         }
         right={
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -74,9 +76,8 @@ export default function HomeScreen({navigation}) {
               )}
             </TouchableOpacity>
             {/* <TouchableOpacity onPress={() => setType(2)}> */}
-            <TouchableOpacity onPress={() => navigation.navigate('Notifications')}>
-
-            
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Notifications')}>
               {type === 0 ? (
                 <SvgXml xml={NotificationWhiteIcon} />
               ) : (
