@@ -39,13 +39,14 @@ return (
             style={styles.wrapper}
             height={200}
             horizontal={true}
+            loop={false}
             // autoplay
             dot={<View style={{backgroundColor: 'white', opacity: 0.25, width: scale(8), height: scale(8), borderRadius: scale(4), marginLeft: scale(8), marginRight: scale(5), marginTop: scale(5), marginBottom: scale(5)}} />}
             activeDot={<View style={{backgroundColor: '#FFFFFF', width: scale(10), height: scale(10), borderRadius: scale(5), marginLeft: scale(5), marginRight: scale(5), marginTop: scale(5), marginBottom: scale(5)}} />}
             >
             {entries.map((item, index) => {
               return(
-                <View style={[{ flex: 1}]} key={index}>
+                <View style={[{ flex: 1, paddingBottom: scale(30)}]} key={index}>
                   <View style={{ flex: 3, alignItems:'center', alignContent:'center', justifyContent: 'center'}}>
                     <Text style={styles.textTop}>{item.title}</Text>
                   </View>
@@ -54,12 +55,16 @@ return (
                     <Text style={styles.textContentCenter}>{item.content}</Text>
                   </View>
 
-                  <View style={{bottom: -50, flex: 3, alignItems:'center', alignContent:'center', justifyContent: 'center'}}>
-                    {index == 2 ? <TouchableOpacity 
-                      style={styles.buttonStart}
-                      onPress={() => {}}>
-                      <Text style={styles.textStart}>Get started</Text>
-                    </TouchableOpacity> : <View></View>}
+                  <View style={{flex: 3, alignItems:'center', alignContent:'center', justifyContent: 'flex-end'}}>
+                    {index == 2 ? <View>
+                        <TouchableOpacity 
+                          style={styles.buttonStart}
+                          onPress={() => {}}>
+                          <Text style={styles.textStart}>Get started</Text>
+                        </TouchableOpacity>
+                        <View style={{height: scale(35)}}></View>
+                      </View> : 
+                      <View></View>}
                   </View>
                 </View>
             )
@@ -99,7 +104,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonStart: {
-    width: scale(355),
+    width: scale(340),
     height: scale(42),
     borderRadius: scale(21),
     backgroundColor: '#58B368',
