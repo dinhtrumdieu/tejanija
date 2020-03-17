@@ -1,6 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import BackIcon from '../../assets/svg/back_icon_black.svg';
+import BackBlackIcon from '../../assets/svg/back_icon_black.svg';
+import BackWhiteIcon from '../../assets/svg/back_icon_white.svg';
 //import Navigator from '../utils/Navigator';
 import {SvgXml} from 'react-native-svg';
 import Text from '../component/Text';
@@ -11,7 +12,7 @@ import {useNavigation} from '@react-navigation/native';
 
 export default function BackButton(props) {
   const navigation = useNavigation();
-  const {isShowBackLabel = true} = props;
+  const {isShowBackLabel = true, white = false} = props;
   return (
     <TouchableOpacity
       hitSlop={{
@@ -22,13 +23,13 @@ export default function BackButton(props) {
       }}
       onPress={() => navigation.goBack()}>
       <View style={{flexDirection: 'row'}}>
-        {<SvgXml xml={BackIcon} />}
+        {<SvgXml xml={white ? BackWhiteIcon : BackBlackIcon} />}
         {isShowBackLabel && (
           <Text
             style={{
               marginLeft: scale(5),
               fontSize: moderateScale(16),
-              color: CommonColors.headerTextColor,
+              color: white ? '#fff' : CommonColors.headerTextColor,
               fontWeight: 'bold',
             }}>
             {I18n.t('app.back')}

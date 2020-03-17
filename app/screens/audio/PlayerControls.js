@@ -19,7 +19,7 @@ type PlayerControlsProps = {
 export default class PlayerControls extends React.PureComponent<PlayerControlsProps> {
   render() {
     return (
-      <TouchableWithoutFeedback>
+      <TouchableWithoutFeedback onPress={() => this.props.onPress()}>
         <View style={styles.container}>
           <View style={styles.placeholder} />
           <Text style={styles.title} numerOfLine={3}>
