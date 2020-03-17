@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   TouchableOpacity,
+  Switch
 } from 'react-native';
 import Text from '../../component/Text';
 import Header from '../../component/Header';
@@ -36,6 +37,7 @@ function renderSeparator() {
 }
 
 export default function SettingsScreen({navigation}) {
+  const [isOn, setIsOn] = React.useState(true)
   return (
     <View style={{flex: 1}}>
       <Header
@@ -69,6 +71,11 @@ export default function SettingsScreen({navigation}) {
             <TouchableWithoutFeedback>
               <View style={styles.row}>
                 <Text style={styles.label}>Push notifications</Text>
+                <Switch 
+                  style={{}}
+                  onValueChange={() => {setIsOn(!isOn)}}
+                  value={isOn}
+              />
               </View>
             </TouchableWithoutFeedback>
           </View>

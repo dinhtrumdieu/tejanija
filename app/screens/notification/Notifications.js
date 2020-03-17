@@ -68,6 +68,42 @@ export default function Notifications() {
       content: 'They are not important – just imagination. Don’t ... ',
       title: 'Images in the mind are just thoughts – nothing to fear',
     },
+    {
+      id: 2,
+      name: 'Restlessness',
+      date: 'November 23, 2019',
+      content: 'They are not important – just imagination. Don’t ... ',
+      title: 'Images in the mind are just thoughts – nothing to fear',
+    },
+    {
+      id: 3,
+      name: 'Guided meditation',
+      date: 'November 24, 2019',
+      content: '',
+      title: 'This meditation is for life, no need to ',
+    },
+    {
+      id: 4,
+      name: 'Burmese zen',
+      date: 'November 24, 2019',
+      content: 'Check your mind, what is the mind knowing?...',
+      title:
+        'Every object is very simple; it’s only thinking that makes it complicated.',
+    },
+    {
+      id: 5,
+      name: 'Drowsiness',
+      date: 'November 23, 2019',
+      content: 'You need to practice – whenever the mind is thin... ',
+      title: 'Dealing with wandering mind',
+    },
+    {
+      id: 6,
+      name: 'Restlessness',
+      date: 'November 23, 2019',
+      content: 'They are not important – just imagination. Don’t ... ',
+      title: 'Images in the mind are just thoughts – nothing to fear',
+    },
   ];
   const [list, setList] = React.useState(list1);
   const [isRead, setIsRead] = React.useState(false);
@@ -139,9 +175,14 @@ export default function Notifications() {
             alignSelf: 'center',
             height: scale(300),
             width: scale(300),
+            justifyContent:'center',
           }}>
-          <SvgXml xml={Notification1} />
-          <Text style={{textAlign: 'center'}}>You have no notification.</Text>
+            <View style={{paddingBottom: scale(40)}}>
+              <SvgXml xml={Notification1} />
+              <Text style={{textAlign: 'center'}}>You have no notification.</Text>
+
+            </View>
+
         </View>
       )}
     </View>
@@ -179,11 +220,12 @@ export default function Notifications() {
 
     return (
       <View style={[display ? {} : {display: 'none'}]}>
-        <View style={{height: screenHeight}}>
+        <View style={{height: screenHeight - scale(80)}}>
           <FlatList
             bounces={true}
             data={list}
             keyExtractor={item => item.id}
+            contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
             extraData={selected}
             renderItem={({item, index}) => (
               <PostItem
@@ -210,10 +252,12 @@ export default function Notifications() {
     const display = tabSelected === 2;
     return (
       <View style={[display ? {} : {display: 'none'}]}>
-        <View style={{height: screenHeight}}>
+        <View style={{height: screenHeight - scale(85)}}>
           <FlatList
             bounces={true}
             data={list}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
             renderItem={({item, index}) => (
               <PostItem
                 getSwipeItemIsOpen={() => getSwipeRef(index)}
@@ -222,12 +266,14 @@ export default function Notifications() {
                 item={item}
                 index={index}
                 type={'sys'}
+                isRead={isRead}
                 deleteItem={() => deleteItem(index)}
                 selected={!!selected.get(item.id)}
                 onSelect={onSelect}
               />
             )}
             keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
         </View>
       </View>
@@ -238,7 +284,7 @@ export default function Notifications() {
 const styles = ScaledSheet.create({
   container: {
     // marginTop: scale(30),
-    // flex: 1
+    flex: 1
   },
 
   labelTextInactive: {
@@ -329,6 +375,6 @@ const styles = ScaledSheet.create({
   },
   separator: {
     ...CommonStyles.separatorStyle,
-    marginHorizontal: scale(20),
+    marginLeft: scale(20),
   },
 });

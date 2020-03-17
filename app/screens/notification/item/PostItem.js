@@ -80,7 +80,7 @@ export default class PostItem extends React.Component {
                 paddingHorizontal: scale(20),
               }}>
                 <View style = {{ padding: scale(0)}}>
-                  <Text style = {styles.date}>{item.date} {type ==="sys" ? <View/> : <Text style ={!isRead ? {fontSize: scale(11), color: "#309975"} : styles.date }> / {item.name}</Text>}</Text>
+                  <Text style = {styles.date}>{item.date}{type ==="sys" ? <View/> : <Text style ={!isRead ? {fontSize: scale(11), color: "#309975"} : styles.date }><Text style = {styles.date}> / </Text>{item.name}</Text>}</Text>
                     <View style = {{flexDirection:"row", flex:1, alignItems:"center"}}>
                       { !isRead ? <View style ={[styles.circleStatus,  ]}></View> : <View style={{marginLeft: 18, marginRight: 16}}/>}
                       <Text style = {!isRead ? styles.textTitle : styles.textTitleInactive} >{item.title}</Text>
