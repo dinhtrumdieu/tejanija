@@ -20,6 +20,7 @@ import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
 import SearchScreen from './app/screens/search/SearchScreen';
 import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
+import MenuScreen from './app/screens/menu/MenuScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -94,6 +95,8 @@ function MyStack() {
       <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
+      <Stack.Screen name="MenuScreen" component={MenuScreen} />
+
     </Stack.Navigator>
   );
 }

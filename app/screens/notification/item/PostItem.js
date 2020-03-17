@@ -90,7 +90,7 @@ export default class PostItem extends React.Component {
             </View>
           </TouchableOpacity>
         </Swipeable>
-        <View style ={[CommonStyles.separatorStyle, { marginLeft: scale(18), marginRight: scale(18)}]}></View>
+        {/* <View style ={[CommonStyles.separatorStyle, { marginLeft: scale(18), marginRight: scale(18)}]}></View> */}
       </View>
       
     );
