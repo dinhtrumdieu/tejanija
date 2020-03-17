@@ -4,7 +4,7 @@ import LikeItem from './item/LikeItem';
 import {CommonStyles} from '../../utils/CommonStyles';
 import {scale} from '../../libs/reactSizeMatter/scalingUtils';
 
-const DATA = [{}, {}];
+const DATA = [{}, {}, {},{},{},{}];
 
 function getSwipeRef(index) {
   this.itemIsOpen = index;
