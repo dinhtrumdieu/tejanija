@@ -49,7 +49,7 @@ const MenuScreen = () => {
 
     const list1 = [
         {id: 1, count: "23", title: "Confidence"},
-        {id: 2, count: "45", title: "Effort"},
+        {id: 2, count: "43335", title: "Effort"},
         {id: 3, count: "33", title: "Awareness 1"},
         {id: 4, count: "13", title: "Stability"},
         {id: 2, count: "45", title: "Effort"},
