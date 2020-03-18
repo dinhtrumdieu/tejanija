@@ -12,6 +12,7 @@
   "dependencies": {
     "@ptomasroos/react-native-multi-slider": "^1.0.0",
     "@react-native-community/async-storage": "^1.6.1",
+    "@react-native-community/cli-platform-android": "^4.3.0",
     "@react-native-community/masked-view": "^0.1.7",
     "@react-native-community/netinfo": "^4.1.4",
     "@react-native-community/slider": "^2.0.8",

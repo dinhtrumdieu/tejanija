@@ -121,7 +121,7 @@ export default function Notifications() {
       <Header
         headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
         type={0}
-        left={<BackButton isShowBackLabel={false} />}
+        left={<BackButton white={true} isShowBackLabel={false} />}
         center={<Text style={CommonStyles.headerTitle}>Notifications</Text>}
         right={
           <ActionSheetItem
@@ -139,11 +139,7 @@ export default function Notifications() {
                 ? {backgroundColor: '#309975'}
                 : styles.inActiveTab1,
             ]}>
-            {tabSelected !== 1 ? (
-              <Text style={styles.labelTextInactive}>Post</Text>
-            ) : (
-              <Text style={styles.labelTextActive}>Post</Text>
-            )}
+            <Text style={ tabSelected === 2 ? styles.labelTextActive : styles.labelTextInactive}>Post</Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setTabSelected(2)}>
@@ -154,18 +150,14 @@ export default function Notifications() {
                 ? {backgroundColor: '#309975'}
                 : styles.inActiveTab2,
             ]}>
-            {tabSelected !== 2 ? (
-              <Text style={styles.labelTextInactive}>System</Text>
-            ) : (
-              <Text style={styles.labelTextActive}>System</Text>
-            )}
+            <Text style={ tabSelected === 2 ? styles.labelTextActive : styles.labelTextInactive}>System</Text>
           </View>
         </TouchableWithoutFeedback>
       </View>
       {list.length > 0 ? (
         <View style={{}}>
-          {<RenderTabPost />}
-          {<RenderTabSystem />}
+          {tabSelected === 1 && <RenderTabPost />}
+          {tabSelected === 2 && <RenderTabSystem />}
         </View>
       ) : (
         <View
@@ -180,9 +172,7 @@ export default function Notifications() {
             <View style={{paddingBottom: scale(40)}}>
               <SvgXml xml={Notification1} />
               <Text style={{textAlign: 'center'}}>You have no notification.</Text>
-
             </View>
-
         </View>
       )}
     </View>
@@ -216,66 +206,59 @@ export default function Notifications() {
   }
 
   function RenderTabPost() {
-    const display = tabSelected === 1;
-
     return (
-      <View style={[display ? {} : {display: 'none'}]}>
-        <View style={{height: screenHeight - scale(80)}}>
-          <FlatList
-            bounces={true}
-            data={list}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
-            extraData={selected}
-            renderItem={({item, index}) => (
-              <PostItem
-                getSwipeItemIsOpen={() => getSwipeRef(index)}
-                onCloseOldSwipe={() => onClose(index)}
-                ref={ref => (this[`item_${index}`] = ref)}
-                item={item}
-                index={index}
-                type={''}
-                isRead={isRead}
-                deleteItem={() => deleteItem(index)}
-                selected={!!selected.get(item.id)}
-                onSelect={onSelect}
-              />
-            )}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        </View>
+      <View style={{height: screenHeight - scale(80)}}>
+        <FlatList
+          bounces={true}
+          data={list}
+          keyExtractor={item => item.id}
+          contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
+          extraData={selected}
+          renderItem={({item, index}) => (
+            <PostItem
+              getSwipeItemIsOpen={() => getSwipeRef(index)}
+              onCloseOldSwipe={() => onClose(index)}
+              ref={ref => (this[`item_${index}`] = ref)}
+              item={item}
+              index={index}
+              type={''}
+              isRead={isRead}
+              deleteItem={() => deleteItem(index)}
+              selected={!!selected.get(item.id)}
+              onSelect={onSelect}
+            />
+          )}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
       </View>
     );
   }
 
   function RenderTabSystem() {
-    const display = tabSelected === 2;
     return (
-      <View style={[display ? {} : {display: 'none'}]}>
-        <View style={{height: screenHeight - scale(85)}}>
-          <FlatList
-            bounces={true}
-            data={list}
-            keyExtractor={item => item.id}
-            contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
-            renderItem={({item, index}) => (
-              <PostItem
-                getSwipeItemIsOpen={() => getSwipeRef(index)}
-                onCloseOldSwipe={() => onClose(index)}
-                ref={ref => (this[`item_${index}`] = ref)}
-                item={item}
-                index={index}
-                type={'sys'}
-                isRead={isRead}
-                deleteItem={() => deleteItem(index)}
-                selected={!!selected.get(item.id)}
-                onSelect={onSelect}
-              />
-            )}
-            keyExtractor={(item, index) => index.toString()}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        </View>
+      <View style={{height: screenHeight - scale(85)}}>
+        <FlatList
+          bounces={true}
+          data={list}
+          keyExtractor={item => item.id}
+          contentContainerStyle={{ paddingBottom: scale(30), flexGrow: 1 }}
+          renderItem={({item, index}) => (
+            <PostItem
+              getSwipeItemIsOpen={() => getSwipeRef(index)}
+              onCloseOldSwipe={() => onClose(index)}
+              ref={ref => (this[`item_${index}`] = ref)}
+              item={item}
+              index={index}
+              type={'sys'}
+              isRead={isRead}
+              deleteItem={() => deleteItem(index)}
+              selected={!!selected.get(item.id)}
+              onSelect={onSelect}
+            />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+        />
       </View>
     );
   }
