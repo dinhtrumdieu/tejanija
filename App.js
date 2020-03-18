@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomeIcon from './assets/svg/home.svg';
 import HomeActiveIcon from './assets/svg/home_active.svg';
@@ -16,11 +16,12 @@ import MoreScreen from './app/screens/MoreScreen';
 import SettingsScreen from './app/screens/more/SettingsScreen';
 import Notifications from './app/screens/notification/Notifications';
 import AudioDetailScreen from './app/screens/audio/AudioDetailScreen';
-import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
+// import AudioPlayerScreen from './app/screens/audio/AudioPlayerScreen';
 import LikeScreen from './app/screens/LikeScreen';
 import SearchScreen from './app/screens/search/SearchScreen';
 import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
 import MenuScreen from './app/screens/menu/MenuScreen';
+import AudioPlayer from './app/screens/audio/AudioPlayer';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -86,13 +87,17 @@ const Stack = createStackNavigator();
 
 function MyStack() {
   return (
-    <Stack.Navigator initialRouteName={'OnBoarding'} headerMode={'none'}>
+    <Stack.Navigator initialRouteName={'Main'} headerMode={'none'}>
       <Stack.Screen name="Main" component={MyTabs} />
       <Stack.Screen name="VideoPlayer" component={VideoPlayer} />
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
-      <Stack.Screen name="AudioPlayer" component={AudioPlayerScreen} />
+      <Stack.Screen
+        name="AudioPlayer"
+        component={AudioPlayer}
+        options={{...TransitionPresets.ModalSlideFromBottomIOS}}
+      />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
       <Stack.Screen name="MenuScreen" component={MenuScreen} />
