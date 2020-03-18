@@ -4,10 +4,21 @@ import {
   View,
   TouchableWithoutFeedback,
   Dimensions,
+  TouchableOpacity,
+  Animated,
+  Easing
+
 } from 'react-native';
+import Text from '../../component/Text';
 import ActionButton from 'react-native-action-button';
 import {SvgXml} from 'react-native-svg';
 import MenuWhiteIcon from '../../../assets/svg/Menu_white.svg';
+
+import FavouriteIcon from '../../../assets/svg/Icon_float_favourite.svg';
+import CloseIcon from '../../../assets/svg/Icon_float_close.svg';
+import CreateIcon from '../../../assets/svg/Icon_float_create.svg';
+import ShareIcon from '../../../assets/svg/Icon_float_share.svg';
+
 import MenuIcon from '../../../assets/svg/Menu.svg';
 import {scale} from '../../libs/reactSizeMatter/scalingUtils';
 
@@ -37,6 +48,71 @@ const {width, height} = Dimensions.get('window');
 function BackgroundViewList(props) {
   const {type} = props;
   const [postNext, onPostNext] = React.useState(0);
+  const [float, setFloat] = React.useState(false);
+  const [fadeValue, setFadeValue] = React.useState(new Animated.Value(0));
+  const [xValue, setXValueValue] = React.useState(new Animated.Value(0));
+  const [spinValue, setspinValue] = React.useState(new Animated.Value(0));
+  const spin = spinValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '45deg']
+  })
+
+  function fadeAnimation(){
+    Animated.timing(fadeValue, {
+      toValue: 1,
+      duration: 300,
+    }).start(()=> moveOutAnimation());
+  }
+
+  function fadeOutAnimation(){
+    Animated.timing(fadeValue, {
+      toValue: 0,
+      duration: 300,
+    }).start();
+  }
+
+  function moveAnimation() {
+    Animated.timing(xValue, {
+      toValue: scale(-64),
+      duration: 800,
+    }).start(()=> fadeOutAnimation());
+  }
+  function moveOutAnimation() {
+    Animated.timing(xValue, {
+      toValue: scale(0),
+      duration: 800,
+    }).start();
+  }
+
+  function rotate(){
+    Animated.timing(spinValue,{
+      toValue: 1,
+      duration: 1000,
+      easing: Easing.linear
+    }
+  ).start()
+  }
+
+  function rotateOut(){
+    Animated.timing(spinValue,{
+      toValue: 0,
+      duration: 1000,
+      easing: Easing.linear
+    }
+  ).start()
+  }
+
+  function toggleButton() {
+    if (float) {
+      fadeAnimation()
+      rotate()
+    } else {
+      moveAnimation()
+      rotateOut()
+    }
+    setFloat(!float)
+  }
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -51,49 +127,59 @@ function BackgroundViewList(props) {
         style={{
           width: width,
           height: height - scale(50),
-          //display: type !== 0 ? 'none' : ''
         }}>
-        <ActionButton 
-        // verticalOrientation="down"
 
-        // position='left'
-        // backdrop={true}
-        buttonColor="#309975">
-          <View style={{flexDirection:'row', backgroundColor: "red"}}>
-            <ActionButton.Item
-              buttonColor="#9b59b6"
-              title="New Task"
-              onPress={() => console.log('notes tapped!')}>
-              {type === 0 ? (
-                <SvgXml xml={MenuWhiteIcon} />
-              ) : (
-                <SvgXml xml={MenuIcon} />
-              )}
-            </ActionButton.Item>
+      <View style={{marginTop: height - scale(250), marginLeft: width - scale(200), justifyContent: 'center', alignContent: 'center', alignItems:'center'}}>
+            <View style={{height: scale(72), width: scale(120), flexDirection:'row-reverse', alignItems:'flex-end'}}>
+              <Animated.View
+                  style={{
+                    bottom: xValue,
+                    opacity: fadeValue,
+                    marginLeft: scale(24),backgroundColor:"#EFEEB4", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                >
+                  <SvgXml xml={FavouriteIcon} />
 
-            <ActionButton.Item
-              buttonColor="#3498db"
-              position='left'
-              backdrop={true}
-              title="Notifications"
-              onPress={() => {}}>
-              <SvgXml xml={MenuIcon} />
-            </ActionButton.Item>
+                </ Animated.View>
+              <Animated.View
+                  style={{
+                    left: xValue,
+                    bottom: xValue,
+                    opacity: fadeValue,
+                    backgroundColor:"#EFEEB4", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                >
+                  <SvgXml xml={CreateIcon} />
 
-          </View>
+                </ Animated.View>
+            </View>
+            <View style={{height: scale(72), width: scale(120), flexDirection:'row-reverse', alignItems:'flex-end'}}>
+              <TouchableOpacity
+                    onPress={() => toggleButton()}
+                    style={{marginLeft: scale(24),backgroundColor:"#309975", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+              >
+                <Animated.View
+                  style={{transform: [{rotate: spin}] }}
+                >
+                  <SvgXml xml={CloseIcon} />
 
+                </Animated.View>
+                    
 
-          <ActionButton.Item
-            buttonColor="#1abc9c"
-            title="All Tasks"
-            onPress={() => {}}>
-            <SvgXml xml={MenuWhiteIcon} />
-          </ActionButton.Item>
+                  </ TouchableOpacity>
+              <Animated.View
+                    style={{
+                      left: xValue,
+                      opacity: fadeValue,
+                      backgroundColor:"#EFEEB4", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                  >
+                    <SvgXml xml={ShareIcon} />
+                  </ Animated.View>
+            </View>
 
-        </ActionButton>
+        </View>
       </ImageBackground>
     </TouchableWithoutFeedback>
   );
 }
 
 export default BackgroundViewList;
+
