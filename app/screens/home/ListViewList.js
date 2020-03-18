@@ -25,24 +25,28 @@ const DATA = [
     title: 'First Item',
     video: true,
     image: require('../../../assets/demo/81b6683a2687eaeb0201905296cf5d79.jpg'),
+    audio: require('../../../assets/audio/SoundHelix-Song-1.mp3'),
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     title: 'Second Item',
     video: false,
     image: require('../../../assets/demo/17049efa376cd9bf8d7c0af72238784c.jpg'),
+    audio: require('../../../assets/audio/file_example_MP3_2MG.mp3'),
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Third Item',
     video: false,
     image: require('../../../assets/demo/gradient_pink_shades_130856_1350x2400.jpg'),
+    audio: require('../../../assets/audio/SoundHelix-Song-1.mp3'),
   },
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: 'First Item',
     video: true,
     image: require('../../../assets/demo/Many-pink-flowers-background-color-layers_iphone_320x480.jpg'),
+    audio: require('../../../assets/audio/file_example_MP3_2MG.mp3'),
   },
 ];
 
@@ -51,7 +55,7 @@ function Item({item, index}) {
   const navigation = useNavigation();
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('AudioDetail')}>
+      onPress={() => navigation.navigate('AudioDetail', {data: item})}>
       <View
         style={{
           marginRight: scale(16),

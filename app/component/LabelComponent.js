@@ -15,9 +15,9 @@ export default class LabelComponent extends Component {
             ? CommonColors.activeTabColor
             : CommonColors.inActiveTabColor,
           fontSize: moderateScale(13),
+          fontWeight: 'bold',
           ...Fonts.defaultRegular,
           textAlign: 'center',
-          marginBottom: scale(5),
         }}>
         {title}
       </Text>

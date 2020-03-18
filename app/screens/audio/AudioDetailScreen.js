@@ -23,6 +23,7 @@ import Animated, {Easing} from 'react-native-reanimated';
 import AudioPlayerScreen from './AudioPlayerScreen';
 const {Value, timing} = Animated;
 const {height} = Dimensions.get('window');
+import _ from 'lodash';
 
 export default class AudioDetailScreen extends React.Component {
   animation = new Value(0);
@@ -44,7 +45,7 @@ export default class AudioDetailScreen extends React.Component {
   };
 
   componentDidMount(): void {
-   // this.setVideo();
+    // this.setVideo();
   }
 
   render() {
@@ -54,6 +55,7 @@ export default class AudioDetailScreen extends React.Component {
       inputRange: [0, 1],
       outputRange: [height, 0],
     });
+    const data = _.get(this.props.route, 'params.data', null);
     return (
       <View style={{flex: 1}}>
         <Header
@@ -74,7 +76,10 @@ export default class AudioDetailScreen extends React.Component {
           contentContainerStyle={{paddingBottom: scale(30)}}
           style={styles.body}>
           <View>
-            <TouchableWithoutFeedback onPress={() => this.setVideo()}>
+            <TouchableWithoutFeedback
+              onPress={() =>
+                this.props.navigation.navigate('AudioPlayer', {data})
+              }>
               <View>
                 <Image
                   style={{
@@ -115,10 +120,10 @@ export default class AudioDetailScreen extends React.Component {
             </Text>
           </View>
         </ScrollView>
-        <Animated.View
-          style={{transform: [{translateY}], position: 'absolute'}}>
-          {video && <AudioPlayerScreen />}
-        </Animated.View>
+        {/*<Animated.View*/}
+        {/*  style={{transform: [{translateY}], position: 'absolute'}}>*/}
+        {/*  {video && <AudioPlayerScreen />}*/}
+        {/*</Animated.View>*/}
       </View>
     );
   }
