@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {
   ImageBackground,
   View,
@@ -9,16 +9,10 @@ import {
   Easing,
   TouchableHighlight,
   StyleSheet,
-  SafeAreaView
 } from 'react-native';
 import Text from '../../component/Text';
-import ActionButton from 'react-native-action-button';
 import {SvgXml} from 'react-native-svg';
 import MenuWhiteIcon from '../../../assets/svg/Menu_white.svg';
-import FavouriteIcon from '../../../assets/svg/Icon_float_favourite.svg';
-import CloseIcon from '../../../assets/svg/Icon_float_close.svg';
-import CreateIcon from '../../../assets/svg/Icon_float_create.svg';
-import ShareIcon from '../../../assets/svg/Icon_float_share.svg';
 import MenuIcon from '../../../assets/svg/Menu.svg';
 import {scale} from '../../libs/reactSizeMatter/scalingUtils';
 import {CommonStyles, ShadowStyle} from '../../utils/CommonStyles';
@@ -67,11 +61,7 @@ function BackgroundViewList(props) {
           width: width,
           height: height - scale(50),
         }}>
-          <Fragment>
-            <SafeAreaView style={{ flex: 1, backgroundColor: '' }}>
-              <FloatButton isShow = {float}/>
-            </SafeAreaView>
-          </Fragment>
+          <FloatButton isShow = {float}/>
       </ImageBackground>
     </TouchableWithoutFeedback>
   );
