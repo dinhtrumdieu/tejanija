@@ -6,7 +6,8 @@ import {
   Dimensions,
   TouchableOpacity,
   Animated,
-  Easing
+  Easing,
+  TouchableHighlight
 
 } from 'react-native';
 import Text from '../../component/Text';
@@ -48,19 +49,13 @@ const {width, height} = Dimensions.get('window');
 function BackgroundViewList(props) {
   const {type} = props;
   const [postNext, onPostNext] = React.useState(0);
-  const [float, setFloat] = React.useState(true);
+  const [float, setFloat] = React.useState(false);
   const [fadeValue, setFadeValue] = React.useState(new Animated.Value(0));
   const [xValue, setXValueValue] = React.useState(new Animated.Value(scale(-88)));
   const [spinValue, setspinValue] = React.useState(new Animated.Value(0));
-  const [hValue, sethValue] = React.useState(new Animated.Value(0));
-  const [wValue, setwValue] = React.useState(new Animated.Value(0));
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '45deg']
-  })
-  const numBorderRadius = xValue.interpolate({
-    inputRange: [0, 64],
-    outputRange: [0, 32]
   })
 
   function fadeAnimation(){
@@ -81,6 +76,7 @@ function BackgroundViewList(props) {
     Animated.timing(xValue, {
       toValue: scale(-88),
       duration: 300,
+      easing: Easing.back(), 
   }).start(()=> fadeOutAnimation());
 
   }
@@ -90,6 +86,7 @@ function BackgroundViewList(props) {
     Animated.timing(xValue, {
       toValue: scale(0),
       duration: 300,
+      easing: Easing.linear
     }).start();
   }
 
@@ -98,8 +95,7 @@ function BackgroundViewList(props) {
       toValue: 1,
       duration: 500,
       easing: Easing.linear
-    }
-  ).start()
+    }).start()
   }
 
   function rotateOut(){
@@ -107,19 +103,18 @@ function BackgroundViewList(props) {
       toValue: 0,
       duration: 500,
       easing: Easing.linear
-    }
-  ).start()
+    }).start()
   }
 
   function toggleButton() {
  
     if (float) {
-      fadeAnimation()
-      rotate()
-  
-    } else {
       moveAnimation()
       rotateOut()
+  
+    } else {
+      fadeAnimation()
+      rotate()
 
     }
     setFloat(!float)
@@ -182,8 +177,10 @@ function BackgroundViewList(props) {
               backgroundColor:''
               
               }}>
-              <TouchableOpacity
+              <TouchableHighlight
+                    underlayColor = {'#FFF'}
                     onPress={() => toggleButton()}
+                    // activeOpacity={1}
                     style={{
                       marginLeft: scale(24),
                       backgroundColor:"#309975",
@@ -201,25 +198,23 @@ function BackgroundViewList(props) {
                   <SvgXml xml={CloseIcon} />
 
                 </Animated.View>
-                    
 
-                  </ TouchableOpacity>
+              </ TouchableHighlight>
               <Animated.View
-                    style={{
-                      left: xValue,
-                      opacity: fadeValue,
-                      height: scale(64),
-                      width: scale(64),
-                      borderRadius: scale(32),
-                      justifyContent:'center',
-                      alignItems: 'center',
-                      backgroundColor:"#EFEEB4",
-                    }}
-                  >
-                    <SvgXml xml={ShareIcon} />
-                  </ Animated.View>
+                  style={{
+                    left: xValue,
+                    opacity: fadeValue,
+                    height: scale(64),
+                    width: scale(64),
+                    borderRadius: scale(32),
+                    justifyContent:'center',
+                    alignItems: 'center',
+                    backgroundColor:"#EFEEB4",
+                  }}
+                >
+                  <SvgXml xml={ShareIcon} />
+                </ Animated.View>
             </View>
-
         </View>
       </ImageBackground>
     </TouchableWithoutFeedback>
