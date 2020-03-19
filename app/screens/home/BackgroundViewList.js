@@ -8,8 +8,7 @@ import {
   Animated,
   Easing,
   TouchableHighlight,
-  StyleSheet
-
+  StyleSheet,
 } from 'react-native';
 import Text from '../../component/Text';
 import ActionButton from 'react-native-action-button';
@@ -50,21 +49,23 @@ function BackgroundViewList(props) {
   const [postNext, onPostNext] = React.useState(0);
   const [float, setFloat] = React.useState(false);
   const [fadeValue, setFadeValue] = React.useState(new Animated.Value(0));
-  const [xValue, setXValueValue] = React.useState(new Animated.Value(scale(-88)));
+  const [xValue, setXValueValue] = React.useState(
+    new Animated.Value(scale(-88)),
+  );
   const [spinValue, setspinValue] = React.useState(new Animated.Value(0));
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
-    outputRange: ['0deg', '45deg']
-  })
-// function animate
-  function fadeAnimation(){
+    outputRange: ['0deg', '135deg'],
+  });
+  // function animate
+  function fadeAnimation() {
     Animated.timing(fadeValue, {
       toValue: 1,
       duration: 300,
-    }).start(()=> moveOutAnimation());
+    }).start(() => moveOutAnimation());
   }
 
-  function fadeOutAnimation(){
+  function fadeOutAnimation() {
     Animated.timing(fadeValue, {
       toValue: 1,
       duration: 300,
@@ -75,45 +76,43 @@ function BackgroundViewList(props) {
     Animated.timing(xValue, {
       toValue: scale(-88),
       duration: 300,
-      easing: Easing.back(), 
-  }).start(()=> fadeOutAnimation());
-
+      easing: Easing.back(),
+    }).start(() => fadeOutAnimation());
   }
 
   function moveOutAnimation() {
     Animated.timing(xValue, {
       toValue: scale(0),
       duration: 300,
-      easing: Easing.linear
+      easing: Easing.linear,
     }).start();
   }
 
-  function rotate(){
-    Animated.timing(spinValue,{
+  function rotate() {
+    Animated.timing(spinValue, {
       toValue: 1,
-      duration: 500,
-      easing: Easing.linear
-    }).start()
+      duration: 100,
+      easing: Easing.linear,
+    }).start();
   }
 
-  function rotateOut(){
-    Animated.timing(spinValue,{
+  function rotateOut() {
+    Animated.timing(spinValue, {
       toValue: 0,
-      duration: 500,
-      easing: Easing.linear
-    }).start()
+      duration: 100,
+      easing: Easing.linear,
+    }).start();
   }
 
   function toggleButton() {
     if (float) {
-      moveAnimation()
-      rotateOut()
-  
+      moveAnimation();
+      rotateOut();
     } else {
-      fadeAnimation()
-      rotate()
+      fadeAnimation();
+      rotate();
     }
-    setFloat(!float)
+    setFloat(!float);
   }
 
   return (
@@ -131,89 +130,92 @@ function BackgroundViewList(props) {
           width: width,
           height: height - scale(50),
         }}>
-
-      <View style={{
-              marginTop: height - scale(250),
-              marginLeft: width - scale(200),
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems:'center'
-            }}>
-            <View style={{
+        <View
+          style={{
+            marginTop: height - scale(250),
+            marginLeft: width - scale(200),
+            justifyContent: 'center',
+            alignContent: 'center',
+            alignItems: 'center',
+          }}>
+          <View
+            style={{
               height: scale(64),
               width: scale(152),
-              flexDirection:'row-reverse',
-              alignItems:'flex-end',
-              alignContent:'center',
-              backgroundColor:''
-              }}>
+              flexDirection: 'row-reverse',
+              alignItems: 'flex-end',
+              alignContent: 'center',
+              backgroundColor: '',
+            }}>
+            <TouchableOpacity activeOpacity={0.8}>
               <Animated.View
-                  style={[styles.circle, {
+                style={[
+                  styles.circle,
+                  {
                     bottom: xValue,
                     opacity: fadeValue,
                     marginLeft: scale(24),
-                    backgroundColor:"#EFEEB4",
-                  }]}
-                >
-                  <TouchableOpacity>
-                    <SvgXml xml={FavouriteIcon} />
-                  </TouchableOpacity>
-                </ Animated.View>
-              <Animated.View
-                  style={[styles.circle, {
-                    left: xValue,
-                    bottom: xValue,
-                    opacity: fadeValue,
-                    backgroundColor:"#EFEEB4",
+                    backgroundColor: '#EFEEB4',
+                  },
+                ]}>
+                <SvgXml xml={FavouriteIcon} />
+              </Animated.View>
+            </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.circle,
+                {
+                  left: xValue,
+                  bottom: xValue,
+                  opacity: fadeValue,
+                  backgroundColor: '#EFEEB4',
+                },
+              ]}>
+              <TouchableOpacity>
+                <SvgXml xml={CreateIcon} />
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
 
-                  }]}
-                >
-                  <TouchableOpacity>
-                    <SvgXml xml={CreateIcon} />
-                  </TouchableOpacity>
-                  
-
-                </ Animated.View>
-            </View>
-
-            <View style={{
+          <View
+            style={{
               height: scale(88),
               width: scale(152),
-              flexDirection:'row-reverse',
-              alignItems:'flex-end',
-              backgroundColor:''
-              
-              }}>
-              <TouchableHighlight
-                    underlayColor = {'#FFF'}
-                    onPress={() => toggleButton()}
-                    // activeOpacity={1}
-                    style={[styles.circle, {
-                      marginLeft: scale(24),
-                      backgroundColor:"#309975",
-                      zIndex: 999
-                    }]}
-              >
-                <Animated.View
-                  style={{transform: [{rotate: spin}] }}
-                >
-                  <SvgXml xml={CloseIcon} />
-
-                </Animated.View>
-
-              </ TouchableHighlight>
-              <Animated.View
-                  style={[styles.circle, {
-                    left: xValue,
-                    opacity: fadeValue,
-                    backgroundColor:"#EFEEB4",
-                  }]}
-                >
-                  <TouchableOpacity>
-                    <SvgXml xml={ShareIcon} />
-                  </TouchableOpacity>
-                </ Animated.View>
-            </View>
+              flexDirection: 'row-reverse',
+              alignItems: 'flex-end',
+              backgroundColor: '',
+            }}>
+            <TouchableOpacity
+              activeOpacity={1}
+              underlayColor={'#FFF'}
+              onPress={() => toggleButton()}
+              // activeOpacity={1}
+              style={[
+                styles.circle,
+                {
+                  marginLeft: scale(24),
+                  backgroundColor: '#309975',
+                  zIndex: 999,
+                },
+              ]}>
+              <Animated.View style={{transform: [{rotate: spin}]}}>
+                <SvgXml xml={CloseIcon} />
+              </Animated.View>
+            </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.circle,
+                {
+                  left: xValue,
+                  opacity: fadeValue,
+                  backgroundColor: '#EFEEB4',
+                },
+              ]}>
+              <TouchableOpacity>
+                <SvgXml xml={ShareIcon} />
+              </TouchableOpacity>
+            </Animated.View>
+          </View>
         </View>
       </ImageBackground>
     </TouchableWithoutFeedback>
@@ -227,10 +229,7 @@ const styles = StyleSheet.create({
     height: scale(64),
     width: scale(64),
     borderRadius: scale(32),
-    justifyContent:'center',
-    alignItems: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-
-})
-
-
+});
