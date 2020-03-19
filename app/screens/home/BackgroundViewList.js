@@ -62,7 +62,7 @@ function BackgroundViewList(props) {
   function fadeAnimation() {
     Animated.timing(fadeValue, {
       toValue: 1,
-      duration: 300,
+      duration: 100,
     }).start(() => moveOutAnimation());
   }
 
@@ -150,7 +150,7 @@ function BackgroundViewList(props) {
               alignItems:'flex-end',
               alignContent:'center',
               }]}>
-            <TouchableOpacity activeOpacity={0.8}>
+            {/* <TouchableOpacity activeOpacity={0.8}> */}
               <Animated.View
                 style={[
                   styles.circle,
@@ -158,36 +158,58 @@ function BackgroundViewList(props) {
                     bottom: xValue,
                     opacity: fadeValue,
                     marginLeft: scale(24),
-                    backgroundColor: '#EFEEB4',
+                    // backgroundColor: '#EFEEB4',
                   },
                 ]}>
-                <SvgXml xml={FavouriteIcon} />
+                <TouchableOpacity
+                    style={{
+                      width: scale(64),
+                      height: scale(64),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#EFEEB4',
+                      borderRadius: scale(32)
+                    }}
+                  >
+                    <SvgXml xml={FavouriteIcon} />
+                </TouchableOpacity>
               </Animated.View>
-            </TouchableOpacity>
-            <Animated.View
-              style={[
-                styles.circle,
-                {
-                  left: xValue,
-                  bottom: xValue,
-                  opacity: fadeValue,
-                  backgroundColor: '#EFEEB4',
-                },
-              ]}>
-              <TouchableOpacity>
-                <SvgXml xml={CreateIcon} />
-              </TouchableOpacity>
-            </Animated.View>
+            {/* </TouchableOpacity> */}
+              <Animated.View
+                style={[
+                  styles.circle,
+                  {
+                    left: xValue,
+                    bottom: xValue,
+                    opacity: fadeValue,
+                    // backgroundColor: '#EFEEB4',
+                  },
+                ]}>
+                  <TouchableOpacity
+                    style={{
+                      width: scale(64),
+                      height: scale(64),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#EFEEB4',
+                      borderRadius: scale(32)
+                    }}
+                  >
+                    <SvgXml xml={CreateIcon} />
+                </TouchableOpacity>
+                
+              </Animated.View>
           </View>
 
           <View
-            style={{
+            style={[styles.shadownBox, {
               height: scale(88),
               width: scale(152),
               flexDirection: 'row-reverse',
               alignItems: 'flex-end',
               backgroundColor: '',
-            }}>
+            }]}>
+              
             <TouchableOpacity
               activeOpacity={1}
               underlayColor={'#FFF'}
@@ -205,19 +227,28 @@ function BackgroundViewList(props) {
                 <SvgXml xml={CloseIcon} />
               </Animated.View>
             </TouchableOpacity>
-            <Animated.View
-              style={[
-                styles.circle,
-                {
-                  left: xValue,
-                  opacity: fadeValue,
-                  backgroundColor: '#EFEEB4',
-                },
-              ]}>
-              <TouchableOpacity>
-                <SvgXml xml={ShareIcon} />
-              </TouchableOpacity>
-            </Animated.View>
+              <Animated.View
+                style={[
+                  styles.circle,
+                  {
+                    left: xValue,
+                    opacity: fadeValue,
+                    // backgroundColor: '#EFEEB4',
+                  },
+                ]}>
+                <TouchableOpacity
+                    style={{
+                      width: scale(64),
+                      height: scale(64),
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      backgroundColor: '#EFEEB4',
+                      borderRadius: scale(32)
+                    }}
+                  >
+                    <SvgXml xml={ShareIcon} />
+                </TouchableOpacity>
+              </Animated.View>
           </View>
         </View>
       </ImageBackground>
