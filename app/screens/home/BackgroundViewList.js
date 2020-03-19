@@ -21,6 +21,7 @@ import CreateIcon from '../../../assets/svg/Icon_float_create.svg';
 import ShareIcon from '../../../assets/svg/Icon_float_share.svg';
 import MenuIcon from '../../../assets/svg/Menu.svg';
 import {scale} from '../../libs/reactSizeMatter/scalingUtils';
+import {CommonStyles, ShadowStyle} from '../../utils/CommonStyles';
 
 const data = [
   {
@@ -56,6 +57,7 @@ function BackgroundViewList(props) {
     inputRange: [0, 1],
     outputRange: ['0deg', '45deg']
   })
+
 // function animate
   function fadeAnimation(){
     Animated.timing(fadeValue, {
@@ -76,8 +78,7 @@ function BackgroundViewList(props) {
       toValue: scale(-88),
       duration: 300,
       easing: Easing.back(), 
-  }).start(()=> fadeOutAnimation());
-
+    }).start(()=> fadeOutAnimation());
   }
 
   function moveOutAnimation() {
@@ -133,20 +134,21 @@ function BackgroundViewList(props) {
         }}>
 
       <View style={{
-              marginTop: height - scale(250),
-              marginLeft: width - scale(200),
-              justifyContent: 'center',
-              alignContent: 'center',
-              alignItems:'center'
+              alignItems:'flex-end',
+              bottom:0,
+              width: scale(152),
+              position:'absolute',
+              right: 0,
+              marginRight: scale(40),
+              marginBottom: scale(40),
             }}>
-            <View style={{
+            <View style={[styles.shadownBox, {
               height: scale(64),
               width: scale(152),
               flexDirection:'row-reverse',
               alignItems:'flex-end',
               alignContent:'center',
-              backgroundColor:''
-              }}>
+              }]}>
               <Animated.View
                   style={[styles.circle, {
                     bottom: xValue,
@@ -165,30 +167,24 @@ function BackgroundViewList(props) {
                     bottom: xValue,
                     opacity: fadeValue,
                     backgroundColor:"#EFEEB4",
-
                   }]}
                 >
                   <TouchableOpacity>
                     <SvgXml xml={CreateIcon} />
                   </TouchableOpacity>
-                  
-
-                </ Animated.View>
+              </ Animated.View>
             </View>
-
             <View style={{
               height: scale(88),
               width: scale(152),
               flexDirection:'row-reverse',
               alignItems:'flex-end',
-              backgroundColor:''
-              
               }}>
               <TouchableHighlight
                     underlayColor = {'#FFF'}
                     onPress={() => toggleButton()}
-                    // activeOpacity={1}
-                    style={[styles.circle, {
+                    style={[
+                      styles.circle, {
                       marginLeft: scale(24),
                       backgroundColor:"#309975",
                       zIndex: 999
@@ -198,9 +194,7 @@ function BackgroundViewList(props) {
                   style={{transform: [{rotate: spin}] }}
                 >
                   <SvgXml xml={CloseIcon} />
-
                 </Animated.View>
-
               </ TouchableHighlight>
               <Animated.View
                   style={[styles.circle, {
@@ -230,6 +224,11 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     alignItems: 'center'
   },
+  shadownBox: {
+
+    ...ShadowStyle,
+  }
+  
 
 })
 
