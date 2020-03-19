@@ -7,19 +7,18 @@ import {
   TouchableOpacity,
   Animated,
   Easing,
-  TouchableHighlight
+  TouchableHighlight,
+  StyleSheet
 
 } from 'react-native';
 import Text from '../../component/Text';
 import ActionButton from 'react-native-action-button';
 import {SvgXml} from 'react-native-svg';
 import MenuWhiteIcon from '../../../assets/svg/Menu_white.svg';
-
 import FavouriteIcon from '../../../assets/svg/Icon_float_favourite.svg';
 import CloseIcon from '../../../assets/svg/Icon_float_close.svg';
 import CreateIcon from '../../../assets/svg/Icon_float_create.svg';
 import ShareIcon from '../../../assets/svg/Icon_float_share.svg';
-
 import MenuIcon from '../../../assets/svg/Menu.svg';
 import {scale} from '../../libs/reactSizeMatter/scalingUtils';
 
@@ -57,7 +56,7 @@ function BackgroundViewList(props) {
     inputRange: [0, 1],
     outputRange: ['0deg', '45deg']
   })
-
+// function animate
   function fadeAnimation(){
     Animated.timing(fadeValue, {
       toValue: 1,
@@ -81,7 +80,6 @@ function BackgroundViewList(props) {
 
   }
 
-  
   function moveOutAnimation() {
     Animated.timing(xValue, {
       toValue: scale(0),
@@ -107,7 +105,6 @@ function BackgroundViewList(props) {
   }
 
   function toggleButton() {
- 
     if (float) {
       moveAnimation()
       rotateOut()
@@ -115,10 +112,10 @@ function BackgroundViewList(props) {
     } else {
       fadeAnimation()
       rotate()
-
     }
     setFloat(!float)
   }
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -135,7 +132,13 @@ function BackgroundViewList(props) {
           height: height - scale(50),
         }}>
 
-      <View style={{marginTop: height - scale(250), marginLeft: width - scale(200), justifyContent: 'center', alignContent: 'center', alignItems:'center'}}>
+      <View style={{
+              marginTop: height - scale(250),
+              marginLeft: width - scale(200),
+              justifyContent: 'center',
+              alignContent: 'center',
+              alignItems:'center'
+            }}>
             <View style={{
               height: scale(64),
               width: scale(152),
@@ -145,26 +148,30 @@ function BackgroundViewList(props) {
               backgroundColor:''
               }}>
               <Animated.View
-                  style={{
+                  style={[styles.circle, {
                     bottom: xValue,
                     opacity: fadeValue,
                     marginLeft: scale(24),
                     backgroundColor:"#EFEEB4",
-                    height: scale(64),
-                    width: scale(64),
-                    borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                  }]}
                 >
-                  <SvgXml xml={FavouriteIcon} />
-
+                  <TouchableOpacity>
+                    <SvgXml xml={FavouriteIcon} />
+                  </TouchableOpacity>
                 </ Animated.View>
               <Animated.View
-                  style={{
+                  style={[styles.circle, {
                     left: xValue,
                     bottom: xValue,
                     opacity: fadeValue,
-                    backgroundColor:"#EFEEB4", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                    backgroundColor:"#EFEEB4",
+
+                  }]}
                 >
-                  <SvgXml xml={CreateIcon} />
+                  <TouchableOpacity>
+                    <SvgXml xml={CreateIcon} />
+                  </TouchableOpacity>
+                  
 
                 </ Animated.View>
             </View>
@@ -181,16 +188,11 @@ function BackgroundViewList(props) {
                     underlayColor = {'#FFF'}
                     onPress={() => toggleButton()}
                     // activeOpacity={1}
-                    style={{
+                    style={[styles.circle, {
                       marginLeft: scale(24),
                       backgroundColor:"#309975",
-                      height: scale(64),
-                      width: scale(64),
-                      borderRadius: scale(32),
-                      justifyContent:'center',
-                      alignItems: 'center',
                       zIndex: 999
-                    }}
+                    }]}
               >
                 <Animated.View
                   style={{transform: [{rotate: spin}] }}
@@ -201,18 +203,15 @@ function BackgroundViewList(props) {
 
               </ TouchableHighlight>
               <Animated.View
-                  style={{
+                  style={[styles.circle, {
                     left: xValue,
                     opacity: fadeValue,
-                    height: scale(64),
-                    width: scale(64),
-                    borderRadius: scale(32),
-                    justifyContent:'center',
-                    alignItems: 'center',
                     backgroundColor:"#EFEEB4",
-                  }}
+                  }]}
                 >
-                  <SvgXml xml={ShareIcon} />
+                  <TouchableOpacity>
+                    <SvgXml xml={ShareIcon} />
+                  </TouchableOpacity>
                 </ Animated.View>
             </View>
         </View>
@@ -222,4 +221,16 @@ function BackgroundViewList(props) {
 }
 
 export default BackgroundViewList;
+
+const styles = StyleSheet.create({
+  circle: {
+    height: scale(64),
+    width: scale(64),
+    borderRadius: scale(32),
+    justifyContent:'center',
+    alignItems: 'center'
+  },
+
+})
+
 
