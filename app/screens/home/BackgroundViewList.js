@@ -48,13 +48,19 @@ const {width, height} = Dimensions.get('window');
 function BackgroundViewList(props) {
   const {type} = props;
   const [postNext, onPostNext] = React.useState(0);
-  const [float, setFloat] = React.useState(false);
+  const [float, setFloat] = React.useState(true);
   const [fadeValue, setFadeValue] = React.useState(new Animated.Value(0));
-  const [xValue, setXValueValue] = React.useState(new Animated.Value(0));
+  const [xValue, setXValueValue] = React.useState(new Animated.Value(scale(-88)));
   const [spinValue, setspinValue] = React.useState(new Animated.Value(0));
+  const [hValue, sethValue] = React.useState(new Animated.Value(0));
+  const [wValue, setwValue] = React.useState(new Animated.Value(0));
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '45deg']
+  })
+  const numBorderRadius = xValue.interpolate({
+    inputRange: [0, 64],
+    outputRange: [0, 32]
   })
 
   function fadeAnimation(){
@@ -66,28 +72,31 @@ function BackgroundViewList(props) {
 
   function fadeOutAnimation(){
     Animated.timing(fadeValue, {
-      toValue: 0,
+      toValue: 1,
       duration: 300,
     }).start();
   }
 
   function moveAnimation() {
     Animated.timing(xValue, {
-      toValue: scale(-64),
-      duration: 800,
-    }).start(()=> fadeOutAnimation());
+      toValue: scale(-88),
+      duration: 300,
+  }).start(()=> fadeOutAnimation());
+
   }
+
+  
   function moveOutAnimation() {
     Animated.timing(xValue, {
       toValue: scale(0),
-      duration: 800,
+      duration: 300,
     }).start();
   }
 
   function rotate(){
     Animated.timing(spinValue,{
       toValue: 1,
-      duration: 1000,
+      duration: 500,
       easing: Easing.linear
     }
   ).start()
@@ -96,23 +105,25 @@ function BackgroundViewList(props) {
   function rotateOut(){
     Animated.timing(spinValue,{
       toValue: 0,
-      duration: 1000,
+      duration: 500,
       easing: Easing.linear
     }
   ).start()
   }
 
   function toggleButton() {
+ 
     if (float) {
       fadeAnimation()
       rotate()
+  
     } else {
       moveAnimation()
       rotateOut()
+
     }
     setFloat(!float)
   }
-
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -130,12 +141,23 @@ function BackgroundViewList(props) {
         }}>
 
       <View style={{marginTop: height - scale(250), marginLeft: width - scale(200), justifyContent: 'center', alignContent: 'center', alignItems:'center'}}>
-            <View style={{height: scale(72), width: scale(120), flexDirection:'row-reverse', alignItems:'flex-end'}}>
+            <View style={{
+              height: scale(64),
+              width: scale(152),
+              flexDirection:'row-reverse',
+              alignItems:'flex-end',
+              alignContent:'center',
+              backgroundColor:''
+              }}>
               <Animated.View
                   style={{
                     bottom: xValue,
                     opacity: fadeValue,
-                    marginLeft: scale(24),backgroundColor:"#EFEEB4", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                    marginLeft: scale(24),
+                    backgroundColor:"#EFEEB4",
+                    height: scale(64),
+                    width: scale(64),
+                    borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
                 >
                   <SvgXml xml={FavouriteIcon} />
 
@@ -151,10 +173,27 @@ function BackgroundViewList(props) {
 
                 </ Animated.View>
             </View>
-            <View style={{height: scale(72), width: scale(120), flexDirection:'row-reverse', alignItems:'flex-end'}}>
+
+            <View style={{
+              height: scale(88),
+              width: scale(152),
+              flexDirection:'row-reverse',
+              alignItems:'flex-end',
+              backgroundColor:''
+              
+              }}>
               <TouchableOpacity
                     onPress={() => toggleButton()}
-                    style={{marginLeft: scale(24),backgroundColor:"#309975", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                    style={{
+                      marginLeft: scale(24),
+                      backgroundColor:"#309975",
+                      height: scale(64),
+                      width: scale(64),
+                      borderRadius: scale(32),
+                      justifyContent:'center',
+                      alignItems: 'center',
+                      zIndex: 999
+                    }}
               >
                 <Animated.View
                   style={{transform: [{rotate: spin}] }}
@@ -169,7 +208,13 @@ function BackgroundViewList(props) {
                     style={{
                       left: xValue,
                       opacity: fadeValue,
-                      backgroundColor:"#EFEEB4", height: scale(64), width: scale(64), borderRadius: scale(32), justifyContent:'center', alignItems: 'center'}}
+                      height: scale(64),
+                      width: scale(64),
+                      borderRadius: scale(32),
+                      justifyContent:'center',
+                      alignItems: 'center',
+                      backgroundColor:"#EFEEB4",
+                    }}
                   >
                     <SvgXml xml={ShareIcon} />
                   </ Animated.View>
