@@ -25,70 +25,75 @@ import Carousel from 'react-native-anchor-carousel';
 import BackButton from '../../component/BackButton';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+const entries = [
+  {
+    title: 'Wisdom’s road ',
+    header: 'Heading',
+    content:
+      'Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
+  },
+  {
+    title: 'Abcfd’s road ',
+    header: '22Heading',
+    content:
+      '22Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
+  },
+  {
+    title: 'Xyhdhde’s road ',
+    header: '33Heading',
+    content:
+      '33Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
+  },
+  {
+    title: 'Wisdom’s road ',
+    header: 'Heading',
+    content:
+      'Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
+  },
+  {
+    title: 'Abcfd’s road ',
+    header: '22Heading',
+    content:
+      '22Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
+  },
+  {
+    title: 'Xyhdhde’s road ',
+    header: '33Heading',
+    content:
+      '33Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
+  },
+];
+
+const list1 = [
+  {id: 1, count: '23', title: 'Confidence'},
+  {id: 2, count: '4523', title: 'Effort'},
+  {id: 3, count: '33', title: 'Awareness 1'},
+  {id: 4, count: '13', title: 'Stability'},
+  {id: 2, count: '45', title: 'Effort'},
+  {id: 3, count: '33', title: 'Awareness 1'},
+  {id: 4, count: '13', title: 'Stability'},
+  {id: 2, count: '45', title: 'Effort'},
+  {id: 3, count: '33', title: 'Awareness 1'},
+  {id: 4, count: '13', title: 'Stability'},
+  {id: 3, count: '33', title: 'Awareness 1'},
+  {id: 4, count: '13', title: 'Stability'},
+  {id: 2, count: '45', title: 'Effort'},
+  {id: 3, count: '33', title: 'Awareness 1'},
+  {id: 4, count: '13', title: 'Stability'},
+];
+
 const MenuScreen = () => {
   const navigation = useNavigation();
   const carouselRef = useRef(null);
-  const entries = [
-    {
-      title: 'Wisdom’s road ',
-      header: 'Heading',
-      content:
-        'Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
-    },
-    {
-      title: 'Abcfd’s road ',
-      header: '22Heading',
-      content:
-        '22Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
-    },
-    {
-      title: 'Xyhdhde’s road ',
-      header: '33Heading',
-      content:
-        '33Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
-    },
-    {
-      title: 'Wisdom’s road ',
-      header: 'Heading',
-      content:
-        'Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
-    },
-    {
-      title: 'Abcfd’s road ',
-      header: '22Heading',
-      content:
-        '22Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
-    },
-    {
-      title: 'Xyhdhde’s road ',
-      header: '33Heading',
-      content:
-        '33Non veniam sint reprehenderit ea minim consequat ipsum consectetur qui quis cupidatat sint ipsum fugiat ad ex elit aliqua ea',
-    },
-  ];
-
-  const list1 = [
-    {id: 1, count: '23', title: 'Confidence'},
-    {id: 2, count: '4523', title: 'Effort'},
-    {id: 3, count: '33', title: 'Awareness 1'},
-    {id: 4, count: '13', title: 'Stability'},
-    {id: 2, count: '45', title: 'Effort'},
-    {id: 3, count: '33', title: 'Awareness 1'},
-    {id: 4, count: '13', title: 'Stability'},
-    {id: 2, count: '45', title: 'Effort'},
-    {id: 3, count: '33', title: 'Awareness 1'},
-    {id: 4, count: '13', title: 'Stability'},
-    {id: 3, count: '33', title: 'Awareness 1'},
-    {id: 4, count: '13', title: 'Stability'},
-    {id: 2, count: '45', title: 'Effort'},
-    {id: 3, count: '33', title: 'Awareness 1'},
-    {id: 4, count: '13', title: 'Stability'},
-  ];
   const [list, setList] = React.useState(list1);
 
   const renderItemFlatlist = ({item}) => {
     return (
-      <View style={{paddingHorizontal: scale(16)}}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('List', {title: item.title, type: 2})
+        }
+        style={{paddingHorizontal: scale(16)}}>
         <View
           style={{
             flex: 1,
@@ -120,15 +125,10 @@ const MenuScreen = () => {
                 {item.count}
               </Text>
             </View>
-            <TouchableOpacity
-              onPress={item => {}}
-              // onPress={() => navigation.navigate('CollectionListScreen', { data: item })}
-            >
-              <SvgXml xml={RightIcon} />
-            </TouchableOpacity>
+            <SvgXml xml={RightIcon} />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -139,6 +139,7 @@ const MenuScreen = () => {
         style={[{backgroundColor}]}
         onPress={() => {
           carouselRef.current.scrollToIndex(index);
+          navigation.navigate('List', {title: item.title, type: 1});
         }}>
         <View style={[styles.viewContainerImage]}>
           <ImageBackground
@@ -173,7 +174,12 @@ const MenuScreen = () => {
         type={1}
         left={<BackButton isShowBackLabel={true} />}
       />
-      <View style={{marginLeft: scale(16), marginTop: scale(30),marginBottom: scale(15)}}>
+      <View
+        style={{
+          marginLeft: scale(16),
+          marginTop: scale(30),
+          marginBottom: scale(15),
+        }}>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.textHeader}>Collection</Text>
           <View style={{justifyContent: 'center', flex: 1}}>

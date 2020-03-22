@@ -10,32 +10,38 @@ import {
   TouchableHighlight,
   StyleSheet,
 } from 'react-native';
-import Text from '../../component/Text';
 import {SvgXml} from 'react-native-svg';
-import MenuWhiteIcon from '../../../assets/svg/Menu_white.svg';
-import MenuIcon from '../../../assets/svg/Menu.svg';
-import {scale} from '../../libs/reactSizeMatter/scalingUtils';
+import {moderateScale, scale} from '../../libs/reactSizeMatter/scalingUtils';
 import {CommonStyles, ShadowStyle} from '../../utils/CommonStyles';
-import FloatButton from '../../component/FloatButton'
+import FloatButton from '../../component/FloatButton';
+import LinearGradient from 'react-native-linear-gradient';
+import Text from '../../component/Text';
+
+const content =
+  'Right idea is important.\n' +
+  '\n' +
+  'The mind doesn’t go to the sound. It is the paying-attention-mind happening. This is the right concept – the mind pays attention at one instance. The next mind is a new mind. Otherwise, you think that the mind goes there and then comes back; that there is only one mind.\n' +
+  '\n' +
+  'Your realization is right if you understand that this mind is happening and then is finished, the next mind arises and then is finished. One mind does its job and then it’s finished; the next mind arises, does its job and then it’s finished.';
 
 const data = [
   {
     image: require('../../../assets/demo/81b6683a2687eaeb0201905296cf5d79.jpg'),
-    content: '',
+    content: content,
   },
   {
     image: require('../../../assets/demo/17049efa376cd9bf8d7c0af72238784c.jpg'),
-    content: '',
+    content: content,
   },
-  {image: require('../../../assets/demo/download.jpeg'), content: ''},
+  {image: require('../../../assets/demo/download.jpeg'), content: content},
   {
     image: require('../../../assets/demo/gradient_pink_shades_130856_1350x2400.jpg'),
-    content: '',
+    content: content,
   },
-  {image: require('../../../assets/demo/images.jpeg'), content: ''},
+  {image: require('../../../assets/demo/images.jpeg'), content: content},
   {
     image: require('../../../assets/demo/Many-pink-flowers-background-color-layers_iphone_320x480.jpg'),
-    content: '',
+    content: content,
   },
 ];
 
@@ -45,26 +51,75 @@ function BackgroundViewList(props) {
   const {type} = props;
   const [postNext, onPostNext] = React.useState(0);
   const [float, setFloat] = React.useState(false);
- 
+
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        if (postNext < data.length - 1) {
-          onPostNext(postNext + 1);
-        } else {
-          onPostNext(0);
-        }
+    <ImageBackground
+      resizeMode={'cover'}
+      source={data[postNext].image}
+      style={{
+        width: width,
+        height: height - scale(50),
       }}>
-      <ImageBackground
-        source={data[postNext].image}
-        style={{
-          width: width,
-          height: height - scale(50),
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (postNext < data.length - 1) {
+            onPostNext(postNext + 1);
+          } else {
+            onPostNext(0);
+          }
         }}>
-          <FloatButton isShow = {float}/>
-      </ImageBackground>
-    </TouchableWithoutFeedback>
+        <View style={{flex: 1}}>
+          <View style={[styles.linearGradient]} />
+          <View style={{marginTop: scale(100), marginHorizontal: scale(20)}}>
+            <Text style={styles.time}>November 2, 2019</Text>
+            <Text style={styles.title}>
+              RIGHT IDEA OF ARISING AND PASSING AWAY
+            </Text>
+            <Text style={styles.description}>
+              China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)
+            </Text>
+            <Text style={styles.content}>{data[postNext].content}</Text>
+          </View>
+          <FloatButton navigation={props.navigation} isShow={float} />
+        </View>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
   );
 }
 
 export default BackgroundViewList;
+
+const styles = StyleSheet.create({
+  linearGradient: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    height: height,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+  },
+  time: {
+    fontSize: moderateScale(13),
+    color: '#fff',
+    textAlign: 'center',
+  },
+  content: {
+    fontSize: moderateScale(16),
+    color: '#fff',
+  },
+  title: {
+    fontSize: moderateScale(32),
+    color: '#fff',
+    textAlign: 'center',
+    marginTop: scale(5),
+    marginBottom: scale(10),
+    fontWeight: '300',
+  },
+  description: {
+    fontSize: moderateScale(13),
+    color: '#fff',
+    textAlign: 'center',
+    marginBottom: scale(16),
+  },
+});

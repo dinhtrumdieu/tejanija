@@ -23,6 +23,8 @@ import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
 import MenuScreen from './app/screens/menu/MenuScreen';
 import AudioPlayer from './app/screens/audio/AudioPlayer';
 import {AudioContext} from './app/screens/context/audio-context';
+import AddNotesScreen from './app/screens/likes/AddNotesScreen';
+import ListScreen from './app/screens/common/ListScreen';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -102,6 +104,8 @@ function MyStack() {
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
       <Stack.Screen name="MenuScreen" component={MenuScreen} />
+      <Stack.Screen name="AddNotes" component={AddNotesScreen} />
+      <Stack.Screen name="List" component={ListScreen} />
     </Stack.Navigator>
   );
 }

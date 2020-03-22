@@ -5,9 +5,7 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  
-}
-from 'react-native';
+} from 'react-native';
 import Text from '../component/Text';
 import {SvgXml} from 'react-native-svg';
 import FavouriteIcon from '../../assets/svg/Icon_float_favourite.svg';
@@ -16,19 +14,21 @@ import CreateIcon from '../../assets/svg/Icon_float_create.svg';
 import ShareIcon from '../../assets/svg/Icon_float_share.svg';
 import {scale} from '../libs/reactSizeMatter/scalingUtils';
 import {CommonStyles, ShadowStyle} from '../utils/CommonStyles';
-import  DimensionsIOS from '../utils/DimensionsIOS';
+import DimensionsIOS from '../utils/DimensionsIOS';
 
 function FloatButton(props) {
   const {isShow} = props;
   const [float, setFloat] = React.useState(isShow);
   const [fadeValue, setFadeValue] = React.useState(new Animated.Value(0));
-  const [xValue, setXValueValue] = React.useState(new Animated.Value(scale(-88)));
+  const [xValue, setXValueValue] = React.useState(
+    new Animated.Value(scale(-88)),
+  );
   const [spinValue, setspinValue] = React.useState(new Animated.Value(0));
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '135deg'],
   });
-  const xPadding = DimensionsIOS.bottomAreaHeight + scale(40)
+  const xPadding = DimensionsIOS.bottomAreaHeight + scale(20);
 
   // function animate
   function fadeAnimation() {
@@ -90,123 +90,127 @@ function FloatButton(props) {
 
   return (
     <View
-        style={{
-        alignItems:'flex-end',
-        bottom:0,
+      style={{
+        alignItems: 'flex-end',
+        bottom: 0,
         width: scale(152),
-        position:'absolute',
+        position: 'absolute',
         right: 0,
-        marginRight: scale(40),
+        marginRight: scale(24),
         marginBottom: xPadding,
-        }}>
-        <View
-        style={[styles.shadownBox, {
+      }}>
+      <View
+        style={[
+          styles.shadownBox,
+          {
             height: scale(64),
             width: scale(152),
-            flexDirection:'row-reverse',
-            alignItems:'flex-end',
-            alignContent:'center',
-            }]}>
+            flexDirection: 'row-reverse',
+            alignItems: 'flex-end',
+            alignContent: 'center',
+          },
+        ]}>
         {/* <TouchableOpacity activeOpacity={0.8}> */}
-            <Animated.View
-            style={[
-                styles.circle,
-                {
-                bottom: xValue,
-                opacity: fadeValue,
-                marginLeft: scale(24),
-                // backgroundColor: '#EFEEB4',
-                },
-            ]}>
-            <TouchableOpacity
-                style={{
-                    width: scale(64),
-                    height: scale(64),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#EFEEB4',
-                    borderRadius: scale(32)
-                }}
-                >
-                <SvgXml xml={FavouriteIcon} />
-            </TouchableOpacity>
-            </Animated.View>
+        <Animated.View
+          style={[
+            styles.circle,
+            {
+              bottom: xValue,
+              opacity: fadeValue,
+              marginLeft: scale(24),
+              // backgroundColor: '#EFEEB4',
+            },
+          ]}>
+          <TouchableOpacity
+            style={{
+              width: scale(64),
+              height: scale(64),
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#EFEEB4',
+              borderRadius: scale(32),
+            }}>
+            <SvgXml xml={FavouriteIcon} />
+          </TouchableOpacity>
+        </Animated.View>
         {/* </TouchableOpacity> */}
-            <Animated.View
-            style={[
-                styles.circle,
-                {
-                left: xValue,
-                bottom: xValue,
-                opacity: fadeValue,
-                // backgroundColor: '#EFEEB4',
-                },
-            ]}>
-                <TouchableOpacity
-                style={{
-                    width: scale(64),
-                    height: scale(64),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#EFEEB4',
-                    borderRadius: scale(32)
-                }}
-                >
-                <SvgXml xml={CreateIcon} />
-            </TouchableOpacity>
-            
-            </Animated.View>
-        </View>
+        <Animated.View
+          style={[
+            styles.circle,
+            {
+              left: xValue,
+              bottom: xValue,
+              opacity: fadeValue,
+              // backgroundColor: '#EFEEB4',
+            },
+          ]}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('AddNotes');
+            }}
+            style={{
+              width: scale(64),
+              height: scale(64),
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#EFEEB4',
+              borderRadius: scale(32),
+            }}>
+            <SvgXml xml={CreateIcon} />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
 
-        <View
-        style={[styles.shadownBox, {
+      <View
+        style={[
+          styles.shadownBox,
+          {
             height: scale(88),
             width: scale(152),
             flexDirection: 'row-reverse',
             alignItems: 'flex-end',
             backgroundColor: '',
-        }]}>
-            
+          },
+        ]}>
         <TouchableOpacity
-            activeOpacity={1}
-            underlayColor={'#FFF'}
-            onPress={() => toggleButton()}
-            // activeOpacity={1}
-            style={[
+          activeOpacity={1}
+          underlayColor={'#FFF'}
+          onPress={() => toggleButton()}
+          // activeOpacity={1}
+          style={[
             styles.circle,
             {
-                marginLeft: scale(24),
-                backgroundColor: '#309975',
-                zIndex: 999,
+              marginLeft: scale(24),
+              backgroundColor: '#309975',
+              zIndex: 999,
             },
-            ]}>
-            <Animated.View style={{transform: [{rotate: spin}]}}>
+          ]}>
+          <Animated.View style={{transform: [{rotate: spin}]}}>
             <SvgXml xml={CloseIcon} />
-            </Animated.View>
+          </Animated.View>
         </TouchableOpacity>
-            <Animated.View
-            style={[
-                styles.circle,
-                {
-                left: xValue,
-                opacity: fadeValue,
-                // backgroundColor: '#EFEEB4',
-                },
-            ]}>
-            <TouchableOpacity
-                style={{
-                    width: scale(64),
-                    height: scale(64),
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: '#EFEEB4',
-                    borderRadius: scale(32)
-                }}
-                >
-                <SvgXml xml={ShareIcon} />
-            </TouchableOpacity>
-            </Animated.View>
-        </View>
+        <Animated.View
+          style={[
+            styles.circle,
+            {
+              left: xValue,
+              opacity: fadeValue,
+              // backgroundColor: '#EFEEB4',
+            },
+          ]}>
+          <TouchableOpacity
+            style={{
+              width: scale(64),
+              height: scale(64),
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: '#EFEEB4',
+              borderRadius: scale(32),
+            }}>
+            <SvgXml xml={ShareIcon} />
+          </TouchableOpacity>
+        </Animated.View>
+      </View>
     </View>
   );
 }
@@ -223,7 +227,5 @@ const styles = StyleSheet.create({
   },
   shadownBox: {
     ...ShadowStyle,
-  }
-})
-
-
+  },
+});
