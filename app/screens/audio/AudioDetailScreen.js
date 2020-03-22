@@ -19,42 +19,20 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 import {SvgXml} from 'react-native-svg';
 import PlayIcon from '../../../assets/svg/Play.svg';
-import Animated, {Easing} from 'react-native-reanimated';
-import AudioPlayerScreen from './AudioPlayerScreen';
-const {Value, timing} = Animated;
-const {height} = Dimensions.get('window');
 import _ from 'lodash';
+import AudioPlayerBottom from './AudioPlayerBottom';
 
 export default class AudioDetailScreen extends React.Component {
-  animation = new Value(0);
-
   state = {
     video: false,
   };
 
-  setVideo = () => {
-    this.setState({video: true}, this.toggleVideo);
+  handleOnPress = () => {
+    const data = _.get(this.props.route, 'params.data', null);
+    this.props.navigation.navigate('AudioPlayer', {data});
   };
-
-  toggleVideo = () => {
-    timing(this.animation, {
-      toValue: 1,
-      duration: 300,
-      easing: Easing.inOut(Easing.ease),
-    }).start();
-  };
-
-  componentDidMount(): void {
-    // this.setVideo();
-  }
 
   render() {
-    const {animation} = this;
-    const {video} = this.state;
-    const translateY = animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [height, 0],
-    });
     const data = _.get(this.props.route, 'params.data', null);
     return (
       <View style={{flex: 1}}>
@@ -76,10 +54,7 @@ export default class AudioDetailScreen extends React.Component {
           contentContainerStyle={{paddingBottom: scale(30)}}
           style={styles.body}>
           <View>
-            <TouchableWithoutFeedback
-              onPress={() =>
-                this.props.navigation.navigate('AudioPlayer', {data})
-              }>
+            <TouchableWithoutFeedback onPress={this.handleOnPress}>
               <View>
                 <Image
                   style={{
@@ -120,10 +95,11 @@ export default class AudioDetailScreen extends React.Component {
             </Text>
           </View>
         </ScrollView>
-        {/*<Animated.View*/}
-        {/*  style={{transform: [{translateY}], position: 'absolute'}}>*/}
-        {/*  {video && <AudioPlayerScreen />}*/}
-        {/*</Animated.View>*/}
+        <AudioPlayerBottom
+          data={data}
+          navigation={this.props.navigation}
+          onPress={this.handleOnPress}
+        />
       </View>
     );
   }

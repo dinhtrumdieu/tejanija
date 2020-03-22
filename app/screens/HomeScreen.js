@@ -23,7 +23,7 @@ import GridViewList from './home/GridViewList';
 import ListViewList from './home/ListViewList';
 
 export default function HomeScreen({navigation}) {
-  const [type, setType] = React.useState(2);
+  const [type, setType] = React.useState(0);
   return (
     <View style={{flex: 1}}>
       {type === 0 && <BackgroundViewList type={type} />}
