@@ -22,6 +22,7 @@ import SearchScreen from './app/screens/search/SearchScreen';
 import OnBoardingScreen from './app/screens/boarding/OnBoardingScreen';
 import MenuScreen from './app/screens/menu/MenuScreen';
 import AudioPlayer from './app/screens/audio/AudioPlayer';
+import FilterOptionsScreen from './app/screens/filterOptions/FilterOptionsScreen'
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -51,7 +52,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Likes"
-        component={LikeScreen}
+        component={FilterOptionsScreen}
         options={{
           tabBarLabel: ({focused}) => (
             <LabelComponent title="Likes" focused={focused} />
@@ -93,11 +94,7 @@ function MyStack() {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
-      <Stack.Screen
-        name="AudioPlayer"
-        component={AudioPlayer}
-        options={{...TransitionPresets.ModalSlideFromBottomIOS}}
-      />
+      <Stack.Screen name="AudioPlayer" component={AudioPlayer} options={{...TransitionPresets.ModalSlideFromBottomIOS}} />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
       <Stack.Screen name="MenuScreen" component={MenuScreen} />

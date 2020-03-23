@@ -21,7 +21,7 @@ const FORMATS = {
     'datetime': 'YYYY-MM-DD HH:mm',
     'time': 'HH:mm',
 };
-
+// logo-splash
 const SUPPORTED_ORIENTATIONS = ['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right'];
 
 class DatePicker extends Component {
@@ -445,7 +445,7 @@ DatePicker.defaultProps = {
     duration: 300,
     confirmBtnText: 'Done',
     cancelBtnText: 'Cancel',
-    iconSource: require('../../assets/images/logo.png'),
+    iconSource: require('../../assets/images/logo-splash.png'),
     customStyles: {},
 
     // whether or not show the icon
