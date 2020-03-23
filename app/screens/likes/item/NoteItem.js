@@ -5,6 +5,7 @@ import Text from '../../../component/Text';
 import React from 'react';
 import {SvgXml} from 'react-native-svg';
 import DeleteIcon from '../../../../assets/svg/delete_icon.svg';
+import EditIcon from '../../../../assets/svg/Icon_float_create.svg';
 import {
   CommonColors,
   CommonStyles,
@@ -40,7 +41,17 @@ export default class NoteItem extends React.Component {
     return [
       <TouchableOpacity
         style={{flex: 1, justifyContent: 'center'}}
-        onPress={() => this.onClickDelete()}>
+        onPress={() => {
+          this.props.navigation.navigate('AddNotes');
+          this.close();
+        }}>
+        <View style={styles.editButton}>
+          <SvgXml xml={EditIcon} />
+        </View>
+      </TouchableOpacity>,
+      <TouchableOpacity
+        onPress={() => this.onClickDelete()}
+        style={{flex: 1, justifyContent: 'center'}}>
         <View style={styles.deleteButton}>
           <SvgXml xml={DeleteIcon} />
         </View>
@@ -87,10 +98,10 @@ export default class NoteItem extends React.Component {
               <Image
                 resizeMode={'cover'}
                 style={styles.image}
-                source={require('../../../../assets/demo/Many-pink-flowers-background-color-layers_iphone_320x480.jpg')}
+                source={item.image}
               />
-              <View style={{justifyContent: 'center'}}>
-                <Text style={styles.title}>Check the energy used</Text>
+              <View style={{justifyContent: 'center', flex:1}}>
+                <Text style={styles.title}>{item.title}</Text>
                 <Text style={styles.category}>Effort</Text>
               </View>
             </View>
@@ -128,6 +139,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#309975',
+    borderRadius: scale(32),
+    ...ShadowStyle,
+  },
+  editButton: {
+    width: scale(64),
+    height: scale(64),
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(26, 44, 60, 0.92)',
     borderRadius: scale(32),
     ...ShadowStyle,
   },

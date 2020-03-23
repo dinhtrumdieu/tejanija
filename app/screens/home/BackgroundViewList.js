@@ -26,20 +26,50 @@ const content =
 
 const data = [
   {
+    id: 1,
+    time: 'November 2, 2019',
+    title: 'RIGHT IDEA OF ARISING AND PASSING AWAY',
+    description: 'China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)',
     image: require('../../../assets/demo/81b6683a2687eaeb0201905296cf5d79.jpg'),
     content: content,
   },
   {
+    id: 2,
+    time: 'November 3, 2019',
+    title: 'HOW MUCH PRACTICE FOR A BEGINNER?',
+    description: 'China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)',
     image: require('../../../assets/demo/17049efa376cd9bf8d7c0af72238784c.jpg'),
     content: content,
   },
-  {image: require('../../../assets/demo/download.jpeg'), content: content},
   {
+    id: 3,
+    time: 'November 4, 2019',
+    title: 'THE MINDS WORK IS TO STAY AWARE ',
+    description: 'China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)',
+    image: require('../../../assets/demo/download.jpeg'),
+    content: content,
+  },
+  {
+    id: 4,
+    time: 'November 5, 2019',
+    title: 'Check the energy used',
+    description: 'China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)',
     image: require('../../../assets/demo/gradient_pink_shades_130856_1350x2400.jpg'),
     content: content,
   },
-  {image: require('../../../assets/demo/images.jpeg'), content: content},
   {
+    id: 5,
+    time: 'November 6, 2019',
+    title: 'RIGHT IDEA OF ARISING AND PASSING AWAY',
+    description: 'China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)',
+    image: require('../../../assets/demo/images.jpeg'),
+    content: content,
+  },
+  {
+    id: 6,
+    time: 'November 7, 2019',
+    title: 'RIGHT IDEA OF ARISING AND PASSING AWAY',
+    description: 'China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)',
     image: require('../../../assets/demo/Many-pink-flowers-background-color-layers_iphone_320x480.jpg'),
     content: content,
   },
@@ -71,16 +101,16 @@ function BackgroundViewList(props) {
         <View style={{flex: 1}}>
           <View style={[styles.linearGradient]} />
           <View style={{marginTop: scale(100), marginHorizontal: scale(20)}}>
-            <Text style={styles.time}>November 2, 2019</Text>
-            <Text style={styles.title}>
-              RIGHT IDEA OF ARISING AND PASSING AWAY
-            </Text>
-            <Text style={styles.description}>
-              China Retreat 2016 02/27 Interview 5 (A2) (1:30:42-1:32:13)
-            </Text>
+            <Text style={styles.time}>{data[postNext].time}</Text>
+            <Text style={styles.title}>{data[postNext].title}</Text>
+            <Text style={styles.description}>{data[postNext].description}</Text>
             <Text style={styles.content}>{data[postNext].content}</Text>
           </View>
-          <FloatButton navigation={props.navigation} isShow={float} />
+          <FloatButton
+            data={data[postNext]}
+            navigation={props.navigation}
+            isShow={float}
+          />
         </View>
       </TouchableWithoutFeedback>
     </ImageBackground>

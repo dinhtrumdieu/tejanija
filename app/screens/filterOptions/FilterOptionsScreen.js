@@ -1,19 +1,18 @@
 import * as React from 'react';
-import {View, TouchableOpacity, StatusBar, Dimensions} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import ScaledSheet from '../../libs/reactSizeMatter/ScaledSheet';
 import CloseIcon from '../../../assets/svg/CLoseWhite.svg';
 import CalendarIcon from '../../../assets/svg/Icon_Calendar.svg';
 import CloseCircleIcon from '../../../assets/svg/Icon_Close_Circle.svg';
 import DatePicker from 'react-native-datepicker';
-import {CommonColors, CommonSize, CommonStyles} from '../../utils/CommonStyles';
+import {CommonStyles} from '../../utils/CommonStyles';
 import {SvgXml} from 'react-native-svg';
 import LikeScreen from '../LikeScreen';
 import {scale, moderateScale} from '../../libs/reactSizeMatter/scalingUtils';
 import Text from '../../component/Text';
 import Accordion from './Accordion';
 import Header from '../../component/Header';
-const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
 function CustomDrawerContent(props) {
   return (
@@ -139,10 +138,9 @@ function MyDrawer() {
         width: scale(335),
         backgroundColor: 'rgba(26, 44, 60, 0.92)',
       }}
-      // drawerWidth={500}
       drawerPosition={'left'}
       drawerContent={props => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="BackgroungComponet" component={LikeScreen} />
+      <Drawer.Screen name="like" component={LikeScreen} />
     </Drawer.Navigator>
   );
 }

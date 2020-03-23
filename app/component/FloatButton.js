@@ -17,7 +17,7 @@ import {CommonStyles, ShadowStyle} from '../utils/CommonStyles';
 import DimensionsIOS from '../utils/DimensionsIOS';
 
 function FloatButton(props) {
-  const {isShow} = props;
+  const {isShow, data} = props;
   const [float, setFloat] = React.useState(isShow);
   const [fadeValue, setFadeValue] = React.useState(new Animated.Value(0));
   const [xValue, setXValueValue] = React.useState(
@@ -146,7 +146,7 @@ function FloatButton(props) {
           ]}>
           <TouchableOpacity
             onPress={() => {
-              props.navigation.navigate('AddNotes');
+              props.navigation.navigate('AddNotes', {data});
             }}
             style={{
               width: scale(64),
