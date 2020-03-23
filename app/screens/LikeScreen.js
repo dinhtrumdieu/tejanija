@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Button
+  Button,
 } from 'react-native';
 import Text from '../component/Text';
 import {CommonColors, CommonStyles} from '../utils/CommonStyles';
@@ -14,9 +14,19 @@ import MenuIcon from '../../assets/svg/menu_three.svg';
 import FilterIcon from '../../assets/svg/Filter.svg';
 import LikesList from './likes/LikesList';
 import NotesList from './likes/NotesList';
+import {_getPost} from '../store/AsyncStorage';
 
-export default function LikeScreen({ navigation }) {
+export default function LikeScreen({navigation}) {
   const [tab, setTab] = React.useState(0);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    async function getData() {
+      return await _getPost();
+    }
+    getData().then(result => {
+      setData(JSON.parse(result));
+    });
+  }, []);
   return (
     <View style={{flex: 1}}>
       <View
@@ -55,14 +65,12 @@ export default function LikeScreen({ navigation }) {
       </View>
       <View style={styles.body}>
         <View style={styles.filterMenu}>
-          <TouchableOpacity
-          onPress={() => navigation.openDrawer()} 
-          >
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <SvgXml style={{marginLeft: scale(15)}} xml={FilterIcon} />
           </TouchableOpacity>
         </View>
         {tab === 0 && <LikesList />}
-        {tab === 1 && <NotesList />}
+        {tab === 1 && <NotesList data={data} navigation={navigation} />}
       </View>
     </View>
   );

@@ -1,10 +1,7 @@
-import React from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, FlatList} from 'react-native';
 import NoteItem from './item/NoteItem';
-import {CommonStyles} from '../../utils/CommonStyles';
-import {scale} from '../../libs/reactSizeMatter/scalingUtils';
-
-const DATA = [{}, {}];
+import {_getPost} from '../../store/AsyncStorage';
 
 function getSwipeRef(index) {
   this.itemIsOpen = index;
@@ -18,13 +15,14 @@ function onClose(index) {
   }
 }
 
-function NotesList() {
+function NotesList(props) {
   return (
     <FlatList
       bounces={true}
-      data={DATA}
+      data={props.data}
       renderItem={({item, index}) => (
         <NoteItem
+          navigation={props.navigation}
           getSwipeItemIsOpen={() => getSwipeRef(index)}
           onCloseOldSwipe={() => onClose(index)}
           ref={ref => (this[`item_${index}`] = ref)}
@@ -37,8 +35,6 @@ function NotesList() {
   );
 }
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 export default NotesList;
