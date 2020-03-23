@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Button
 } from 'react-native';
 import Text from '../component/Text';
 import {CommonColors, CommonStyles} from '../utils/CommonStyles';
@@ -14,7 +15,7 @@ import FilterIcon from '../../assets/svg/Filter.svg';
 import LikesList from './likes/LikesList';
 import NotesList from './likes/NotesList';
 
-export default function LikeScreen() {
+export default function LikeScreen({ navigation }) {
   const [tab, setTab] = React.useState(0);
   return (
     <View style={{flex: 1}}>
@@ -54,7 +55,9 @@ export default function LikeScreen() {
       </View>
       <View style={styles.body}>
         <View style={styles.filterMenu}>
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => navigation.openDrawer()} 
+          >
             <SvgXml style={{marginLeft: scale(15)}} xml={FilterIcon} />
           </TouchableOpacity>
         </View>
