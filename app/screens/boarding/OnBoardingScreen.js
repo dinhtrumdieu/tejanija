@@ -84,21 +84,21 @@ const styles = StyleSheet.create({
     height: screenHeight,
   },
   textTop: {
-    fontSize: scale(32),
+    fontSize: moderateScale(32),
     fontWeight: 'bold',
     color: '#FFF',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
   textCenter: {
-    fontSize: scale(24),
+    fontSize: moderateScale(24),
     fontWeight: 'bold',
     color: '#FFF',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
   textContentCenter: {
-    fontSize: scale(13),
+    fontSize: moderateScale(13),
     fontWeight: 'normal',
     color: '#FFF',
     textAlign: 'center',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textStart: {
-    fontSize: scale(16),
+    fontSize: moderateScale(16),
     fontWeight: 'bold',
     color: '#1A2C3C',
     textAlign: 'center',

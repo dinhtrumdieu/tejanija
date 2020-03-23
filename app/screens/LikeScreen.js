@@ -4,19 +4,49 @@ import {
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
-  Button
+  Button,
+  AsyncStorage
 } from 'react-native';
 import Text from '../component/Text';
 import {CommonColors, CommonStyles} from '../utils/CommonStyles';
-import {scale} from '../libs/reactSizeMatter/scalingUtils';
+import {scale, moderateScale} from '../libs/reactSizeMatter/scalingUtils';
 import {SvgXml} from 'react-native-svg';
 import MenuIcon from '../../assets/svg/menu_three.svg';
 import FilterIcon from '../../assets/svg/Filter.svg';
+import CloseIcon from '../../assets/svg/Icon_close_white.svg';
+
 import LikesList from './likes/LikesList';
 import NotesList from './likes/NotesList';
 
 export default function LikeScreen({ navigation }) {
   const [tab, setTab] = React.useState(0);
+  const [note, setNote] = React.useState("");
+  React.useEffect(() => {
+    getNoteFilter()
+  }, []);
+
+  const getNoteFilter = async () => {
+    let noteFilter = '';
+    try {
+      noteFilter = await AsyncStorage.getItem('note') || 'none';
+      setNote(noteFilter)
+      console.warn("getNote", noteFilter)
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+    return noteFilter;
+  }
+
+  const deleteNoteFilter = async () => {
+    try {
+      await AsyncStorage.removeItem('note');
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  }
+
   return (
     <View style={{flex: 1}}>
       <View
@@ -60,6 +90,36 @@ export default function LikeScreen({ navigation }) {
           >
             <SvgXml style={{marginLeft: scale(15)}} xml={FilterIcon} />
           </TouchableOpacity>
+          {(note || note ==! "") && <View 
+          style={{
+            // flexDirection:'row',
+            height: scale(24), borderRadius: scale(12),
+            borderWidth: scale(1), borderColor:'#FFF',
+            paddingLeft: scale(10),
+            paddingRight: scale(6.67),
+            justifyContent:'center'
+          
+          }}
+          >
+            <View
+              style={{
+                flexDirection:'row',
+              }}
+            >
+              <Text
+              style={{color:'#FFF', fontSize: moderateScale(13), textAlign:'center'}}
+              >{note}</Text>
+
+              <TouchableOpacity
+              onPress={() => {setNote(""); deleteNoteFilter}} 
+              >
+                <SvgXml style={{marginLeft: scale(10)}} xml={CloseIcon} />
+              </TouchableOpacity>
+
+            </View>
+
+          </View>}
+
         </View>
         {tab === 0 && <LikesList />}
         {tab === 1 && <NotesList />}

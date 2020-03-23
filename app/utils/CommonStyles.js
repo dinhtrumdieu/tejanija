@@ -146,7 +146,7 @@ const CommonStyles = {
     borderRadius: scale(3),
   },
   textButtonSubmit: {
-    fontSize: scale(13),
+    fontSize: moderateScale(13),
     ...Fonts.defaultBold,
     textTransform: 'uppercase',
     color: CommonColors.lightTextColor,
@@ -160,7 +160,7 @@ const CommonStyles = {
     flexDirection: 'column',
   },
   errorMessage: {
-    fontSize: scale(11),
+    fontSize: moderateScale(11),
     textAlign: 'left',
     color: 'red',
   },

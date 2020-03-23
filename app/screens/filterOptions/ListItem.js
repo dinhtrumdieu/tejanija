@@ -1,19 +1,33 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import {scale} from '../../libs/reactSizeMatter/scalingUtils';
+import {StyleSheet, Text, View, AsyncStorage, TouchableOpacity} from 'react-native';
+import {scale, moderateScale} from '../../libs/reactSizeMatter/scalingUtils';
 import {CommonColors, CommonStyles} from '../../utils/CommonStyles';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 export const LIST_ITEM_HEIGHT = scale(52);
 export default function Item(props) {
   const {item} = props;
   return (
-    <View style={{marginLeft: scale(20)}}>
-      <View style={[styles.container]}>
-        <Text style={styles.name}>{item.name}</Text>
-      </View>
-      <View style={styles.separator} />
-    </View>
+      <TouchableOpacity
+      onPress={()=>{saveNoteFilter(item.name);}}
+      >
+        <View style={{marginLeft: scale(20)}}>
+            <View style={[styles.container]}>
+                <Text style={styles.name}>{item.name}</Text>
+            </View>
+            <View style={styles.separator} />
+        </View>
+      </TouchableOpacity>
   );
 }
+const saveNoteFilter = async note => {
+    try {
+      await AsyncStorage.setItem('note', note);
+      console.warn("note", note)
+    } catch (error) {
+      // Error retrieving data
+      console.log(error.message);
+    }
+  };
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
@@ -24,7 +38,7 @@ const styles = StyleSheet.create({
     height: LIST_ITEM_HEIGHT,
   },
   name: {
-    fontSize: scale(16),
+    fontSize: moderateScale(16),
   },
   pointsContainer: {
     borderRadius: scale(8),
