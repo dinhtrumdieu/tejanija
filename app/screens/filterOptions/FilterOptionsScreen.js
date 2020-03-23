@@ -9,7 +9,7 @@ import DatePicker from 'react-native-datepicker';
 import {CommonStyles} from '../../utils/CommonStyles';
 import {SvgXml} from 'react-native-svg';
 import LikeScreen from '../LikeScreen';
-import {scale} from '../../libs/reactSizeMatter/scalingUtils';
+import {scale, moderateScale} from '../../libs/reactSizeMatter/scalingUtils';
 import Text from '../../component/Text';
 import Accordion from './Accordion';
 import Header from '../../component/Header';
@@ -20,8 +20,7 @@ function CustomDrawerContent(props) {
       style={{
         flex: 1,
         width: scale(335),
-      }}
-      {...props}>
+      }}>
       <Header
         left={
           <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
@@ -33,7 +32,7 @@ function CustomDrawerContent(props) {
           <TouchableOpacity>
             <Text
               style={{
-                fontSize: scale(16),
+                fontSize: moderateScale(16),
                 color: '#FFF',
                 fontWeight: 'normal',
               }}>

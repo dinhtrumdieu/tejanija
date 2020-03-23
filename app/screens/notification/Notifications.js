@@ -321,7 +321,7 @@ const styles = ScaledSheet.create({
     paddingBottom: scale(8),
     marginLeft: scale(18),
     marginRight: scale(18),
-    fontSize: scale(11),
+    fontSize: moderateScale(11),
     color: '#C4C4C4',
   },
   containerSwitch: {
@@ -344,7 +344,7 @@ const styles = ScaledSheet.create({
     paddingBottom: scale(8),
     marginLeft: scale(18),
     marginRight: scale(18),
-    fontSize: scale(13),
+    fontSize: moderateScale(13),
     color: '#7D7D7D',
   },
   lineBottom: {
@@ -355,7 +355,7 @@ const styles = ScaledSheet.create({
     marginRight: scale(18),
   },
   textTitle: {
-    fontSize: scale(16),
+    fontSize: moderateScale(16),
     color: '#1A1A1A',
     fontWeight: '900',
   },

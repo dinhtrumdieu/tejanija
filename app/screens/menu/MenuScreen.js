@@ -10,7 +10,7 @@ import {
   FlatList,
 } from 'react-native';
 import Text from '../../component/Text';
-import {scale} from '../../libs/reactSizeMatter/scalingUtils';
+import {scale, moderateScale} from '../../libs/reactSizeMatter/scalingUtils';
 import {SvgXml} from 'react-native-svg';
 import PlayIcon from '../../../assets/svg/play_icon.svg';
 import RightIcon from '../../../assets/svg/chervon-right-green.svg';
@@ -102,7 +102,7 @@ const MenuScreen = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={{flex: 1, fontSize: scale(18), fontWeight: 'normal'}}>
+          <Text style={{flex: 1, fontSize: moderateScale(18), fontWeight: 'normal'}}>
             {item.title}
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -117,7 +117,7 @@ const MenuScreen = () => {
               <Text
                 style={{
                   color: '#FFF',
-                  fontSize: scale(11),
+                  fontSize: moderateScale(11),
                   fontWeight: 'bold',
                   textAlign: 'center',
                   paddingHorizontal: scale(6),
@@ -248,21 +248,21 @@ const styles = StyleSheet.create({
     ...ShadowStyle,
   },
   textTop: {
-    fontSize: scale(20),
+    fontSize: moderateScale(20),
     fontWeight: 'bold',
     color: '#FFF',
     textAlign: 'left',
     marginHorizontal: scale(16),
   },
   textCenter: {
-    fontSize: scale(24),
+    fontSize: moderateScale(24),
     fontWeight: 'bold',
     color: '#FFF',
     textAlign: 'center',
     textTransform: 'uppercase',
   },
   textContentCenter: {
-    fontSize: scale(13),
+    fontSize: moderateScale(13),
     fontWeight: 'normal',
     color: '#FFF',
     textAlign: 'center',
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textStart: {
-    fontSize: scale(16),
+    fontSize: moderateScale(16),
     fontWeight: 'bold',
     color: '#1A2C3C',
     textAlign: 'center',
@@ -295,7 +295,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   textHeader: {
-    fontSize: scale(24),
+    fontSize: moderateScale(24),
     fontWeight: 'bold',
     color: '#000',
     textAlign: 'left',

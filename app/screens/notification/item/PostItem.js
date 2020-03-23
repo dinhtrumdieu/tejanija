@@ -80,7 +80,7 @@ export default class PostItem extends React.Component {
                 paddingHorizontal: scale(20),
               }}>
                 <View style = {{ padding: scale(0)}}>
-                  <Text style = {styles.date}>{item.date}{type ==="sys" ? <View/> : <Text style ={!isRead ? {fontSize: scale(11), color: "#309975"} : styles.date }><Text style = {styles.date}> / </Text>{item.name}</Text>}</Text>
+                  <Text style = {styles.date}>{item.date}{type ==="sys" ? <View/> : <Text style ={!isRead ? {fontSize: moderateScale(11), color: "#309975"} : styles.date }><Text style = {styles.date}> / </Text>{item.name}</Text>}</Text>
                     <View style = {{flexDirection:"row", flex:1, alignItems:"center"}}>
                       { !isRead ? <View style ={[styles.circleStatus,  ]}></View> : <View style={{marginLeft: 18, marginRight: 16}}/>}
                       <Text style = {!isRead ? styles.textTitle : styles.textTitleInactive} >{item.title}</Text>
@@ -104,7 +104,7 @@ const styles = ScaledSheet.create({
       paddingBottom: scale(4),
       marginLeft: scale(18),
       marginRight: scale(18),
-      fontSize: scale(11),
+      fontSize: moderateScale(11),
       color: "#C4C4C4",
   },
   containerSwitch: {
@@ -125,7 +125,7 @@ const styles = ScaledSheet.create({
       paddingBottom: scale(0),
       marginLeft: scale(18),
       marginRight: scale(18),
-      fontSize: scale(13),
+      fontSize: moderateScale(13),
       color: "#7D7D7D"
   },
   lineBottom:{flex:1 ,
@@ -135,13 +135,13 @@ const styles = ScaledSheet.create({
       marginRight: scale(18)
   },
   textTitle: {
-      fontSize: scale(16),
+      fontSize: moderateScale(16),
       marginRight: scale(16),
       color: "#1A1A1A",
       fontWeight: '900',
   },
   textTitleInactive: {
-    fontSize: scale(16),
+    fontSize: moderateScale(16),
     marginRight: scale(24),
     marginLeft: scale(-14),
     color: "#7D7D7D",
