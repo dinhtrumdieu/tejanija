@@ -23,6 +23,7 @@ function FloatButton(props) {
   const [xValue, setXValueValue] = React.useState(
     new Animated.Value(scale(-88)),
   );
+  const [sizeCircle, setSizeCircle] = React.useState(scale(64));
   const [spinValue, setspinValue] = React.useState(new Animated.Value(0));
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
@@ -60,6 +61,11 @@ function FloatButton(props) {
       easing: Easing.linear,
     }).start();
   }
+///////////////////
+  function fixSizeCircle(){
+
+  }
+
 
   function rotate() {
     Animated.timing(spinValue, {
@@ -123,8 +129,8 @@ function FloatButton(props) {
           ]}>
           <TouchableOpacity
             style={{
-              width: scale(64),
-              height: scale(64),
+              width: scale(62),
+              height: scale(62),
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: '#EFEEB4',
@@ -149,8 +155,8 @@ function FloatButton(props) {
               props.navigation.navigate('AddNotes', {data});
             }}
             style={{
-              width: scale(64),
-              height: scale(64),
+              width: scale(62),
+              height: scale(62),
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: '#EFEEB4',
@@ -200,8 +206,8 @@ function FloatButton(props) {
           ]}>
           <TouchableOpacity
             style={{
-              width: scale(64),
-              height: scale(64),
+              width: scale(62),
+              height: scale(62),
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: '#EFEEB4',
