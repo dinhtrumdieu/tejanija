@@ -22,8 +22,8 @@ const list1 = {
 export default function Accordion() {
   return (
     <ScrollView style={styles.container}>
-      <List list={list} />
-      <List list={list1} />
+        <List list={list1} />
+        <List list={list} />
     </ScrollView>
   );
 }
