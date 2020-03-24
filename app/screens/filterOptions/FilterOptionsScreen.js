@@ -94,9 +94,7 @@ function CalendarComponent() {
             }}
             onDateChange={date => setDateFrom(date)}
           />
-
           <Text style={{color: '#7D7D7D'}}>-</Text>
-
           <DatePicker
             style={{
               width: scale(100),
