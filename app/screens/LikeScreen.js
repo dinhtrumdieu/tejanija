@@ -20,10 +20,13 @@ import {_getPost} from '../store/AsyncStorage';
 
 export default function LikeScreen({navigation}) {
   const [tab, setTab] = React.useState(0);
-  const [note, setNote] = React.useState("");
-  React.useEffect(() => {
-    getNoteFilter()
-  }, []);
+  const [note, setNote] = React.useState("A Yogi’s Note");
+  const [dateFrom, setDateFrom] = React.useState("2019 / 11 / 03");
+  const [dateTo, setDateTo] = React.useState("2019 / 11/ 20");
+  
+  // React.useEffect(() => {
+  //   getNoteFilter()
+  // }, []);
 
   const getNoteFilter = async () => {
     let noteFilter = '';
@@ -32,7 +35,6 @@ export default function LikeScreen({navigation}) {
       setNote(noteFilter)
       console.warn("getNote", noteFilter)
     } catch (error) {
-      // Error retrieving data
       console.log(error.message);
     }
     return noteFilter;
@@ -97,34 +99,48 @@ export default function LikeScreen({navigation}) {
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <SvgXml style={{marginLeft: scale(15)}} xml={FilterIcon} />
           </TouchableOpacity>
-          {(note || note ==! "") && <View 
-          style={{
-            // flexDirection:'row',
-            height: scale(24), borderRadius: scale(12),
-            borderWidth: scale(1), borderColor:'#FFF',
-            paddingLeft: scale(10),
-            paddingRight: scale(6.67),
-            justifyContent:'center'
-          
-          }}
+{/* NOTE */}
+          {(note || note ==! "") && 
+          <View 
+            style={{
+              // flexDirection:'row',
+              height: scale(24), borderRadius: scale(12),
+              borderWidth: scale(1), borderColor:'#FFF',
+              paddingLeft: scale(10),
+              paddingRight: scale(6.67),
+              justifyContent:'center',
+              marginRight: scale(10),
+            }}
           >
-            <View
-              style={{
-                flexDirection:'row',
-              }}
-            >
+            <View style={{ flexDirection:'row', }}>
               <Text
               style={{color:'#FFF', fontSize: moderateScale(13), textAlign:'center'}}
               >{note}</Text>
-
-              <TouchableOpacity
-              onPress={() => {setNote(""); deleteNoteFilter}} 
-              >
-                <SvgXml style={{marginLeft: scale(10)}} xml={CloseIcon} />
+              <TouchableOpacity style={{ justifyContent:'center', }} onPress={() => {setNote(""); deleteNoteFilter}}>
+                <SvgXml style={{marginLeft: scale(5)}} xml={CloseIcon} />
               </TouchableOpacity>
-
             </View>
-
+          </View>}
+{/* DATE FROM - TO*/}
+          {(dateFrom || dateFrom ==! "") && 
+          <View 
+            style={{
+              // flexDirection:'row',
+              height: scale(24), borderRadius: scale(12),
+              borderWidth: scale(1), borderColor:'#FFF',
+              paddingLeft: scale(10),
+              paddingRight: scale(6.67),
+              justifyContent:'center',
+            }}
+          >
+            <View style={{ flexDirection:'row', }}>
+              <Text
+              style={{color:'#FFF', fontSize: moderateScale(13), textAlign:'center'}}
+              >{dateFrom} - {dateTo}</Text>
+              <TouchableOpacity style={{ justifyContent:'center', }} onPress={() => {setDateFrom(""); setDateTo("")}}>
+                <SvgXml style={{marginLeft: scale(5)}} xml={CloseIcon} />
+              </TouchableOpacity>
+            </View>
           </View>}
 
         </View>
