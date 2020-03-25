@@ -16,6 +16,8 @@ import CheckIcon from '../../../assets/svg/Check.svg';
 import {scale} from '../../libs/reactSizeMatter/scalingUtils';
 import _ from 'lodash';
 import {_savePost} from '../../store/AsyncStorage';
+import Utils from '../../utils/Utils';
+import EventRegister, {RELOAD_EVENT} from '../../utils/EventRegister';
 
 export default function AddNotesScreen(props) {
   const data = _.get(props.route.params, 'data', null);
@@ -26,6 +28,7 @@ export default function AddNotesScreen(props) {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={{flex: 1}}>
         <Header
+          showStatusBar={false}
           headerStyle={{backgroundColor: 'rgba(26, 44, 60, 0.92)'}}
           left={<BackButton white={true} />}
           center={
@@ -39,7 +42,12 @@ export default function AddNotesScreen(props) {
             </Text>
           }
           right={
-            <TouchableOpacity onPress={() => _savePost(data)}>
+            <TouchableOpacity
+              onPress={async () => {
+                await _savePost(data);
+                EventRegister.emit(RELOAD_EVENT);
+                Utils.showSuccessToast({message: 'Save successfully!'});
+              }}>
               <SvgXml xml={CheckIcon} />
             </TouchableOpacity>
           }

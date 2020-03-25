@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   StyleSheet,
@@ -17,45 +17,35 @@ import CloseIcon from '../../assets/svg/Icon_close_white.svg';
 import LikesList from './likes/LikesList';
 import NotesList from './likes/NotesList';
 import {_getPost} from '../store/AsyncStorage';
+import _ from 'lodash';
+import EventRegister, {RELOAD_EVENT} from '../utils/EventRegister';
 
 export default function LikeScreen({navigation}) {
   const [tab, setTab] = React.useState(0);
-  const [note, setNote] = React.useState("");
-  React.useEffect(() => {
-    getNoteFilter()
-  }, []);
-
-  const getNoteFilter = async () => {
-    let noteFilter = '';
-    try {
-      noteFilter = await AsyncStorage.getItem('note') || 'none';
-      setNote(noteFilter)
-      console.warn("getNote", noteFilter)
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-    return noteFilter;
-  }
-
-  const deleteNoteFilter = async () => {
-    try {
-      await AsyncStorage.removeItem('note');
-    } catch (error) {
-      // Error retrieving data
-      console.log(error.message);
-    }
-  }
-
+  const [note, setNote] = React.useState('A Yogi’s Note');
   const [data, setData] = useState([]);
-  useEffect(() => {
+  const fetchData = () => {
     async function getData() {
       return await _getPost();
     }
     getData().then(result => {
       setData(JSON.parse(result));
     });
+  };
+
+  useEffect(() => {
+    fetchData();
+    this.event = EventRegister.on(RELOAD_EVENT, () => fetchData());
+    // Specify how to clean up after this effect:
+    return () => {
+      EventRegister.off(this.event);
+    };
   }, []);
+
+  const memoizedCallback = useCallback(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
   return (
     <View style={{flex: 1}}>
       <View
@@ -97,39 +87,50 @@ export default function LikeScreen({navigation}) {
           <TouchableOpacity onPress={() => navigation.openDrawer()}>
             <SvgXml style={{marginLeft: scale(15)}} xml={FilterIcon} />
           </TouchableOpacity>
-          {(note || note ==! "") && <View 
-          style={{
-            // flexDirection:'row',
-            height: scale(24), borderRadius: scale(12),
-            borderWidth: scale(1), borderColor:'#FFF',
-            paddingLeft: scale(10),
-            paddingRight: scale(6.67),
-            justifyContent:'center'
-          
-          }}
-          >
+          {!_.isEmpty(note) && (
             <View
               style={{
-                flexDirection:'row',
-              }}
-            >
-              <Text
-              style={{color:'#FFF', fontSize: moderateScale(13), textAlign:'center'}}
-              >{note}</Text>
+                // flexDirection:'row',
+                height: scale(24),
+                borderRadius: scale(12),
+                borderWidth: scale(1),
+                borderColor: '#FFF',
+                paddingLeft: scale(10),
+                paddingRight: scale(6.67),
+                justifyContent: 'center',
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                }}>
+                <Text
+                  style={{
+                    color: '#FFF',
+                    fontSize: moderateScale(13),
+                    textAlign: 'center',
+                  }}>
+                  {note}
+                </Text>
 
-              <TouchableOpacity
-              onPress={() => {setNote(""); deleteNoteFilter}} 
-              >
-                <SvgXml style={{marginLeft: scale(10)}} xml={CloseIcon} />
-              </TouchableOpacity>
-
+                <TouchableOpacity
+                  onPress={() => {
+                    setNote('');
+                    //deleteNoteFilter;
+                  }}>
+                  <SvgXml style={{marginLeft: scale(10)}} xml={CloseIcon} />
+                </TouchableOpacity>
+              </View>
             </View>
-
-          </View>}
-
+          )}
         </View>
         {tab === 0 && <LikesList />}
-        {tab === 1 && <NotesList data={data} navigation={navigation} />}
+        {tab === 1 && (
+          <NotesList
+            memoizedCallback={memoizedCallback}
+            data={data}
+            navigation={navigation}
+          />
+        )}
       </View>
     </View>
   );

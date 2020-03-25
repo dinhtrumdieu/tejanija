@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList} from 'react-native';
+import {StyleSheet, FlatList, RefreshControl} from 'react-native';
 import NoteItem from './item/NoteItem';
-import {_getPost} from '../../store/AsyncStorage';
+import EventRegister, {RELOAD_EVENT} from '../../utils/EventRegister';
 
 function getSwipeRef(index) {
   this.itemIsOpen = index;
@@ -15,11 +15,28 @@ function onClose(index) {
   }
 }
 
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
+
 function NotesList(props) {
+  const [refreshing, setRefreshing] = React.useState(false);
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    props.memoizedCallback();
+    wait(1000).then(() => setRefreshing(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshing]);
+  const data = [...props.data].reverse();
   return (
     <FlatList
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
       bounces={true}
-      data={props.data}
+      data={data}
       renderItem={({item, index}) => (
         <NoteItem
           navigation={props.navigation}

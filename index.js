@@ -9,5 +9,6 @@ YellowBox.ignoreWarnings([
   'Warning: componentWillMount',
   'Warning: componentWillReceiveProps',
   'Warning: DatePickerIOS',
+  'Warning: componentWillUpdate',
 ]);
 AppRegistry.registerComponent(appName, () => App);

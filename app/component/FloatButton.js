@@ -147,6 +147,9 @@ function FloatButton(props) {
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('AddNotes', {data});
+              moveAnimation();
+              rotateOut();
+              setFloat(!float);
             }}
             style={{
               width: scale(64),

@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import _ from 'lodash';
+import Utils from '../../utils/Utils';
 
 const POST_KEY = 'POST';
 
@@ -11,7 +12,7 @@ export const _savePost = async data => {
       let array = JSON.parse(result);
       const response = array.find(element => element.id === data.id);
       if (response) {
-        console.warn('Item is ton tai');
+        Utils.showErrorToast({message: 'Bạn đã lưu bài này trước đó '});
         return;
       }
       array.push(data);
