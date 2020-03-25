@@ -19,13 +19,27 @@ export default function List(props) {
     inputRange: [0, 16 / 400],
     outputRange: [8, 0],
   });
+  const [selected, setSelected] = React.useState(new Map());
+  const onSelect = React.useCallback(
+    id => {
+      const newSelected = new Map(selected);
+      newSelected.set(id, !selected.get(id));
+      setSelected(newSelected);
+    },
+    selected,
+  );
   return (
     <>
       <TouchableWithoutFeedback onPress={() => setOpen(prev => !prev)}>
         <View>
-          <Animated.View style={[styles.container, {}]}>
-            <Text style={styles.title}>{list.name}</Text>
-            <Chevron {...{transition}} />
+          <Animated.View >
+            <View style={[styles.container, {}]}>
+              <Text style={styles.title}>{list.name}</Text>
+              <Chevron {...{transition}} />
+            </View>
+            <View style={styles.containerSelected}>
+              <Text style={styles.titleSelected}>{selected}</Text>
+            </View>
           </Animated.View>
           <View style={styles.separator} />
         </View>
@@ -33,7 +47,7 @@ export default function List(props) {
       <Animated.View style={[styles.items, {height}]}>
         {list.items.map((item, index) => (
           // <Item {...{ item, key }} isLast={key === list.items.length - 1} />
-          <Item key={index} item={item} />
+          <Item key={index} item={item} selected={!!selected.get(item.name)} onSelect={onSelect}/>
         ))}
       </Animated.View>
     </>
@@ -49,10 +63,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  containerSelected: {
+    position:'absolute',
+    bottom: scale(5),
+    alignItems: 'flex-start',
+  },
   title: {
     fontSize: moderateScale(18),
     fontWeight: 'normal',
     color: '#1A1A1A',
+  },
+  titleSelected: {
+    fontSize: moderateScale(13),
+    fontWeight: 'normal',
+    color: '#7D7D7D',
   },
   items: {
     overflow: 'hidden',
