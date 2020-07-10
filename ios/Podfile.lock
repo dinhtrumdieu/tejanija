@@ -20,6 +20,9 @@ PODS:
     - boost-for-react-native
     - DoubleConversion
     - glog
+  - GCDWebServer (3.5.4):
+    - GCDWebServer/Core (= 3.5.4)
+  - GCDWebServer/Core (3.5.4)
   - glog (0.3.5)
   - libwebp (1.1.0):
     - libwebp/demux (= 1.1.0)
@@ -253,6 +256,9 @@ PODS:
     - ReactCommon/jscallinvoker (= 0.61.5)
   - ReactNativePermissions (1.2.1):
     - React
+  - RealmJS (4.0.0-beta.0):
+    - GCDWebServer
+    - React
   - RNCAsyncStorage (1.8.1):
     - React
   - RNCMaskedView (0.1.7):
@@ -333,6 +339,7 @@ DEPENDENCIES:
   - ReactCommon/jscallinvoker (from `../node_modules/react-native/ReactCommon`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - ReactNativePermissions (from `../node_modules/react-native-permissions`)
+  - RealmJS (from `../node_modules/realm`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCViewpager (from `../node_modules/@react-native-community/viewpager`)"
@@ -352,6 +359,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - GCDWebServer
     - libwebp
     - lottie-ios
     - SDWebImage
@@ -428,6 +436,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   ReactNativePermissions:
     :path: "../node_modules/react-native-permissions"
+  RealmJS:
+    :path: "../node_modules/realm"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
@@ -466,6 +476,7 @@ SPEC CHECKSUMS:
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
+  GCDWebServer: 2c156a56c8226e2d5c0c3f208a3621ccffbe3ce4
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   lottie-ios: 85ce835dd8c53e02509f20729fc7d6a4e6645a0a
@@ -498,6 +509,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: a49a1f42bf8f5acf1c3e297097517c6b3af377ad
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   ReactNativePermissions: e7db6c38a2f3fb8f26dbfdcaeb5c5e9364657a6d
+  RealmJS: 86ae8aad686b220649741ee2fab364e7d2302578
   RNCAsyncStorage: 00bdf63f7f1e0f11d3323533dba4f222e58bf092
   RNCMaskedView: 90dd32f5b786bd562e876e1421ea77c700cbf71e
   RNCViewpager: eff3ba6712d3aff9ea779ef1c99f78aa7cd36771

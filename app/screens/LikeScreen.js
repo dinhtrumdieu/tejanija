@@ -19,6 +19,8 @@ import NotesList from './likes/NotesList';
 import {_getPost} from '../store/AsyncStorage';
 import _ from 'lodash';
 import EventRegister, {RELOAD_EVENT} from '../utils/EventRegister';
+import Realm from 'realm';
+import Quote from '../realm/schema/Quotes';
 
 export default function LikeScreen({navigation}) {
   const [tab, setTab] = React.useState(0);

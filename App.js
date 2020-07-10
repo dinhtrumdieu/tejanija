@@ -25,7 +25,11 @@ import AudioPlayer from './app/screens/audio/AudioPlayer';
 import {AudioContext} from './app/screens/context/audio-context';
 import AddNotesScreen from './app/screens/likes/AddNotesScreen';
 import ListScreen from './app/screens/common/ListScreen';
-import FilterOptionsScreen from './app/screens/filterOptions/FilterOptionsScreen'
+import FilterOptionsScreen from './app/screens/filterOptions/FilterOptionsScreen';
+import Realm from 'realm';
+import Quote from './app/realm/schema/Quotes';
+import {DATA} from './app/utils/Consts';
+import _ from 'lodash';
 
 const Tab = createBottomTabNavigator();
 function MyTabs() {
@@ -97,7 +101,11 @@ function MyStack() {
       <Stack.Screen name="Notifications" component={Notifications} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
       <Stack.Screen name="AudioDetail" component={AudioDetailScreen} />
-      <Stack.Screen name="AudioPlayer" component={AudioPlayer} options={{...TransitionPresets.ModalSlideFromBottomIOS}} />
+      <Stack.Screen
+        name="AudioPlayer"
+        component={AudioPlayer}
+        options={{...TransitionPresets.ModalSlideFromBottomIOS}}
+      />
       <Stack.Screen name="Search" component={SearchScreen} />
       <Stack.Screen name="OnBoarding" component={OnBoardingScreen} />
       <Stack.Screen name="MenuScreen" component={MenuScreen} />
@@ -124,8 +132,23 @@ export default class App extends Component {
       audio: {
         play: 'paused',
       },
+      quotes: [],
       togglePlay: this.togglePlay,
     };
+  }
+
+  componentDidMount(): void {
+    const realm = new Realm({schema: [Quote]});
+    // realm.write(() => {
+    //   DATA.forEach(item => {
+    //     realm.create('Quote', item);
+    //   });
+    // });
+    let quotes = realm.objects('Quote');
+    // eslint-disable-next-line react/no-did-mount-set-state
+    this.setState({
+      quotes: _.values(quotes),
+    });
   }
 
   render() {
